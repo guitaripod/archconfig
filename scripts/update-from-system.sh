@@ -24,6 +24,7 @@ cp ~/.config/kdeglobals "$DOTFILES/.config/kde/"
 cp ~/.config/kwinrc "$DOTFILES/.config/kde/"
 cp ~/.config/kglobalshortcutsrc "$DOTFILES/.config/kde/"
 cp ~/.config/plasmashellrc "$DOTFILES/.config/kde/"
+cp ~/.config/khotkeysrc "$DOTFILES/.config/kde/"
 cp ~/.config/kcminputrc "$DOTFILES/.config/"
 
 echo "[4/6] Updating SSH config..."

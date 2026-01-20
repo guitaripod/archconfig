@@ -59,6 +59,7 @@ cp "$DOTFILES/.config/kde/kdeglobals" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/kwinrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/kglobalshortcutsrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/plasmashellrc" "$HOME/.config/"
+cp "$DOTFILES/.config/kde/khotkeysrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kcminputrc" "$HOME/.config/"
 
 echo "[7/8] Linking SSH config..."
