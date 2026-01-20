@@ -71,6 +71,7 @@ npm
 ntfs-3g
 nvidia-container-toolkit
 nvidia-open
+nvidia-prime
 nvidia-settings
 nvidia-utils
 ollama-cuda
