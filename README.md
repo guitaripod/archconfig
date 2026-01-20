@@ -6,7 +6,7 @@ Arch Linux configuration files for syncing between machines.
 
 1. Clone this repo:
    ```bash
-   git clone git@github.com:YOUR_USERNAME/dotfiles.git ~/dotfiles
+   git clone git@github.com:guitaripod/archconfig.git ~/dotfiles
    ```
 
 2. Run the installer:
