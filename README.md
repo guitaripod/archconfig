@@ -2,6 +2,11 @@
 
 Arch Linux configuration files for syncing between machines.
 
+## Prerequisites
+
+- Enable multilib in /etc/pacman.conf (for gaming packages)
+- SSH key configured for GitHub
+
 ## Fresh Install (New Machine)
 
 1. Clone this repo:
