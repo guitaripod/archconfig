@@ -20,7 +20,7 @@ python311
 qimgv-git
 r8125-dkms
 realesrgan-ncnn-vulkan
-rpcs3-git
+rpcs3-bin
 starcraft-cli
 steam-rom-manager-bin
 sunshine
