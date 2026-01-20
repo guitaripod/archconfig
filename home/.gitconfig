@@ -1,0 +1,40 @@
+[user]
+  email = guitaripod@icloud.com
+  name = guitaripod
+	signingkey = 6C4928A2CEF262E7
+
+[alias]
+  pru = fetch --prune 
+  co = checkout
+  ca = commit -a 
+  branches = branch -a --color -v 
+  hash = rev-parse --short HEAD
+  lc = log ORIG_HEAD.. --stat --no-merges
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit 
+  p = push 
+  c = commit 
+  s = status 
+  pl = pull 
+  d = diff 
+  pf = push --force 
+  b = branch
+
+[core]
+  excludesfile = ~/.config/git/ignore
+
+[pull]
+  rebase = true
+
+[init]
+  defaultBranch = master
+[commit]
+	gpgsign = false
+[gpg]
+	program = /usr/bin/gpg
+[credential]
+	helper = store
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

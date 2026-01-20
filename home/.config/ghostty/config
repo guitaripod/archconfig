@@ -1,0 +1,49 @@
+# Ghostty Configuration File
+
+# Font settings
+font-family = "FiraCode Nerd Font Mono"
+font-size = 12
+
+# Theme - automatically switches based on system light/dark mode
+# Solarized Light with custom palette for better diff readability
+theme = light:Builtin Solarized Light,dark:Rose Pine
+
+# Option 2: Zenbones Light - Soft warm tones with better readability
+# theme = light:zenbones_light,dark:rose-pine
+
+# Option 3: Seoulbones Light - Warm paper-like background
+# theme = light:seoulbones_light,dark:rose-pine
+
+# Option 4: Gruvbox Light Hard - More contrast, still warm
+# theme = light:GruvboxLightHard,dark:rose-pine
+
+# Option 5: Catppuccin Latte - Soft pastels with warm undertones
+# theme = light:catppuccin-latte,dark:rose-pine
+
+# Option 6: Rose Pine Dawn (original - softest colors)
+# theme = light:rose-pine-dawn,dark:rose-pine
+
+# Increase minimum contrast to ensure text is always readable
+minimum-contrast = 3.0
+
+# Window settings
+window-padding-x = 10
+window-padding-y = 10
+
+# Cursor
+cursor-style = block
+cursor-style-blink = true
+
+# Shell
+command = /bin/bash
+
+# Other settings
+copy-on-select = true
+confirm-close-surface = false
+
+# Keybindings
+keybind = ctrl+shift+o=new_split:right
+keybind = ctrl+shift+h=close_surface
+keybind = ctrl+shift+l=new_split:down
+
+keybind = shift+enter=text:\x1b\r
