@@ -52,9 +52,3 @@ git push
 - Packages: official and AUR package lists
 - Services: systemd enabled services list
 
-## Secrets
-
-API keys are NOT stored in this repo. After cloning, manually add:
-- `OPENAI_API_KEY` to `~/.bashrc`
-- `OLLAMA_API_KEY` to `~/.bashrc`
-- Set up `~/.wakatime.cfg` with your API key

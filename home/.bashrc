@@ -95,8 +95,6 @@ alias c='clear'
 alias sb='swift build'
 alias st='swift test'
 
-# Open AI Key 
-
 # Tailscale
 alias tsget='sudo tailscale file get ~/Downloads/'
 alias tsend='function _tsend() { 
@@ -271,8 +269,6 @@ export PATH="$HOME/bin:$PATH"
 # OpenCode AI
 alias oc='opencode'
 alias occ='opencode -c'
-
-# Ollama
 
 alias comfy-off="docker stop comfyui"
 alias comfy-on="docker start comfyui"
