@@ -8,10 +8,10 @@ echo "=== Arch Linux Dotfiles Installer ==="
 echo "Dotfiles directory: $DOTFILES_DIR"
 echo ""
 
-echo "[1/5] Installing official packages..."
+echo "[1/6] Installing official packages..."
 sudo pacman -S --needed - < "$SCRIPT_DIR/pkglist-official.txt"
 
-echo "[2/5] Installing yay (AUR helper)..."
+echo "[2/6] Installing yay (AUR helper)..."
 if ! command -v yay &> /dev/null; then
     echo "yay not found, installing..."
     git clone https://aur.archlinux.org/yay.git /tmp/yay-install
@@ -23,14 +23,21 @@ else
     echo "yay already installed, skipping."
 fi
 
-echo "[3/5] Installing AUR packages..."
+echo "[3/6] Installing AUR packages..."
 yay -S --needed - < "$SCRIPT_DIR/pkglist-aur.txt"
 
-echo "[4/5] Installing system configs..."
+echo "[4/6] Installing oh-my-bash..."
+if [[ ! -d "$HOME/.oh-my-bash" ]]; then
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
+else
+    echo "oh-my-bash already installed, skipping."
+fi
+
+echo "[5/6] Installing system configs..."
 sudo mkdir -p /etc/keyd
 sudo cp "$DOTFILES_DIR/etc/keyd/default.conf" /etc/keyd/
 
-echo "[5/5] Enabling services..."
+echo "[6/6] Enabling services..."
 while IFS= read -r service; do
     if [[ -n "$service" && ! "$service" =~ ^# ]]; then
         echo "  Enabling: $service"
