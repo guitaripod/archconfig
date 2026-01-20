@@ -6,7 +6,6 @@ keyd.service
 NetworkManager-dispatcher.service
 NetworkManager-wait-online.service
 NetworkManager.service
-nmb.service
 nvidia-hibernate.service
 nvidia-resume.service
 nvidia-suspend-then-hibernate.service
@@ -14,7 +13,6 @@ nvidia-suspend.service
 ollama.service
 plexmediaserver.service
 sddm.service
-smb.service
 sshd.service
 systemd-timesyncd.service
 tailscaled.service

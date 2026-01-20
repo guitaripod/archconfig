@@ -100,7 +100,6 @@ qbittorrent
 qt5-wayland
 rgbds
 rustup
-samba
 sddm
 sddm-kcm
 simde
