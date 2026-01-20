@@ -1,0 +1,12 @@
+[Keyboard]
+RepeatDelay=200
+RepeatRate=70
+
+[Libinput][1133][50503][Logitech USB Receiver]
+NaturalScroll=true
+ScrollFactor=1.5
+
+[Mouse]
+X11LibInputXAccelProfileFlat=true
+XLbInptNaturalScroll=true
+XLbInptPointerAcceleration=1
