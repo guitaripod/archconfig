@@ -66,11 +66,7 @@ echo "[7/8] Linking SSH config..."
 mkdir -p "$HOME/.ssh"
 link_file "$DOTFILES/.ssh/config" "$HOME/.ssh/config"
 
-echo "[8/8] Linking GTK and XDG configs..."
-link_file "$DOTFILES/.gtkrc-2.0" "$HOME/.gtkrc-2.0"
-mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
-cp -r "$DOTFILES/.config/gtk-3.0/"* "$HOME/.config/gtk-3.0/"
-cp -r "$DOTFILES/.config/gtk-4.0/"* "$HOME/.config/gtk-4.0/"
+echo "[8/8] Linking XDG configs..."
 link_file "$DOTFILES/.config/mimeapps.list" "$HOME/.config/mimeapps.list"
 link_file "$DOTFILES/.config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
 
