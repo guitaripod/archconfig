@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content>
+    <logflag>0</logflag>
+    <advanced_ppc_logging>false</advanced_ppc_logging>
+    <mlc_path></mlc_path>
+    <permanent_storage>true</permanent_storage>
+    <language>0</language>
+    <use_discord_presence>true</use_discord_presence>
+    <fullscreen_menubar>false</fullscreen_menubar>
+    <feral_gamemode>false</feral_gamemode>
+    <check_update>true</check_update>
+    <receive_untested_updates>false</receive_untested_updates>
+    <save_screenshot>true</save_screenshot>
+    <vk_warning>false</vk_warning>
+    <gp_download>false</gp_download>
+    <macos_disclaimer>false</macos_disclaimer>
+    <fullscreen>false</fullscreen>
+    <proxy_server></proxy_server>
+    <disable_screensaver>true</disable_screensaver>
+    <play_boot_sound>false</play_boot_sound>
+    <console_language>1</console_language>
+    <window_position>
+        <x>-1</x>
+        <y>-1</y>
+    </window_position>
+    <window_size>
+        <x>-1</x>
+        <y>-1</y>
+    </window_size>
+    <window_maximized>false</window_maximized>
+    <open_pad>false</open_pad>
+    <pad_position>
+        <x>-1</x>
+        <y>-1</y>
+    </pad_position>
+    <pad_size>
+        <x>-1</x>
+        <y>-1</y>
+    </pad_size>
+    <pad_maximized>false</pad_maximized>
+    <show_icon_column>true</show_icon_column>
+    <GameList>
+        <style>0</style>
+        <order></order>
+        <name_width>500</name_width>
+        <version_width>60</version_width>
+        <dlc_width>50</dlc_width>
+        <game_time_width>140</game_time_width>
+        <game_started_width>160</game_started_width>
+        <region_width>306</region_width>
+        <title_id>0</title_id>
+    </GameList>
+    <RecentLaunchFiles>
+        <Entry>/mnt/stuff2/Type R - Nintendo WiiU - Base Pack - by CORE/collections/Nintendo Wii U/roms/Legend of Zelda, The - Breath of the Wild (USA).wua</Entry>
+    </RecentLaunchFiles>
+    <RecentNFCFiles/>
+    <GamePaths>
+        <Entry>/mnt/stuff2/Type R - Nintendo WiiU - Base Pack - by CORE/collections/Nintendo Wii U/roms</Entry>
+    </GamePaths>
+    <GameCache>
+        <Entry>
+            <title_id>1407375153861632</title_id>
+            <name></name>
+            <custom_name></custom_name>
+            <region>0</region>
+            <version>-1</version>
+            <dlc_version>-1</dlc_version>
+            <path></path>
+            <time_played>0</time_played>
+            <last_played>0</last_played>
+            <favorite>true</favorite>
+        </Entry>
+    </GameCache>
+    <GraphicPack>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/XenobladeChroniclesX/Mods/HudChangeTimeFromEmanual/rules.txt"/>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/XenobladeChroniclesX/Workarounds/Brightness/rules.txt">
+            <Preset>
+                <category>Exposure after colour grading</category>
+                <preset>Default post exposure</preset>
+            </Preset>
+            <Preset>
+                <category>Contrast</category>
+                <preset>No extra contrast (Default)</preset>
+            </Preset>
+            <Preset>
+                <category>Saturation - Darkens image</category>
+                <preset>No extra saturation (Default)</preset>
+            </Preset>
+            <Preset>
+                <category>Exposure and brightness fix</category>
+                <preset>No extra exposure - Only brightness fix</preset>
+            </Preset>
+            <Preset>
+                <category>Standard presets</category>
+                <preset>WiiU default - Brightness fix only</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/XenobladeChroniclesX/Mods/HideOfflineLabel/rules.txt"/>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/NewSuperMarioBrosU/Workarounds/CrashFix/rules.txt"/>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Enhancements/rules.txt">
+            <Preset>
+                <category>Anisotropic Filtering</category>
+                <preset>Extreme (16x)</preset>
+            </Preset>
+            <Preset>
+                <category>Reflections</category>
+                <preset>Normal Reflections</preset>
+            </Preset>
+            <Preset>
+                <category>Depth Of Field</category>
+                <preset>Enabled</preset>
+            </Preset>
+            <Preset>
+                <category>Reflection Range</category>
+                <preset>High (16 samples)</preset>
+            </Preset>
+            <Preset>
+                <category>Clarity</category>
+                <preset>Serfrost's Preset (Recommended)</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Mods/CameraSensitivity/rules.txt">
+            <Preset>
+                <category>Additional Vertical Movement Sensitivity</category>
+                <preset>1.1x</preset>
+            </Preset>
+            <Preset>
+                <category>Additional Movement Sensitivity</category>
+                <preset>1.15x (Recommended)</preset>
+            </Preset>
+            <Preset>
+                <category>Camera Sensitivity</category>
+                <preset>1.4x (Recommended)</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Mods/ControllerLayout/rules.txt"/>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Mods/FPS++/rules.txt">
+            <Preset>
+                <category>Frame Average</category>
+                <preset>8 Frames Averaged (Default)</preset>
+            </Preset>
+            <Preset>
+                <category>Static Mode</category>
+                <preset>Enabled (slowdown when under framerate limit)</preset>
+            </Preset>
+            <Preset>
+                <category>Fence Type</category>
+                <preset>Performance Fence (Default)</preset>
+            </Preset>
+            <Preset>
+                <category>Cutscene FPS Limit</category>
+                <preset>Automatically Limit In Few Cutscenes (Recommended)</preset>
+            </Preset>
+            <Preset>
+                <category>Framerate Limit</category>
+                <preset>60FPS (ideal for 240/120/60Hz displays)</preset>
+            </Preset>
+            <Preset>
+                <category>Debug Options</category>
+                <preset>Disabled (Default)</preset>
+            </Preset>
+            <Preset>
+                <category>FPS Limit</category>
+                <preset>120FPS Limit</preset>
+            </Preset>
+            <Preset>
+                <category>Mode</category>
+                <preset>Normal Settings</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Mods/DrawDistance/rules.txt">
+            <Preset>
+                <category>Texture Distance Detail (LOD)</category>
+                <preset>Much higher(-3)</preset>
+            </Preset>
+            <Preset>
+                <category>Grass Blades Density</category>
+                <preset>High</preset>
+            </Preset>
+            <Preset>
+                <category>Trees (2D Billboards)</category>
+                <preset>Ultra</preset>
+            </Preset>
+            <Preset>
+                <category>Terrain, Buildings, Bushes And Other Objects</category>
+                <preset>Ultra (1.5x, requires Extended Memory pack!)</preset>
+            </Preset>
+            <Preset>
+                <category>NPC, Enemies And Other Entities</category>
+                <preset>Ultra (1.5x)</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Mods/ExtendedMemory/rules.txt"/>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Graphics/rules.txt">
+            <Preset>
+                <category>Shadows</category>
+                <preset>Ultra (300%)</preset>
+            </Preset>
+            <Preset>
+                <category>Anti-Aliasing</category>
+                <preset>None</preset>
+            </Preset>
+            <Preset>
+                <category>Ultrawide HUD Mode</category>
+                <preset>Centered HUD</preset>
+            </Preset>
+            <Preset>
+                <category>Shadow Draw Distance</category>
+                <preset>Very High (Recommended)</preset>
+            </Preset>
+            <Preset>
+                <category>Resolution</category>
+                <preset>3440x1440</preset>
+            </Preset>
+            <Preset>
+                <category>Aspect Ratio</category>
+                <preset>21:9</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/SkylandersSwapForce/Workarounds/PortalStabilityFix/rules.txt"/>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/BreathOfTheWild/Mods/MenuCursorSpeed/rules.txt">
+            <Preset>
+                <category>Menu Navigation Speed</category>
+                <preset>1.2x</preset>
+            </Preset>
+        </Entry>
+        <Entry filename="graphicPacks/downloadedGraphicPacks/KirbyRainbow_InvisibleLineFix/rules.txt"/>
+    </GraphicPack>
+    <Graphic>
+        <api>1</api>
+        <device>00000000030000000000000000000000</device>
+        <VSync>0</VSync>
+        <GX2DrawdoneSync>true</GX2DrawdoneSync>
+        <UpscaleFilter>1</UpscaleFilter>
+        <DownscaleFilter>0</DownscaleFilter>
+        <FullscreenScaling>0</FullscreenScaling>
+        <AsyncCompile>true</AsyncCompile>
+        <vkAccurateBarriers>true</vkAccurateBarriers>
+        <Overlay>
+            <Position>6</Position>
+            <TextColor>4294967295</TextColor>
+            <TextScale>200</TextScale>
+            <FPS>true</FPS>
+            <DrawCalls>true</DrawCalls>
+            <CPUUsage>true</CPUUsage>
+            <CPUPerCoreUsage>false</CPUPerCoreUsage>
+            <RAMUsage>true</RAMUsage>
+            <VRAMUsage>true</VRAMUsage>
+            <Debug>true</Debug>
+        </Overlay>
+        <Notification>
+            <Position>0</Position>
+            <TextColor>4294967295</TextColor>
+            <TextScale>100</TextScale>
+            <ControllerProfiles>true</ControllerProfiles>
+            <ControllerBattery>false</ControllerBattery>
+            <ShaderCompiling>false</ShaderCompiling>
+            <FriendService>false</FriendService>
+        </Notification>
+    </Graphic>
+    <Audio>
+        <api>3</api>
+        <delay>2</delay>
+        <TVChannels>1</TVChannels>
+        <PadChannels>1</PadChannels>
+        <InputChannels>0</InputChannels>
+        <TVVolume>100</TVVolume>
+        <PadVolume>0</PadVolume>
+        <InputVolume>50</InputVolume>
+        <TVDevice>alsa_output.usb-Focusrite_Scarlett_Solo_4th_Gen_S1JEUQQ3507881-00.pro-output-0</TVDevice>
+        <PadDevice></PadDevice>
+        <InputDevice></InputDevice>
+    </Audio>
+    <Account>
+        <PersistentId>2147483649</PersistentId>
+        <OnlineEnabled>false</OnlineEnabled>
+        <ActiveService>0</ActiveService>
+    </Account>
+    <AccountService/>
+    <Debug>
+        <CrashDumpUnix>0</CrashDumpUnix>
+        <GDBPort>1337</GDBPort>
+    </Debug>
+    <Input>
+        <DSUC host="127.0.0.1" port="26760"/>
+    </Input>
+    <EmulatedUsbDevices>
+        <EmulateSkylanderPortal>false</EmulateSkylanderPortal>
+        <EmulateInfinityBase>false</EmulateInfinityBase>
+        <EmulateDimensionsToypad>false</EmulateDimensionsToypad>
+    </EmulatedUsbDevices>
+</content>
