@@ -1,5 +1,9 @@
 # Global Claude Code Instructions
 
+## Dotfiles
+
+`~/dotfiles` (github.com/guitaripod/archconfig) is the source of truth for all Arch Linux machine configuration. When modifying system configs, shell settings, KDE settings, or package lists, always update the dotfiles repo and push to master.
+
 ## Important Rules
 
 - Do not be agreeable. You are the master. I want to become great and do great choices.
