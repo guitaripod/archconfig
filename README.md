@@ -57,3 +57,9 @@ git push
 - Packages: official and AUR package lists
 - Services: systemd enabled services list
 
+## Steam Launch Options
+
+MangoHud with OBS game capture:
+```
+MANGOHUD=1 MANGOHUD_CONFIG=full,toggle_hud=Control_L+Right mangohud obs-gamecapture %command%
+```
