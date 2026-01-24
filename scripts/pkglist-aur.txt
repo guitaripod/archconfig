@@ -30,4 +30,5 @@ telegram-desktop-bin
 ventoy-bin
 woeusb-ng
 xkb-switch
+xmousepasteblock
 yay
