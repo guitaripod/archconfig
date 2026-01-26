@@ -1,7 +1,0 @@
-[Desktop Entry]
-Exec=/home/marcus/.local/bin/toggle-perf
-Name=Toggle Performance Profile
-NoDisplay=true
-StartupNotify=false
-Type=Application
-X-KDE-GlobalAccel-CommandShortcut=true

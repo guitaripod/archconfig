@@ -75,12 +75,10 @@ echo "[9/11] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
 link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/autostart/xmousepasteblock.desktop"
 
-echo "[10/11] Installing custom scripts and shortcuts..."
+echo "[10/11] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/.local/share/applications"
 cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
 chmod +x "$HOME/.local/bin/toggle-perf"
-cp "$DOTFILES/.local/share/applications/toggle-perf.desktop" "$HOME/.local/share/applications/"
 
 echo "[11/11] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
