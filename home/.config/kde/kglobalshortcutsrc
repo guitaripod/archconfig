@@ -292,6 +292,9 @@ ToggleTouchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku
 [services][switch-keyboard.desktop]
 _launch=Ctrl+Space
 
+[services][toggle-perf.desktop]
+_launch=Meta+F5
+
 [wacomtablet]
 Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen
 Map to screen 1=Meta+Ctrl+1,Meta+Ctrl+1,Map to screen 1
