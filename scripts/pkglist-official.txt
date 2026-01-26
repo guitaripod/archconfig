@@ -36,6 +36,7 @@ gptfdisk
 handbrake
 imagemagick
 intel-ucode
+iw
 jdk17-openjdk
 jq
 kde-gtk-config
@@ -124,6 +125,7 @@ vivaldi
 wacomtablet
 wine-staging
 winetricks
+wireless-regdb
 xclip
 xf86-video-vesa
 xorg-bdftopcf
