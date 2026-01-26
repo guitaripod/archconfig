@@ -77,8 +77,8 @@ link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/
 
 echo "[10/11] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
-cp "$SCRIPT_DIR/asus-profile-toggle.sh" "$HOME/.local/bin/asus-profile-toggle"
-chmod +x "$HOME/.local/bin/asus-profile-toggle"
+cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
+chmod +x "$HOME/.local/bin/toggle-perf"
 
 echo "[11/11] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
