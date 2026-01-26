@@ -75,9 +75,12 @@ echo "[9/11] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
 link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/autostart/xmousepasteblock.desktop"
 
-echo "[10/11] Linking custom desktop entries..."
+echo "[10/11] Linking custom desktop entries and scripts..."
 mkdir -p "$HOME/.local/share/applications"
+mkdir -p "$HOME/.local/bin"
 link_file "$DOTFILES/.local/share/applications/asus-profile-toggle.desktop" "$HOME/.local/share/applications/asus-profile-toggle.desktop"
+cp "$SCRIPT_DIR/asus-profile-toggle.sh" "$HOME/.local/bin/asus-profile-toggle"
+chmod +x "$HOME/.local/bin/asus-profile-toggle"
 
 echo "[11/11] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"

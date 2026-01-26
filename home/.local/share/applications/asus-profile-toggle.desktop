@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Toggle ASUS Profile
-Exec=asusctl profile next
+Exec=asus-profile-toggle
 Icon=preferences-system-power-management
