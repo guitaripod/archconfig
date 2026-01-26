@@ -3,4 +3,3 @@ Type=Application
 Name=Toggle ASUS Profile
 Exec=asusctl profile next
 Icon=preferences-system-power-management
-NoDisplay=true
