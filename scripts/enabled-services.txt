@@ -7,6 +7,8 @@ NetworkManager-dispatcher.service
 NetworkManager-wait-online.service
 NetworkManager.service
 nvidia-hibernate.service
+nvidia-persistenced.service
+nvidia-power-limit.service
 nvidia-resume.service
 nvidia-suspend-then-hibernate.service
 nvidia-suspend.service
