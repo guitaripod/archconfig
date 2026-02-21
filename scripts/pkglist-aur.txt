@@ -5,6 +5,7 @@ dualsensectl-git
 flyctl
 igscraper
 lazydocker-bin
+neural-amp-modeler-lv2
 obs-studio-git
 obs-vaapi
 obs-vkcapture

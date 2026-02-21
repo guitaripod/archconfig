@@ -1,5 +1,6 @@
 7zip
 ark
+aida-x
 audacity
 base
 base-devel
@@ -33,6 +34,8 @@ github-cli
 glow
 go
 gptfdisk
+guitarix
+gxplugins.lv2
 handbrake
 imagemagick
 intel-ucode
@@ -60,6 +63,7 @@ libva-utils
 linux
 linux-firmware
 linux-headers
+lsp-plugins
 lutris
 mangohud
 meson
@@ -80,6 +84,7 @@ openssh
 oxygen
 oxygen-sounds
 partitionmanager
+pipewire-jack
 plasma-browser-integration
 plasma-desktop
 plasma-disks
@@ -99,7 +104,9 @@ print-manager
 python-pip
 python-virtualenv
 qbittorrent
+qpwgraph
 qt5-wayland
+realtime-privileges
 rgbds
 rustup
 sddm
