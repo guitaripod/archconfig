@@ -1,4 +1,4 @@
 [General]
 IgnoreImages=false
-NoEmptyClipboard=false
+NoEmptyClipboard=true
 Version=6.2.5

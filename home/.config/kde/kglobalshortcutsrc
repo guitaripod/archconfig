@@ -6,7 +6,7 @@ switch-to-activity-a56d3f48-45bc-4f87-9a82-8ad2ca13567c=none,none,Switch to acti
 Switch keyboard layout to English (US)=none,none,Switch keyboard layout to English (US)
 Switch keyboard layout to Finnish=none,none,Switch keyboard layout to Finnish
 Switch to Last-Used Keyboard Layout=Meta+Alt+L,Meta+Alt+L,Switch to Last-Used Keyboard Layout
-Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=Ctrl+Space,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
 [Strawberry]
@@ -290,7 +290,7 @@ RectangularRegionScreenShot=Meta+Alt+C
 ToggleTouchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku
 
 [services][switch-keyboard.desktop]
-_launch=Ctrl+Space
+_launch=none
 
 [wacomtablet]
 Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen
