@@ -87,6 +87,8 @@ echo "[11/12] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
 cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
 chmod +x "$HOME/.local/bin/toggle-perf"
+cp "$SCRIPT_DIR/guitar.sh" "$HOME/.local/bin/guitar"
+chmod +x "$HOME/.local/bin/guitar"
 
 echo "[12/12] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
