@@ -44,8 +44,12 @@ mkdir -p "$HOME/.config/git"
 link_file "$DOTFILES/.config/git/ignore" "$HOME/.config/git/ignore"
 
 echo "[4/11] Linking terminal configs..."
-mkdir -p "$HOME/.config/ghostty"
-link_file "$DOTFILES/.config/ghostty/config" "$HOME/.config/ghostty/config"
+if [[ -d "$HOME/.config/ghostty/.git" ]]; then
+    git -C "$HOME/.config/ghostty" pull
+else
+    rm -rf "$HOME/.config/ghostty"
+    git clone git@github.com:guitaripod/ghostty-config.git "$HOME/.config/ghostty"
+fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
