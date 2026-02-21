@@ -53,9 +53,16 @@ git push
 - Git: config, global ignore
 - Terminal: ghostty, btop
 - Desktop: KDE Plasma theme, shortcuts
-- System: keyd (Ctrl+J/K as arrow keys)
+- System: keyd (Ctrl+J/K as arrow keys), cpupower (performance governor)
+- Audio: PipeWire low-latency config, Guitarix + Neural Amp Modeler
 - Packages: official and AUR package lists
 - Services: systemd enabled services list
+
+## Guitar
+
+Run `guitar` to launch Guitarix with automatic Scarlett Solo routing.
+
+NAM profiles and cabinet IRs go in `~/.local/share/guitar/`.
 
 ## Steam Launch Options
 

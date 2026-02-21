@@ -16,11 +16,16 @@ scripts/
   install.sh              # Run on fresh machine (packages, services, oh-my-bash)
   link.sh                 # Symlinks dotfiles to home directory
   update-from-system.sh   # Pull current system configs into repo
+  guitar.sh               # Launch Guitarix with Scarlett Solo routing
+  toggle-perf.sh          # Toggle performance mode
   pkglist-official.txt    # Arch official packages (pacman)
   pkglist-aur.txt         # AUR packages (yay)
   enabled-services.txt    # Systemd services to enable
 home/                     # Dotfiles (mirrors ~/)
 etc/                      # System configs (mirrors /etc/)
+  etc/keyd/               # Key remapping
+  etc/default/cpupower    # CPU governor (performance)
+  etc/systemd/system/     # Custom systemd services
 ```
 
 ## Workflow
