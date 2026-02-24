@@ -1,0 +1,14 @@
+[Unit]
+Description=ZeroClaw AI Assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/zeroclaw daemon
+Restart=on-failure
+RestartSec=10
+Environment=RUST_LOG=warn
+
+[Install]
+WantedBy=default.target
