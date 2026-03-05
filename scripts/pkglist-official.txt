@@ -126,6 +126,7 @@ udftools
 unarchiver
 unrar
 usbmuxd
+v4l-utils
 vi
 vim
 vivaldi
