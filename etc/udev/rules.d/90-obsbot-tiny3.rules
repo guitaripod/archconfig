@@ -1,1 +1,0 @@
-ACTION=="add", SUBSYSTEM=="video4linux", ATTRS{idVendor}=="3564", ATTRS{idProduct}=="ff02", RUN+="/usr/local/bin/obsbot-fix-whitebalance.sh"

@@ -39,11 +39,6 @@ sudo cp "$DOTFILES_DIR/etc/keyd/default.conf" /etc/keyd/
 sudo cp "$DOTFILES_DIR/etc/systemd/system/nvidia-power-limit.service" /etc/systemd/system/
 sudo mkdir -p /etc/default
 sudo cp "$DOTFILES_DIR/etc/default/cpupower" /etc/default/
-sudo mkdir -p /etc/udev/rules.d
-sudo cp "$DOTFILES_DIR/etc/udev/rules.d/90-obsbot-tiny3.rules" /etc/udev/rules.d/
-sudo cp "$DOTFILES_DIR/scripts/obsbot-fix-whitebalance.sh" /usr/local/bin/obsbot-fix-whitebalance.sh
-sudo chmod +x /usr/local/bin/obsbot-fix-whitebalance.sh
-sudo udevadm control --reload-rules
 
 echo "[6/6] Enabling services..."
 while IFS= read -r service; do

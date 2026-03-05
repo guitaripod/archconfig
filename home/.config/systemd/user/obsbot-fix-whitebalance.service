@@ -1,0 +1,11 @@
+[Unit]
+Description=OBSBOT Tiny 3 white balance fix
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/obsbot-fix-whitebalance
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

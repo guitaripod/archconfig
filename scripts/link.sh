@@ -83,14 +83,22 @@ echo "[10/12] Linking PipeWire configs..."
 mkdir -p "$HOME/.config/pipewire/pipewire.conf.d"
 link_file "$DOTFILES/.config/pipewire/pipewire.conf.d/10-low-latency.conf" "$HOME/.config/pipewire/pipewire.conf.d/10-low-latency.conf"
 
-echo "[11/12] Installing custom scripts..."
+echo "[11/13] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
 cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
 chmod +x "$HOME/.local/bin/toggle-perf"
 cp "$SCRIPT_DIR/guitar.sh" "$HOME/.local/bin/guitar"
 chmod +x "$HOME/.local/bin/guitar"
+cp "$SCRIPT_DIR/obsbot-fix-whitebalance.sh" "$HOME/.local/bin/obsbot-fix-whitebalance"
+chmod +x "$HOME/.local/bin/obsbot-fix-whitebalance"
 
-echo "[12/12] Copying emulator configs (no symlinks - emulators overwrite them)..."
+echo "[12/13] Installing user services..."
+mkdir -p "$HOME/.config/systemd/user"
+cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
+systemctl --user daemon-reload
+systemctl --user enable obsbot-fix-whitebalance.service
+
+echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
 cp "$DOTFILES/.config/rpcs3/config.yml" "$HOME/.config/rpcs3/"
 cp "$DOTFILES/.config/rpcs3/evdev_positive_axis.yml" "$HOME/.config/rpcs3/"
