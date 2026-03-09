@@ -1,6 +1,7 @@
 [Added Associations]
 application/json=vivaldi-stable.desktop;
 application/pdf=vivaldi-stable.desktop;
+application/x-bittorrent=qbittorrent-nox.desktop;
 application/yaml=dev.zed.Zed-Git.desktop;
 audio/aac=vlc.desktop;
 audio/mp4=vlc.desktop;
@@ -35,6 +36,7 @@ x-scheme-handler/tonsite=org.telegram.desktop.desktop;
 [Default Applications]
 application/json=vivaldi-stable.desktop;
 application/pdf=vivaldi-stable.desktop;
+application/x-bittorrent=qbittorrent-nox.desktop;
 application/yaml=dev.zed.Zed-Git.desktop;
 audio/aac=vlc.desktop;
 audio/mp4=vlc.desktop;
