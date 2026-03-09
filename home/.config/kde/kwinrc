@@ -12,8 +12,7 @@ Rows=1
 BorderActivate=9
 
 [NightColor]
-Active=true
-NightTemperature=4800
+Active=false
 
 [Tiling]
 padding=4

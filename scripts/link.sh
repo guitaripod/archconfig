@@ -22,13 +22,13 @@ link_file() {
     echo "  Linked: $dst"
 }
 
-echo "[1/12] Linking shell configs..."
+echo "[1/13] Linking shell configs..."
 link_file "$DOTFILES/.bashrc" "$HOME/.bashrc"
 link_file "$DOTFILES/.bash_profile" "$HOME/.bash_profile"
 link_file "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 link_file "$DOTFILES/.bash_logout" "$HOME/.bash_logout"
 
-echo "[2/12] Linking editor configs..."
+echo "[2/13] Linking editor configs..."
 link_file "$DOTFILES/.vimrc" "$HOME/.vimrc"
 mkdir -p "$HOME/.config/nvim"
 ln -sf "$DOTFILES/.config/nvim/init.lua" "$HOME/.config/nvim/"
@@ -38,12 +38,12 @@ cp -r "$DOTFILES/.config/nvim/lua" "$HOME/.config/nvim/"
 mkdir -p "$HOME/.config/zed"
 link_file "$DOTFILES/.config/zed/settings.json" "$HOME/.config/zed/settings.json"
 
-echo "[3/12] Linking git configs..."
+echo "[3/13] Linking git configs..."
 link_file "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
 mkdir -p "$HOME/.config/git"
 link_file "$DOTFILES/.config/git/ignore" "$HOME/.config/git/ignore"
 
-echo "[4/12] Linking terminal configs..."
+echo "[4/13] Linking terminal configs..."
 if [[ -d "$HOME/.config/ghostty/.git" ]]; then
     git -C "$HOME/.config/ghostty" pull
 else
@@ -53,12 +53,12 @@ fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
-echo "[5/12] Linking Claude Code configs..."
+echo "[5/13] Linking Claude Code configs..."
 mkdir -p "$HOME/.claude"
 link_file "$DOTFILES/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 link_file "$DOTFILES/.claude/settings.json" "$HOME/.claude/settings.json"
 
-echo "[6/12] Copying KDE configs (no symlinks - KDE overwrites them)..."
+echo "[6/13] Copying KDE configs (no symlinks - KDE overwrites them)..."
 cp "$DOTFILES/.config/kde/kdeglobals" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/kwinrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/kglobalshortcutsrc" "$HOME/.config/"
@@ -67,19 +67,19 @@ cp "$DOTFILES/.config/kde/khotkeysrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/klipperrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kcminputrc" "$HOME/.config/"
 
-echo "[7/12] Linking SSH config..."
+echo "[7/13] Linking SSH config..."
 mkdir -p "$HOME/.ssh"
 link_file "$DOTFILES/.ssh/config" "$HOME/.ssh/config"
 
-echo "[8/12] Linking XDG configs..."
+echo "[8/13] Linking XDG configs..."
 link_file "$DOTFILES/.config/mimeapps.list" "$HOME/.config/mimeapps.list"
 link_file "$DOTFILES/.config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
 
-echo "[9/12] Linking autostart entries..."
+echo "[9/13] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
 link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/autostart/xmousepasteblock.desktop"
 
-echo "[10/12] Linking PipeWire configs..."
+echo "[10/13] Linking PipeWire configs..."
 mkdir -p "$HOME/.config/pipewire/pipewire.conf.d"
 link_file "$DOTFILES/.config/pipewire/pipewire.conf.d/10-low-latency.conf" "$HOME/.config/pipewire/pipewire.conf.d/10-low-latency.conf"
 
@@ -97,6 +97,7 @@ mkdir -p "$HOME/.config/systemd/user"
 cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 systemctl --user enable obsbot-fix-whitebalance.service
+systemctl --user enable circadia.service
 
 echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
