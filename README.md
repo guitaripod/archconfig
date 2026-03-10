@@ -66,7 +66,7 @@ NAM profiles and cabinet IRs go in `~/.local/share/guitar/`.
 
 ## Steam Launch Options
 
-MangoHud with OBS game capture:
+Latest Nvidia DLSS, MangoHud, and OBS game capture:
 ```
-MANGOHUD=1 MANGOHUD_CONFIG=full,toggle_hud=Control_L+Right mangohud obs-gamecapture %command%
+PROTON_DLSS_UPGRADE=1 MANGOHUD=1 MANGOHUD_CONFIG=full,toggle_hud=Control_L+Right mangohud obs-gamecapture %command%
 ```
