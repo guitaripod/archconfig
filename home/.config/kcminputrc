@@ -2,11 +2,27 @@
 RepeatDelay=200
 RepeatRate=70
 
+[Libinput][1133][16531][Logitech PRO X]
+NaturalScroll=true
+
 [Libinput][1133][50503][Logitech USB Receiver]
 NaturalScroll=true
 ScrollFactor=1.5
+
+[Libinput][12951][6505][ZSA Technology Labs Moonlander Mark I]
+NaturalScroll=false
+
+[Libinput][48879][57005][Mouse passthrough]
+NaturalScroll=true
+
+[Libinput][48879][57005][Mouse passthrough (absolute)]
+NaturalScroll=true
+
+[Libinput][4012][6878][keyd virtual pointer]
+NaturalScroll=true
 
 [Mouse]
 X11LibInputXAccelProfileFlat=true
 XLbInptNaturalScroll=true
 XLbInptPointerAcceleration=1
+cursorSize=42
