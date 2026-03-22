@@ -50,6 +50,10 @@ else
     rm -rf "$HOME/.config/ghostty"
     git clone git@github.com:guitaripod/ghostty-config.git "$HOME/.config/ghostty"
 fi
+MACHINE_CONFIG="$HOME/.config/ghostty/machines/$(cat /etc/hostname)"
+if [[ -f "$MACHINE_CONFIG" ]]; then
+    ln -sf "machines/$(cat /etc/hostname)" "$HOME/.config/ghostty/local"
+fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
