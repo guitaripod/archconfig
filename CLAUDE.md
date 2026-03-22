@@ -42,6 +42,18 @@ etc/                      # System configs (mirrors /etc/)
 3. Remove from link.sh
 4. Commit and push to master
 
+## External Config Repos
+
+- `~/.config/ghostty` → `guitaripod/ghostty-config` (cloned by link.sh, not symlinked from this repo)
+  - Per-machine overrides in `machines/<hostname>`, symlinked to `local` by link.sh
+
+## Machines
+
+- **arch** — main desktop, native Arch, uses install.sh + link.sh directly
+- **steamdeck** — SteamOS (immutable root), packages go through Distrobox (`distrobox enter arch`), export apps/bins to host
+- **macbook** — macOS
+- **g14** — Arch laptop
+
 ## Rules
 
 - Branch: master only
