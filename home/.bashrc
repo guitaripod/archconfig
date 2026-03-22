@@ -20,7 +20,7 @@ fi
 ssh-add ~/.ssh/id_ed25519 2>/dev/null
 
 # Path to your oh-my-bash installation.
-export OSH='/home/marcus/.oh-my-bash'
+export OSH="$HOME/.oh-my-bash"
 
 # Add ~/.local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
