@@ -24,7 +24,7 @@ scripts/
 home/                     # Dotfiles (mirrors ~/)
 etc/                      # System configs (mirrors /etc/)
   etc/keyd/               # Key remapping
-  etc/default/cpupower    # CPU governor (performance)
+  etc/default/cpupower-service.conf  # CPU governor (performance)
   etc/systemd/system/     # Custom systemd services
 ```
 
