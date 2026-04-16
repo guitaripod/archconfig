@@ -79,3 +79,4 @@ x-scheme-handler/itunes=Cider.desktop
 x-scheme-handler/music=Cider.desktop
 x-scheme-handler/nxm=com.nexusmods.app.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
