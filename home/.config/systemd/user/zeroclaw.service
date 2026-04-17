@@ -8,8 +8,9 @@ Type=simple
 ExecStart=%h/.local/bin/zeroclaw daemon
 Restart=on-failure
 RestartSec=10
-Environment=RUST_LOG=warn
+Environment=RUST_LOG=info
 Environment=PATH=%h/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin
+EnvironmentFile=-%h/.zeroclaw/secrets.env
 
 [Install]
 WantedBy=default.target
