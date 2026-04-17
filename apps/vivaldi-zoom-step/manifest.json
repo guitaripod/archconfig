@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Zoom In +60%",
+  "version": "1.1.0",
+  "description": "Catches Ctrl++ / Ctrl+= on web pages and zooms the active tab by +60% (clamped to Chromium's 500% max). Ctrl+- and Ctrl+0 are left untouched.",
+  "permissions": ["tabs"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ]
+}
