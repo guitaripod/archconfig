@@ -57,10 +57,13 @@ fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
-echo "[5/13] Linking Claude Code configs..."
-mkdir -p "$HOME/.claude"
-link_file "$DOTFILES/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-link_file "$DOTFILES/.claude/settings.json" "$HOME/.claude/settings.json"
+echo "[5/13] Setting up Claude Code config (claudeconfig)..."
+if [[ -d "$HOME/claudeconfig/.git" ]]; then
+    git -C "$HOME/claudeconfig" pull
+else
+    git clone git@github.com:guitaripod/claudeconfig.git "$HOME/claudeconfig"
+fi
+"$HOME/claudeconfig/scripts/link.sh"
 
 echo "[6/13] Copying KDE configs (no symlinks - KDE overwrites them)..."
 cp "$DOTFILES/.config/kde/kdeglobals" "$HOME/.config/"
