@@ -56,11 +56,12 @@ lspconfig.pyright.setup({
   },
 })
 
--- Swift (using system installed sourcekit-lsp)
-lspconfig.sourcekit.setup({
-  on_attach = config.on_attach,
-  capabilities = config.capabilities,
-})
+if vim.fn.has("mac") == 1 then
+  lspconfig.sourcekit.setup({
+    on_attach = config.on_attach,
+    capabilities = config.capabilities,
+  })
+end
 
 -- Rust
 lspconfig.rust_analyzer.setup({

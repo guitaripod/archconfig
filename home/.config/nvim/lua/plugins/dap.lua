@@ -1,6 +1,9 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    cond = function()
+      return vim.fn.has("mac") == 1
+    end,
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
@@ -11,7 +14,6 @@ return {
 
       dapui.setup()
 
-      -- Swift/iOS debugging configuration
       dap.adapters.codelldb = {
         type = "server",
         port = "${port}",

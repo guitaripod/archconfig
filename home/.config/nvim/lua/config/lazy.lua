@@ -21,13 +21,13 @@ require("lazy").setup({
   },
   install = { colorscheme = { "solarized" } },
   checker = { enabled = false },
+  rocks = { hererocks = false, enabled = false },
   performance = {
     rtp = {
       disabled_plugins = {
         "gzip",
         "matchit",
         "matchparen",
-        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
