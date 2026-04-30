@@ -67,7 +67,7 @@ alias c='clear'
 alias sb='swift build'
 alias st='swift test'
 
-alias tsget='sudo tailscale file get ~/Downloads/'
+alias tsget='tailscale file get --conflict=rename ~/Downloads/'
 alias tsend='function _tsend() {
     local source="$1"
     sudo tailscale file cp "$source" galaxy-s22-ultra: &&

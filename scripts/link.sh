@@ -102,9 +102,11 @@ chmod +x "$HOME/.local/bin/obsbot-fix-whitebalance"
 echo "[12/13] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"
 cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
+cp "$DOTFILES/.config/systemd/user/taildrop.service" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 systemctl --user enable obsbot-fix-whitebalance.service
 systemctl --user enable circadia.service
+systemctl --user enable taildrop.service
 
 echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
