@@ -54,6 +54,7 @@ kscreen
 ksshaskpass
 kwallet-pam
 kwrited
+lazygit
 lib32-gamemode
 lib32-mangohud
 lib32-mesa
