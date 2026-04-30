@@ -99,6 +99,12 @@ cp "$SCRIPT_DIR/guitar.sh" "$HOME/.local/bin/guitar"
 chmod +x "$HOME/.local/bin/guitar"
 cp "$SCRIPT_DIR/obsbot-fix-whitebalance.sh" "$HOME/.local/bin/obsbot-fix-whitebalance"
 chmod +x "$HOME/.local/bin/obsbot-fix-whitebalance"
+cp "$SCRIPT_DIR/tailsend.sh" "$HOME/.local/bin/tailsend"
+chmod +x "$HOME/.local/bin/tailsend"
+
+mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
+cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
+cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.local/share/applications/"
 
 echo "[12/13] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"

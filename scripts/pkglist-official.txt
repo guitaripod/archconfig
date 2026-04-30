@@ -45,6 +45,7 @@ jq
 kde-gtk-config
 kdenlive
 kdeplasma-addons
+kdialog
 kdiskmark
 keyd
 kgamma
@@ -59,6 +60,7 @@ lib32-gamemode
 lib32-mangohud
 lib32-mesa
 lib32-nvidia-utils
+libnotify
 libva-nvidia-driver
 libva-utils
 linux
@@ -135,6 +137,7 @@ wacomtablet
 wine-staging
 winetricks
 wireless-regdb
+wl-clipboard
 xclip
 xf86-video-vesa
 xorg-bdftopcf

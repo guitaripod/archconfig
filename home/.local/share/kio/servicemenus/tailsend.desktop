@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Service
+Name=Send via Tailscale
+MimeType=all/all;
+Actions=tailsend;
+X-KDE-Priority=TopLevel
+Icon=document-send
+
+[Desktop Action tailsend]
+Name=Send via Tailscale
+Icon=document-send
+Exec=/home/marcus/.local/bin/tailsend %F
