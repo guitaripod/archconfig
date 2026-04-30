@@ -30,11 +30,12 @@ link_file "$DOTFILES/.bash_logout" "$HOME/.bash_logout"
 
 echo "[2/13] Linking editor configs..."
 link_file "$DOTFILES/.vimrc" "$HOME/.vimrc"
-mkdir -p "$HOME/.config/nvim"
-ln -sf "$DOTFILES/.config/nvim/init.lua" "$HOME/.config/nvim/"
-ln -sf "$DOTFILES/.config/nvim/lazy-lock.json" "$HOME/.config/nvim/"
-rm -rf "$HOME/.config/nvim/lua"
-cp -r "$DOTFILES/.config/nvim/lua" "$HOME/.config/nvim/"
+if [[ -d "$HOME/.config/nvim/.git" ]]; then
+    git -C "$HOME/.config/nvim" pull
+else
+    rm -rf "$HOME/.config/nvim"
+    git clone git@github.com:guitaripod/rawdog.ml.nvim.git "$HOME/.config/nvim"
+fi
 mkdir -p "$HOME/.config/zed"
 link_file "$DOTFILES/.config/zed/settings.json" "$HOME/.config/zed/settings.json"
 
