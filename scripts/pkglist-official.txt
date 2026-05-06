@@ -106,7 +106,7 @@ podman-compose
 print-manager
 python-pip
 python-virtualenv
-qbittorrent
+qbittorrent-nox
 qpwgraph
 qt5-wayland
 realtime-privileges

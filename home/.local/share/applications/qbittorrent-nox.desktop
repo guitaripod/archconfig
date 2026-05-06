@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=qBittorrent-nox
+Exec=/home/marcus/.local/bin/qbt-add %U
+MimeType=application/x-bittorrent;x-scheme-handler/magnet;
+NoDisplay=true
+Terminal=false

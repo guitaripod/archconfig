@@ -101,20 +101,25 @@ cp "$SCRIPT_DIR/obsbot-fix-whitebalance.sh" "$HOME/.local/bin/obsbot-fix-whiteba
 chmod +x "$HOME/.local/bin/obsbot-fix-whitebalance"
 cp "$SCRIPT_DIR/tailsend.sh" "$HOME/.local/bin/tailsend"
 chmod +x "$HOME/.local/bin/tailsend"
+cp "$SCRIPT_DIR/qbt-add.sh" "$HOME/.local/bin/qbt-add"
+chmod +x "$HOME/.local/bin/qbt-add"
 
 mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
 cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
 chmod +x "$HOME/.local/share/kio/servicemenus/tailsend.desktop"
 cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.local/share/applications/"
+cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
 
 echo "[12/13] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"
 cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/taildrop.service" "$HOME/.config/systemd/user/"
+cp "$DOTFILES/.config/systemd/user/qbittorrent-nox.service" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 systemctl --user enable obsbot-fix-whitebalance.service
 systemctl --user enable circadia.service
 systemctl --user enable taildrop.service
+systemctl --user enable qbittorrent-nox.service
 
 echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
