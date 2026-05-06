@@ -103,6 +103,8 @@ cp "$SCRIPT_DIR/tailsend.sh" "$HOME/.local/bin/tailsend"
 chmod +x "$HOME/.local/bin/tailsend"
 cp "$SCRIPT_DIR/qbt-add.sh" "$HOME/.local/bin/qbt-add"
 chmod +x "$HOME/.local/bin/qbt-add"
+cp "$SCRIPT_DIR/ufc-rss-fetch.sh" "$HOME/.local/bin/ufc-rss-fetch"
+chmod +x "$HOME/.local/bin/ufc-rss-fetch"
 
 mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
 cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
@@ -115,11 +117,14 @@ mkdir -p "$HOME/.config/systemd/user"
 cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/taildrop.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/qbittorrent-nox.service" "$HOME/.config/systemd/user/"
+cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.service" "$HOME/.config/systemd/user/"
+cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.timer" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 systemctl --user enable obsbot-fix-whitebalance.service
 systemctl --user enable circadia.service
 systemctl --user enable taildrop.service
 systemctl --user enable qbittorrent-nox.service
+systemctl --user enable ufc-rss-fetch.timer
 
 echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"

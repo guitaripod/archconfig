@@ -1,0 +1,8 @@
+[Unit]
+Description=Fetch new UFC torrents from TorrentDay RSS
+
+[Service]
+Type=oneshot
+TimeoutStartSec=15h
+EnvironmentFile=%h/.config/ufc-rss-fetch/secrets.env
+ExecStart=%h/.local/bin/ufc-rss-fetch --retry-until 22:00 --retry-interval 1200
