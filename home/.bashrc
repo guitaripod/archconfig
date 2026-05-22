@@ -56,7 +56,7 @@ alias nl='npm run lint -- --fix'
 alias ghd='gh dash'
 
 alias ytd='yt-dlp --cookies-from-browser vivaldi -P /mnt/stuff2/Clips -f "bv*[ext=mp4][height<=1080]+ba[ext=m4a]/b[ext=mp4]/best" --merge-output-format mp4'
-alias ytdmax='yt-dlp --cookies-from-browser vivaldi -P /mnt/stuff2/Clips -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4'
+alias ytdmax='yt-dlp --cookies-from-browser vivaldi -P /mnt/stuff2/Clips -f "bv*+ba/b" --merge-output-format mkv --exec "after_move:clip-to-twitter %(filepath)q"'
 alias yta='yt-dlp --cookies-from-browser vivaldi -P ~/Music -f "ba[ext=m4a]/ba/b" --extract-audio --audio-format mp3 --audio-quality 0'
 
 alias ac='aicommits'

@@ -108,6 +108,8 @@ cp "$SCRIPT_DIR/qbt-add.sh" "$HOME/.local/bin/qbt-add"
 chmod +x "$HOME/.local/bin/qbt-add"
 cp "$SCRIPT_DIR/ufc-rss-fetch.sh" "$HOME/.local/bin/ufc-rss-fetch"
 chmod +x "$HOME/.local/bin/ufc-rss-fetch"
+cp "$SCRIPT_DIR/clip-to-twitter.sh" "$HOME/.local/bin/clip-to-twitter"
+chmod +x "$HOME/.local/bin/clip-to-twitter"
 
 mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
 cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
