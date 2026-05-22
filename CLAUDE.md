@@ -53,6 +53,7 @@ etc/                      # System configs (mirrors /etc/)
 - **steamdeck** — SteamOS (immutable root), packages go through Distrobox (`distrobox enter arch`), export apps/bins to host
 - **macbook** — macOS
 - **g14** — Arch laptop
+- **x1carbon** — ThinkPad X1 Carbon 7th gen (Intel-only); skip nvidia/lib32/gaming packages from pkglists when installing
 
 ## Rules
 
