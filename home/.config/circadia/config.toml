@@ -1,0 +1,27 @@
+[location]
+latitude = 60.16952
+longitude = 24.93545
+elevation_meters = 0.0
+
+[[profile.waypoints]]
+elevation = -18.0
+temperature = 1900
+
+[[profile.waypoints]]
+elevation = -12.0
+temperature = 2700
+
+[[profile.waypoints]]
+elevation = -6.0
+temperature = 3400
+
+[[profile.waypoints]]
+elevation = 0.0
+temperature = 4500
+
+[[profile.waypoints]]
+elevation = 6.0
+temperature = 6500
+
+[daemon]
+update_interval_secs = 10

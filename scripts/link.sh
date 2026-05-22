@@ -91,6 +91,9 @@ echo "[10/13] Linking PipeWire configs..."
 mkdir -p "$HOME/.config/pipewire/pipewire.conf.d"
 link_file "$DOTFILES/.config/pipewire/pipewire.conf.d/10-low-latency.conf" "$HOME/.config/pipewire/pipewire.conf.d/10-low-latency.conf"
 
+mkdir -p "$HOME/.config/circadia"
+link_file "$DOTFILES/.config/circadia/config.toml" "$HOME/.config/circadia/config.toml"
+
 echo "[11/13] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
 cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
