@@ -34,6 +34,13 @@ echo "[5/6] Updating package lists..."
 pacman -Qqen > "$SCRIPT_DIR/pkglist-official.txt"
 pacman -Qqem > "$SCRIPT_DIR/pkglist-aur.txt"
 
+if [[ "$(cat /etc/hostname)" == "x1carbon" ]]; then
+    echo "[5b/6] Updating x1carbon fingerprint PAM configs..."
+    for f in sudo su su-l polkit-1 system-local-login sddm kde; do
+        cp "/etc/pam.d/$f" "$DOTFILES_DIR/etc/x1carbon/pam.d/$f"
+    done
+fi
+
 echo "[6/6] Updating circadia + ThemeSwitch + emulator configs..."
 cp ~/.config/circadia/config.toml "$DOTFILES/.config/circadia/"
 cp ~/.config/ThemeSwitch/settings.json "$DOTFILES/.config/ThemeSwitch/"

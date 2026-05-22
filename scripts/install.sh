@@ -40,6 +40,11 @@ sudo cp "$DOTFILES_DIR/etc/systemd/system/nvidia-power-limit.service" /etc/syste
 sudo mkdir -p /etc/default
 sudo cp "$DOTFILES_DIR/etc/default/cpupower-service.conf" /etc/default/
 
+if [[ "$(cat /etc/hostname)" == "x1carbon" ]]; then
+    echo "  Installing x1carbon fingerprint PAM configs..."
+    sudo install -m 644 "$DOTFILES_DIR/etc/x1carbon/pam.d/"* /etc/pam.d/
+fi
+
 echo "[6/7] Enabling services..."
 while IFS= read -r service; do
     if [[ -n "$service" && ! "$service" =~ ^# ]]; then

@@ -24,6 +24,7 @@ exfatprogs
 fastfetch
 fd
 flatpak-kcm
+fprintd
 gamemode
 gamescope
 ghostty

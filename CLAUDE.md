@@ -53,7 +53,7 @@ etc/                      # System configs (mirrors /etc/)
 - **steamdeck** — SteamOS (immutable root), packages go through Distrobox (`distrobox enter arch`), export apps/bins to host
 - **macbook** — macOS
 - **g14** — Arch laptop
-- **x1carbon** — ThinkPad X1 Carbon 7th gen (Intel-only); skip nvidia/lib32/gaming packages from pkglists when installing
+- **x1carbon** — ThinkPad X1 Carbon 7th gen (Intel-only); skip nvidia/lib32/gaming packages from pkglists when installing. Only machine with a fingerprint reader (Synaptics 06cb:00bd) — `etc/x1carbon/pam.d/` is installed only on this host. After enrolling with `fprintd-enroll`, the PAM files give fingerprint auth (with password fallback) for sudo, su, polkit, system-local-login, SDDM, and kscreenlocker.
 
 ## Rules
 
