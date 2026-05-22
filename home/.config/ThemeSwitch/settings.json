@@ -1,0 +1,11 @@
+{
+    "changeIconWithTheme": true,
+    "hotkey": {
+        "key": "D",
+        "useAlt": false,
+        "useCtrl": false,
+        "useShift": true,
+        "useSuper": true
+    },
+    "startWithSystem": true
+}

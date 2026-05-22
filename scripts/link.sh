@@ -94,6 +94,9 @@ link_file "$DOTFILES/.config/pipewire/pipewire.conf.d/10-low-latency.conf" "$HOM
 mkdir -p "$HOME/.config/circadia"
 link_file "$DOTFILES/.config/circadia/config.toml" "$HOME/.config/circadia/config.toml"
 
+mkdir -p "$HOME/.config/ThemeSwitch"
+link_file "$DOTFILES/.config/ThemeSwitch/settings.json" "$HOME/.config/ThemeSwitch/settings.json"
+
 echo "[11/13] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
 cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
@@ -124,12 +127,14 @@ cp "$DOTFILES/.config/systemd/user/taildrop.service" "$HOME/.config/systemd/user
 cp "$DOTFILES/.config/systemd/user/qbittorrent-nox.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.timer" "$HOME/.config/systemd/user/"
+cp "$DOTFILES/.config/systemd/user/themeswitch.service" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 systemctl --user enable obsbot-fix-whitebalance.service
 systemctl --user enable circadia.service
 systemctl --user enable taildrop.service
 systemctl --user enable qbittorrent-nox.service
 systemctl --user enable ufc-rss-fetch.timer
+systemctl --user enable themeswitch.service
 
 echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"

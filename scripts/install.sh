@@ -40,13 +40,25 @@ sudo cp "$DOTFILES_DIR/etc/systemd/system/nvidia-power-limit.service" /etc/syste
 sudo mkdir -p /etc/default
 sudo cp "$DOTFILES_DIR/etc/default/cpupower-service.conf" /etc/default/
 
-echo "[6/6] Enabling services..."
+echo "[6/7] Enabling services..."
 while IFS= read -r service; do
     if [[ -n "$service" && ! "$service" =~ ^# ]]; then
         echo "  Enabling: $service"
         sudo systemctl enable "$service" 2>/dev/null || echo "    (skipped or already enabled)"
     fi
 done < "$SCRIPT_DIR/enabled-services.txt"
+
+echo "[7/7] Building ThemeSwitch (Qt6 + KF6 GlobalAccel)..."
+mkdir -p "$HOME/Dev/cpp"
+if [[ -d "$HOME/Dev/cpp/ThemeSwitch/.git" ]]; then
+    git -C "$HOME/Dev/cpp/ThemeSwitch" pull
+else
+    git clone git@github.com:guitaripod/ThemeSwitch.git "$HOME/Dev/cpp/ThemeSwitch"
+fi
+cmake -S "$HOME/Dev/cpp/ThemeSwitch" -B "$HOME/Dev/cpp/ThemeSwitch/build"
+cmake --build "$HOME/Dev/cpp/ThemeSwitch/build"
+mkdir -p "$HOME/.local/bin"
+ln -sf "$HOME/Dev/cpp/ThemeSwitch/build/ThemeSwitch" "$HOME/.local/bin/themeswitch"
 
 echo ""
 echo "=== Installation complete ==="
