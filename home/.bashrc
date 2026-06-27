@@ -66,6 +66,7 @@ alias vi='nvim'
 alias c='clear'
 alias sb='swift build'
 alias st='swift test'
+alias t='tmux new -A -s main'
 
 alias tsget='tailscale file get --conflict=rename ~/Downloads/'
 alias tsend='function _tsend() {
