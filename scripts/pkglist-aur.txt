@@ -2,6 +2,7 @@
 android-studio
 cemu-bin
 dualsensectl-git
+emojipick
 flyctl
 igscraper
 lazydocker-bin

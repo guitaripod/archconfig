@@ -43,6 +43,7 @@ fi
 
 echo "[6/6] Updating circadia + ThemeSwitch + emulator configs..."
 cp ~/.config/circadia/config.toml "$DOTFILES/.config/circadia/"
+cp ~/.config/emojipick/config.toml "$DOTFILES/.config/emojipick/"
 cp ~/.config/ThemeSwitch/settings.json "$DOTFILES/.config/ThemeSwitch/"
 cp ~/.config/systemd/user/themeswitch.service "$DOTFILES/.config/systemd/user/"
 cp ~/.config/rpcs3/config.yml "$DOTFILES/.config/rpcs3/"
