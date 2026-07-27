@@ -3,8 +3,9 @@ set -e
 
 SCARLETT_IN="alsa_input.usb-Focusrite_Scarlett_Solo_4th_Gen_S1JEUQQ3507881-00.pro-input-0"
 SCARLETT_OUT="alsa_output.usb-Focusrite_Scarlett_Solo_4th_Gen_S1JEUQQ3507881-00.pro-output-0"
+GUITAR_LATENCY="128/48000"
 
-guitarix &
+PIPEWIRE_LATENCY="$GUITAR_LATENCY" guitarix &
 GX_PID=$!
 
 echo "Waiting for Guitarix JACK ports..."
