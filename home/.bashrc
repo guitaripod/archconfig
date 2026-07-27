@@ -55,8 +55,8 @@ alias nb='npm run build'
 alias nl='npm run lint -- --fix'
 alias ghd='gh dash'
 
-alias ytd='yt-dlp --cookies-from-browser vivaldi -P /mnt/stuff2/Clips -f "bv*[ext=mp4][height<=1080]+ba[ext=m4a]/b[ext=mp4]/best" --merge-output-format mp4'
-alias ytdmax='yt-dlp --cookies-from-browser vivaldi -P /mnt/stuff2/Clips -f "bv*+ba/b" --merge-output-format mkv --exec "after_move:clip-to-twitter %(filepath)q"'
+alias ytd='yt-dlp --cookies-from-browser vivaldi -P /mnt/backup/Clips -f "bv*[ext=mp4][height<=1080]+ba[ext=m4a]/b[ext=mp4]/best" --merge-output-format mp4'
+alias ytdmax='yt-dlp --cookies-from-browser vivaldi -P /mnt/backup/Clips -f "bv*+ba/b" --merge-output-format mkv --exec "after_move:clip-to-twitter %(filepath)q"'
 alias yta='yt-dlp --cookies-from-browser vivaldi -P ~/Music -f "ba[ext=m4a]/ba/b" --extract-audio --audio-format mp3 --audio-quality 0'
 
 alias ac='aicommits'
@@ -122,3 +122,10 @@ alias comfy-off="docker stop comfyui"
 alias comfy-on="docker start comfyui"
 
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+rtmux() { ssh -t "marcus@${1:?usage: rtmux <host> [session]}" "tmux new -A -s ${2:-main}"; }
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+[[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
+# <<< grok installer <<<
