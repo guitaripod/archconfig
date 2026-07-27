@@ -22,13 +22,17 @@ link_file() {
     echo "  Linked: $dst"
 }
 
-echo "[1/13] Linking shell configs..."
+has_nvidia_gpu() {
+    [[ -e /proc/driver/nvidia/version ]]
+}
+
+echo "[1/14] Linking shell configs..."
 link_file "$DOTFILES/.bashrc" "$HOME/.bashrc"
 link_file "$DOTFILES/.bash_profile" "$HOME/.bash_profile"
 link_file "$DOTFILES/.bash_aliases" "$HOME/.bash_aliases"
 link_file "$DOTFILES/.bash_logout" "$HOME/.bash_logout"
 
-echo "[2/13] Linking editor configs..."
+echo "[2/14] Linking editor configs..."
 link_file "$DOTFILES/.vimrc" "$HOME/.vimrc"
 if [[ -d "$HOME/.config/nvim/.git" ]]; then
     git -C "$HOME/.config/nvim" pull
@@ -39,12 +43,12 @@ fi
 mkdir -p "$HOME/.config/zed"
 link_file "$DOTFILES/.config/zed/settings.json" "$HOME/.config/zed/settings.json"
 
-echo "[3/13] Linking git configs..."
+echo "[3/14] Linking git configs..."
 link_file "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
 mkdir -p "$HOME/.config/git"
 link_file "$DOTFILES/.config/git/ignore" "$HOME/.config/git/ignore"
 
-echo "[4/13] Linking terminal configs..."
+echo "[4/14] Linking terminal configs..."
 if [[ -d "$HOME/.config/ghostty/.git" ]]; then
     git -C "$HOME/.config/ghostty" pull
 else
@@ -58,7 +62,7 @@ fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
-echo "[5/13] Setting up Claude Code config (claudeconfig)..."
+echo "[5/14] Setting up Claude Code config (claudeconfig)..."
 if [[ -d "$HOME/claudeconfig/.git" ]]; then
     git -C "$HOME/claudeconfig" pull
 else
@@ -66,7 +70,7 @@ else
 fi
 "$HOME/claudeconfig/scripts/link.sh"
 
-echo "[6/13] Copying KDE configs (no symlinks - KDE overwrites them)..."
+echo "[6/14] Copying KDE configs (no symlinks - KDE overwrites them)..."
 cp "$DOTFILES/.config/kde/kdeglobals" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/kwinrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/kglobalshortcutsrc" "$HOME/.config/"
@@ -75,19 +79,19 @@ cp "$DOTFILES/.config/kde/khotkeysrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kde/klipperrc" "$HOME/.config/"
 cp "$DOTFILES/.config/kcminputrc" "$HOME/.config/"
 
-echo "[7/13] Linking SSH config..."
+echo "[7/14] Linking SSH config..."
 mkdir -p "$HOME/.ssh"
 link_file "$DOTFILES/.ssh/config" "$HOME/.ssh/config"
 
-echo "[8/13] Linking XDG configs..."
+echo "[8/14] Linking XDG configs..."
 link_file "$DOTFILES/.config/mimeapps.list" "$HOME/.config/mimeapps.list"
 link_file "$DOTFILES/.config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
 
-echo "[9/13] Linking autostart entries..."
+echo "[9/14] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
 link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/autostart/xmousepasteblock.desktop"
 
-echo "[10/13] Linking PipeWire configs..."
+echo "[10/14] Linking PipeWire configs..."
 mkdir -p "$HOME/.config/pipewire/pipewire.conf.d"
 link_file "$DOTFILES/.config/pipewire/pipewire.conf.d/10-low-latency.conf" "$HOME/.config/pipewire/pipewire.conf.d/10-low-latency.conf"
 
@@ -97,7 +101,14 @@ link_file "$DOTFILES/.config/circadia/config.toml" "$HOME/.config/circadia/confi
 mkdir -p "$HOME/.config/ThemeSwitch"
 link_file "$DOTFILES/.config/ThemeSwitch/settings.json" "$HOME/.config/ThemeSwitch/settings.json"
 
-echo "[11/13] Installing custom scripts..."
+echo "[11/14] Linking browser configs..."
+if has_nvidia_gpu; then
+    link_file "$DOTFILES/.config/vivaldi-stable.conf" "$HOME/.config/vivaldi-stable.conf"
+else
+    echo "  Skipped vivaldi-stable.conf (no NVIDIA GPU)"
+fi
+
+echo "[12/14] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
 cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
 chmod +x "$HOME/.local/bin/toggle-perf"
@@ -120,7 +131,7 @@ chmod +x "$HOME/.local/share/kio/servicemenus/tailsend.desktop"
 cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.local/share/applications/"
 cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
 
-echo "[12/13] Installing user services..."
+echo "[13/14] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"
 cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/taildrop.service" "$HOME/.config/systemd/user/"
@@ -136,7 +147,7 @@ systemctl --user enable qbittorrent-nox.service
 systemctl --user enable ufc-rss-fetch.timer
 systemctl --user enable themeswitch.service
 
-echo "[13/13] Copying emulator configs (no symlinks - emulators overwrite them)..."
+echo "[14/14] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
 cp "$DOTFILES/.config/rpcs3/config.yml" "$HOME/.config/rpcs3/"
 cp "$DOTFILES/.config/rpcs3/evdev_positive_axis.yml" "$HOME/.config/rpcs3/"
