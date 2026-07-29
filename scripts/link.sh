@@ -101,6 +101,9 @@ link_file "$DOTFILES/.config/circadia/config.toml" "$HOME/.config/circadia/confi
 mkdir -p "$HOME/.config/ThemeSwitch"
 link_file "$DOTFILES/.config/ThemeSwitch/settings.json" "$HOME/.config/ThemeSwitch/settings.json"
 
+mkdir -p "$HOME/.config/mpv"
+link_file "$DOTFILES/.config/mpv/mpv.conf" "$HOME/.config/mpv/mpv.conf"
+
 echo "[11/14] Linking browser configs..."
 if has_nvidia_gpu; then
     link_file "$DOTFILES/.config/vivaldi-stable.conf" "$HOME/.config/vivaldi-stable.conf"
