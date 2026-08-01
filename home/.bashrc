@@ -55,8 +55,8 @@ alias nb='npm run build'
 alias nl='npm run lint -- --fix'
 alias ghd='gh dash'
 
-alias ytd='yt-dlp --cookies-from-browser vivaldi -P /mnt/backup/Clips -f "bv*[ext=mp4][height<=1080]+ba[ext=m4a]/b[ext=mp4]/best" --merge-output-format mp4'
-alias ytdmax='yt-dlp --cookies-from-browser vivaldi -P /mnt/backup/Clips -f "bv*+ba/b" --merge-output-format mkv --exec "after_move:clip-to-twitter %(filepath)q"'
+alias ytd='yt-dlp --cookies-from-browser vivaldi -P /mnt/nvme8tb/Clips -f "bv*[ext=mp4][height<=1080]+ba[ext=m4a]/b[ext=mp4]/best" --merge-output-format mp4'
+alias ytdmax='yt-dlp --cookies-from-browser vivaldi -P /mnt/nvme8tb/Clips -f "bv*+ba/b" --merge-output-format mkv --exec "after_move:clip-to-twitter %(filepath)q"'
 alias yta='yt-dlp --cookies-from-browser vivaldi -P ~/Music -f "ba[ext=m4a]/ba/b" --extract-audio --audio-format mp3 --audio-quality 0'
 
 alias ac='aicommits'
@@ -105,10 +105,10 @@ OMB_USE_SUDO=true
 
 PS1='\[\033[32m\]\u@\h\[\033[0m\]:\[\033[34m\]\w\[\033[0m\]$(git_prompt)\$ '
 
-alias cc="CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 ENABLE_BACKGROUND_TASKS=1 ~/.local/bin/claude --dangerously-skip-permissions"
-alias ccc="CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 ENABLE_BACKGROUND_TASKS=1 ~/.local/bin/claude --dangerously-skip-permissions --continue"
+alias cc="DISABLE_ERROR_REPORTING=1 DISABLE_FEEDBACK_COMMAND=1 CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1 ENABLE_BACKGROUND_TASKS=1 ~/.local/bin/claude --dangerously-skip-permissions"
+alias ccc="DISABLE_ERROR_REPORTING=1 DISABLE_FEEDBACK_COMMAND=1 CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1 ENABLE_BACKGROUND_TASKS=1 ~/.local/bin/claude --dangerously-skip-permissions --continue"
 alias ccu="~/.local/bin/claude update"
-alias ccr="CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 ENABLE_BACKGROUND_TASKS=1 ~/.local/bin/claude --dangerously-skip-permissions --resume"
+alias ccr="DISABLE_ERROR_REPORTING=1 DISABLE_FEEDBACK_COMMAND=1 CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1 ENABLE_BACKGROUND_TASKS=1 ~/.local/bin/claude --dangerously-skip-permissions --resume"
 
 alias pwdc='pwd  < /dev/null |  xclip -selection clipboard'
 
