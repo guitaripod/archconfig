@@ -32,6 +32,14 @@ video/x-matroska=mpv.desktop;vlc.desktop;
 video/x-ms-wmv=mpv.desktop;vlc.desktop;
 x-scheme-handler/geo=google-maps-geo-handler.desktop;
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-CVSZS3.desktop;
+x-scheme-handler/mid=userapp-Thunderbird-CVSZS3.desktop;
+message/rfc822=userapp-Thunderbird-CVSZS3.desktop;
+x-scheme-handler/webcal=userapp-Thunderbird-HU79S3.desktop;
+x-scheme-handler/webcals=userapp-Thunderbird-HU79S3.desktop;
+text/calendar=userapp-Thunderbird-HU79S3.desktop;
+application/x-extension-ics=userapp-Thunderbird-HU79S3.desktop;
+x-scheme-handler/net.thunderbird=userapp-Thunderbird-87C8S3.desktop;
 
 [Default Applications]
 application/json=vivaldi-stable.desktop;
@@ -88,3 +96,11 @@ application/x-shellscript=nvim.desktop
 text/x-python=nvim.desktop
 application/toml=nvim.desktop
 text/x-log=nvim.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-CVSZS3.desktop
+x-scheme-handler/mid=userapp-Thunderbird-CVSZS3.desktop
+message/rfc822=userapp-Thunderbird-CVSZS3.desktop
+x-scheme-handler/webcal=userapp-Thunderbird-HU79S3.desktop
+x-scheme-handler/webcals=userapp-Thunderbird-HU79S3.desktop
+text/calendar=userapp-Thunderbird-HU79S3.desktop
+application/x-extension-ics=userapp-Thunderbird-HU79S3.desktop
+x-scheme-handler/net.thunderbird=userapp-Thunderbird-87C8S3.desktop

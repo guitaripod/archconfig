@@ -129,3 +129,6 @@ rtmux() { ssh -t "marcus@${1:?usage: rtmux <host> [session]}" "tmux new -A -s ${
 export PATH="$HOME/.grok/bin:$PATH"
 [[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
 # <<< grok installer <<<
+
+# opencode
+export PATH=/home/marcus/.opencode/bin:$PATH
