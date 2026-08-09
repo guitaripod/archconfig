@@ -29,6 +29,25 @@ video_is_compliant() {
 	((width <= MAX_DIMENSION && height <= MAX_DIMENSION)) || return 1
 	((width % 2 == 0 && height % 2 == 0)) || return 1
 	((fps <= MAX_FPS)) || return 1
+	timeline_starts_clean "$file"
+}
+
+## gpu-screen-recorder sometimes opens a capture with a discard-flagged frame
+## and an edit list jumping seconds ahead to the first real keyframe. Such a
+## file probes as compliant, but stream-copying it hands X a timeline it
+## silently refuses to process — so the check reads the first two packets and
+## sends anything discard-flagged or gapped down the re-encode path instead.
+timeline_starts_clean() {
+	ffprobe -v error -select_streams v:0 -show_entries packet=pts_time,flags \
+		-of csv=p=0 -read_intervals "%+#2" "$1" 2>/dev/null |
+		awk -F, '
+			NR==1 { first=$1; if ($2 ~ /D/) bad=1 }
+			NR==2 { if ($1 - first > 0.2) bad=1 }
+			END { exit (NR < 1 || bad) }'
+}
+
+is_mp4_container() {
+	[[ $(probe v:0 format=format_name "$1") == *mp4* ]]
 }
 
 audio_is_compliant() {
@@ -65,12 +84,14 @@ target_fps() {
 
 convert() {
 	local src=$1 dst=$2
-	local -a args=(-y -hide_banner -loglevel warning -stats -i "$src")
+	local -a args=(-y -hide_banner -loglevel warning -stats)
 
 	if video_is_compliant "$src"; then
-		args+=(-c:v copy)
+		args+=(-i "$src" -c:v copy)
 	else
+		is_mp4_container "$src" && args+=(-ignore_editlist 1)
 		args+=(
+			-i "$src"
 			-vf "scale=w='min(iw,$MAX_DIMENSION)':h='min(ih,$MAX_DIMENSION)':force_original_aspect_ratio=decrease:force_divisible_by=2:flags=lanczos:in_range=auto:out_range=tv"
 			-fps_mode cfr -r "$(target_fps "$src")"
 			-c:v libx264 -profile:v high -preset slow -crf 20
