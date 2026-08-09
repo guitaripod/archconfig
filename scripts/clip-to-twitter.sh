@@ -91,15 +91,15 @@ convert() {
 	ffmpeg "${args[@]}"
 }
 
-## Defaults to rewriting next to the source so a download or capture ends up
-## postable at the path the rest of the pipeline already prints and copies to
-## the clipboard. When the conversion would land on its own input — an mp4 that
-## only needs a codec fix — it encodes to a sibling and swaps, so a failed or
-## interrupted run leaves the original intact.
+## Every clip collects in one directory so a capture, a download and a manual
+## conversion all end up somewhere predictable. When the conversion would land
+## on its own input — a clip already in that directory that only needs a codec
+## fix — it encodes to a sibling and swaps, so a failed or interrupted run
+## leaves the original intact.
 for src in "$@"; do
 	[[ -s $src ]] || { echo "clip-to-twitter: no such file: $src" >&2; exit 1; }
 
-	dst_dir="${CLIP_TWITTER_DIR:-$(dirname "$src")}"
+	dst_dir="${CLIP_TWITTER_DIR:-/mnt/nvme8tb/Clips}"
 	mkdir -p "$dst_dir"
 	dst="$dst_dir/$(basename "${src%.*}").mp4"
 
