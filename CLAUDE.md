@@ -15,6 +15,7 @@ This is the single source of truth for Arch Linux machine configuration.
 scripts/
   install.sh              # Run on fresh machine (packages, services, oh-my-bash)
   link.sh                 # Symlinks dotfiles to home directory
+  link-steamdeck.sh       # Deck-safe subset of link.sh (run this on steamdeck)
   update-from-system.sh   # Pull current system configs into repo
   guitar.sh               # Launch Guitarix with Scarlett Solo routing
   toggle-perf.sh          # Toggle performance mode
@@ -50,7 +51,7 @@ etc/                      # System configs (mirrors /etc/)
 ## Machines
 
 - **arch** — main desktop, native Arch, uses install.sh + link.sh directly
-- **steamdeck** — SteamOS (immutable root), packages go through Distrobox (`distrobox enter arch`), export apps/bins to host
+- **steamdeck** — SteamOS (immutable root), packages go through Distrobox (`distrobox enter arch`), export apps/bins to host. Run `scripts/link-steamdeck.sh`, never `link.sh`: mainline enables units that do not exist here and clones over SSH, which this host has no authorized key for. The Deck linker takes shell/git/ssh/terminal/Claude configs only — KDE, emulators (EmuDeck owns them), pipewire, mimeapps and systemd units are deliberately skipped.
 - **macbook** — macOS
 - **g14** — Arch laptop
 - **x1carbon** — ThinkPad X1 Carbon 7th gen (Intel-only); skip nvidia/lib32/gaming packages from pkglists when installing. Only machine with a fingerprint reader (Synaptics 06cb:00bd) — `etc/x1carbon/pam.d/` is installed only on this host. After enrolling with `fprintd-enroll`, the PAM files give fingerprint auth (with password fallback) for sudo, su, polkit, system-local-login, SDDM, and kscreenlocker.
