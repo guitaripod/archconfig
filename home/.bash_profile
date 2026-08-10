@@ -7,4 +7,4 @@
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # Added by swiftly
-. "/home/marcus/.local/share/swiftly/env.sh"
+[[ -f "$HOME/.local/share/swiftly/env.sh" ]] && . "$HOME/.local/share/swiftly/env.sh"

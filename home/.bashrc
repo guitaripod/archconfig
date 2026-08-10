@@ -131,4 +131,4 @@ export PATH="$HOME/.grok/bin:$PATH"
 # <<< grok installer <<<
 
 # opencode
-export PATH=/home/marcus/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
