@@ -1,0 +1,10 @@
+[Unit]
+Description=Watch the Steam libraries for newly installed games
+
+[Path]
+PathChanged=%h/.local/share/Steam/steamapps
+PathChanged=/mnt/nvme8tb/SteamLibrary/steamapps
+Unit=steam-taskbar-icons.service
+
+[Install]
+WantedBy=default.target

@@ -19,6 +19,7 @@ scripts/
   update-from-system.sh   # Pull current system configs into repo
   guitar.sh               # Launch Guitarix with Scarlett Solo routing
   toggle-perf.sh          # Toggle performance mode
+  steam-taskbar-icons.py  # Real taskbar icons for Steam games (steam_app_<id>.desktop + hicolor icons)
   pkglist-official.txt    # Arch official packages (pacman)
   pkglist-aur.txt         # AUR packages (yay)
   enabled-services.txt    # Systemd services to enable
