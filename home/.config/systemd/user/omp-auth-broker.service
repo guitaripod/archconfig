@@ -1,0 +1,12 @@
+[Unit]
+Description=omp auth-broker: serves this machine's provider credentials to the tailnet
+After=network-online.target tailscaled.service
+
+[Service]
+ExecStart=%h/.bun/bin/omp auth-broker serve --bind=100.91.211.44:4101
+Environment=PATH=%h/.bun/bin:%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
