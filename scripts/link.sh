@@ -69,6 +69,10 @@ else
     git clone git@github.com:guitaripod/claudeconfig.git "$HOME/claudeconfig"
 fi
 "$HOME/claudeconfig/scripts/link.sh"
+mkdir -p "$HOME/.claude/rules"
+for rule in "$DOTFILES"/.claude/rules/*.md; do
+    link_file "$rule" "$HOME/.claude/rules/$(basename "$rule")"
+done
 
 echo "[6/14] Copying KDE configs (no symlinks - KDE overwrites them)..."
 cp "$DOTFILES/.config/kde/kdeglobals" "$HOME/.config/"

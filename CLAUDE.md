@@ -23,6 +23,7 @@ scripts/
   pkglist-aur.txt         # AUR packages (yay)
   enabled-services.txt    # Systemd services to enable
 home/                     # Dotfiles (mirrors ~/)
+  home/.claude/rules/     # Arch-only Claude Code rules, linked into ~/.claude/rules/ (global config is claudeconfig)
 etc/                      # System configs (mirrors /etc/)
   etc/keyd/               # Key remapping
   etc/default/cpupower-service.conf  # CPU governor (performance)

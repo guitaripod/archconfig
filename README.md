@@ -57,6 +57,7 @@ git push
 - Audio: PipeWire low-latency config, Guitarix + Neural Amp Modeler
 - Packages: official and AUR package lists
 - Services: systemd enabled services list
+- Claude Code: Arch-only rules in `home/.claude/rules/` (global config comes from [claudeconfig](https://github.com/guitaripod/claudeconfig))
 
 ## Guitar
 
