@@ -132,3 +132,4 @@ export PATH="$HOME/.grok/bin:$PATH"
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
+export OPENCODE_CONFIG="$HOME/.config/opencode/opencode.local.json"
