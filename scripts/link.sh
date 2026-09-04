@@ -62,6 +62,10 @@ fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
+# delegate: per-machine tier overlay (shared config.yml comes from claudeconfig)
+mkdir -p "$HOME/.config/delegate"
+link_file "$DOTFILES/.config/delegate/host.yml" "$HOME/.config/delegate/host.yml"
+
 echo "[5/14] Setting up Claude Code config (claudeconfig)..."
 if [[ -d "$HOME/claudeconfig/.git" ]]; then
     git -C "$HOME/claudeconfig" pull
