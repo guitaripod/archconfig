@@ -1,10 +1,14 @@
 [Unit]
-Description=Set NVIDIA GPU power limit
+Description=Cap NVIDIA GPU board power
+Documentation=https://forums.developer.nvidia.com/t/rtx-pro-6000-blackwell-falls-off-the-bus-under-load-xid-79-xid-154-driver-580-159-03/377221
 After=nvidia-persistenced.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/nvidia-smi -pl 288
+RemainAfterExit=yes
+# 450 W of the RTX PRO 6000 Blackwell's 600 W: the quality benchmarks draw ~340 W anyway, and the top 150 W buys
+# a few percent of clock for a large transient on the 12V-2x6 rail. Retune with scripts/gpu-power-sweep.sh.
+ExecStart=/usr/bin/nvidia-smi -pl 450
 
 [Install]
 WantedBy=multi-user.target
