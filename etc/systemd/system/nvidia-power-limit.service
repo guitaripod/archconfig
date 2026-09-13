@@ -6,9 +6,9 @@ After=nvidia-persistenced.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-# 450 W of the RTX PRO 6000 Blackwell's 600 W: the quality benchmarks draw ~340 W anyway, and the top 150 W buys
-# a few percent of clock for a large transient on the 12V-2x6 rail. Retune with scripts/gpu-power-sweep.sh.
-ExecStart=/usr/bin/nvidia-smi -pl 450
+# 500 W of the RTX PRO 6000 Blackwell's 600 W: the quality benchmarks draw ~340 W anyway, and the top 100 W buys about
+# 2% of clock for a large transient on the 12V-2x6 rail. Retune with scripts/gpu-power-sweep.sh.
+ExecStart=/usr/bin/nvidia-smi -pl 500
 
 [Install]
 WantedBy=multi-user.target
