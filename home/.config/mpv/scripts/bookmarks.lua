@@ -174,9 +174,9 @@ local function delete_nearest()
     if commit(store, key, list) then mp.osd_message("Deleted " .. label(removed)) end
 end
 
-mp.add_key_binding("b", "bookmark-add", function() add("") end)
-mp.add_key_binding("Alt+b", "bookmark-add-named", add_named)
-mp.add_key_binding("B", "bookmark-browse", browse)
-mp.add_key_binding("Alt+.", "bookmark-next", function() step(1) end)
-mp.add_key_binding("Alt+,", "bookmark-prev", function() step(-1) end)
-mp.add_key_binding("Ctrl+b", "bookmark-delete", delete_nearest)
+mp.add_key_binding(nil, "bookmark-add", function() add("") end)
+mp.add_key_binding(nil, "bookmark-add-named", add_named)
+mp.add_key_binding(nil, "bookmark-browse", browse)
+mp.add_key_binding(nil, "bookmark-next", function() step(1) end)
+mp.add_key_binding(nil, "bookmark-prev", function() step(-1) end)
+mp.add_key_binding(nil, "bookmark-delete", delete_nearest)
