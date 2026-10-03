@@ -1,5 +1,6 @@
 local mp = require "mp"
 local utils = require "mp.utils"
+local input = require "mp.input"
 
 local STATE_DIR = (os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")) .. "/mpv"
 local STORE = STATE_DIR .. "/bookmarks.json"
@@ -100,10 +101,10 @@ end
 local function add_named()
     local position = mp.get_property_number("time-pos")
     if not position then return end
-    mp.input.get({
+    input.get({
         prompt = "Bookmark name:",
         submit = function(text)
-            mp.input.terminate()
+            input.terminate()
             mp.set_property_number("time-pos", position)
             add(text)
         end,
@@ -130,7 +131,7 @@ local function browse()
         items[i] = label(bookmark)
         if bookmark.t <= position then default = i end
     end
-    mp.input.select({
+    input.select({
         prompt = "Bookmarks:",
         items = items,
         default_item = default,
