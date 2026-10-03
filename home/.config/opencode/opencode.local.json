@@ -1,0 +1,209 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1"
+      },
+      "models": {
+        "stealth/ox-alpha": {
+          "name": "Ox Alpha · OpenRouter",
+          "reasoning": true,
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        }
+      }
+    },
+    "macbook": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "MacBook (tailnet)",
+      "options": {
+        "baseURL": "http://100.127.250.64:11434/v1"
+      },
+      "models": {
+        "qwen3.8:27b-q8_0": {
+          "name": "Qwen 3.8 27B · Q8 · vision",
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 16384
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        },
+        "qwen3.8:27b-mlx": {
+          "name": "Qwen 3.8 27B · MLX",
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 16384
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    },
+    "llama-server": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Llama Server (local)",
+      "options": {
+        "baseURL": "http://localhost:8081/v1"
+      },
+      "models": {
+        "qwen38-nvfp4": {
+          "name": "Qwen 3.8 27B · NVFP4 · Daily · MTP",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 0.6,
+              "top_p": 0.95,
+              "top_k": 20,
+              "min_p": 0.0,
+              "reasoning_budget_tokens": 4096,
+              "reasoning_budget_message": "\n\nI have planned enough. I will now stop thinking and take the next concrete action using a tool.\n"
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 0.7,
+              "top_p": 0.8,
+              "top_k": 20,
+              "min_p": 0.0
+            }
+          }
+        },
+        "sglang-27b": {
+          "name": "Qwen 3.8 27B · SGLang · DFlash2 · 524K",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 524288,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 0.6,
+              "top_p": 0.95,
+              "top_k": 20,
+              "min_p": 0.0,
+              "reasoning_budget_tokens": 4096,
+              "reasoning_budget_message": "\n\nI have planned enough. I will now stop thinking and take the next concrete action using a tool.\n"
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 0.7,
+              "top_p": 0.8,
+              "top_k": 20,
+              "min_p": 0.0
+            }
+          }
+        },
+        "sglang-muse30b": {
+          "name": "Muse Glimmer 30B · SGLang · FP8 · DFlash2 · 128K",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "reasoning_strength": "high"
+              },
+              "temperature": 1.0,
+              "top_p": 0.95,
+              "top_k": 64
+            },
+            "fast": {
+              "chat_template_kwargs": {
+                "reasoning_strength": "low"
+              },
+              "temperature": 1.0,
+              "top_p": 0.95,
+              "top_k": 64
+            }
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "zvec_grep": {
+      "type": "local",
+      "command": [
+        "zg",
+        "server",
+        "--stdio"
+      ],
+      "enabled": true,
+      "timeout": 600000
+    }
+  },
+  "instructions": [
+    "~/dotfiles/home/.claude/rules/*.md"
+  ]
+}

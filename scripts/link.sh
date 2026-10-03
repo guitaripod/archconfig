@@ -66,6 +66,10 @@ link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 mkdir -p "$HOME/.config/delegate"
 link_file "$DOTFILES/.config/delegate/host.yml" "$HOME/.config/delegate/host.yml"
 
+# opencode: per-machine models/MCPs overlay (shared opencode.json lives in the opencodeconfig repo)
+mkdir -p "$HOME/.config/opencode"
+link_file "$DOTFILES/.config/opencode/opencode.local.json" "$HOME/.config/opencode/opencode.local.json"
+
 echo "[5/14] Setting up Claude Code config (claudeconfig)..."
 if [[ -d "$HOME/claudeconfig/.git" ]]; then
     git -C "$HOME/claudeconfig" pull
