@@ -43,6 +43,7 @@ supabase-bin
 swiftly-bin
 telegram-desktop-bin
 tuxguitar
+upscayl-bin
 ventoy-bin
 woeusb-ng
 xkb-switch

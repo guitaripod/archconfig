@@ -1,0 +1,57 @@
+# upscayl-watch configuration
+min_free_gb = 50.0
+
+binary = "realesrgan-ncnn-vulkan"
+model_dir = "/usr/share/upscayl/models"
+model = "ultrasharp-4x"
+
+# The model is native 4x and always runs at 4x; larger results are resampled down to these caps.
+max_scale = 4.0
+max_output_long_edge = 8192
+max_output_pixels = 48000000
+# Skip sources that could only be enlarged by less than this factor.
+min_gain = 1.5
+
+# Size-optimization layer: .jpg/.jpeg photos -> progressive .jpg, everything else -> .webp
+jpeg_quality = 88
+webp_quality = 88
+
+gpu_id = 0
+# Small explicit tiles only. Auto (0), 1024 and even 512 leave black regions when the GPU is shared; the second size is the retry.
+tile_sizes = [256, 128]
+threads = "1:2:2"
+tta = false
+
+# Large sources run in overlapping bands of about this many source pixels.
+band_pixels = 4000000
+band_pad = 16
+
+# Every output is decoded again and compared with its source; below this it is rejected.
+min_psnr = 28.0
+
+extensions = [".jpg", ".jpeg", ".png", ".webp"]
+exclude_globs = []
+
+min_input_pixels = 4096
+max_input_pixels = 16000000
+
+settle_seconds = 2.0
+job_timeout = 1800.0
+
+gpu_busy_percent = 0
+# 0 = never defer on GPU load; set 55 to protect gaming
+
+max_attempts = 3
+preserve_mtime = true
+
+# Watched trees. Keep these tables last: TOML assigns every bare key that
+# follows a [[roots]] header to that table.
+[[roots]]
+path = "/home/marcus/Pictures"
+output = "/home/marcus/Pictures/Upscaled"
+backfill = true
+
+[[roots]]
+path = "/mnt/nvme8tb/Pictures"
+output = "/mnt/nvme8tb/Pictures/Upscaled"
+backfill = false

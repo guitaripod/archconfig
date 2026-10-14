@@ -115,6 +115,8 @@ plymouth-kcm
 podman-compose
 print-manager
 python-fastbencode
+python-numpy
+python-pillow
 python-pip
 python-virtualenv
 qbittorrent-nox

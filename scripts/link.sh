@@ -141,6 +141,10 @@ cp "$SCRIPT_DIR/clip-to-twitter.sh" "$HOME/.local/bin/clip-to-twitter"
 chmod +x "$HOME/.local/bin/clip-to-twitter"
 cp "$SCRIPT_DIR/steam-taskbar-icons.py" "$HOME/.local/bin/steam-taskbar-icons"
 chmod +x "$HOME/.local/bin/steam-taskbar-icons"
+cp "$SCRIPT_DIR/upscayl-watch.py" "$HOME/.local/bin/upscayl-watch"
+chmod +x "$HOME/.local/bin/upscayl-watch"
+mkdir -p "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch"
+[ -e "$HOME/.config/upscayl-watch/config.toml" ] || cp "$DOTFILES/.config/upscayl-watch/config.toml" "$HOME/.config/upscayl-watch/"
 
 mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
 cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
@@ -159,6 +163,7 @@ cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.timer" "$HOME/.config/systemd/u
 cp "$DOTFILES/.config/systemd/user/themeswitch.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/steam-taskbar-icons.service" "$HOME/.config/systemd/user/"
 cp "$DOTFILES/.config/systemd/user/steam-taskbar-icons.path" "$HOME/.config/systemd/user/"
+cp "$DOTFILES/.config/systemd/user/upscayl-watch.service" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 systemctl --user enable obsbot-fix-whitebalance.service
 systemctl --user enable circadia.service
@@ -167,6 +172,7 @@ systemctl --user enable qbittorrent-nox.service
 systemctl --user enable ufc-rss-fetch.timer
 systemctl --user enable themeswitch.service
 systemctl --user enable steam-taskbar-icons.path
+systemctl --user enable upscayl-watch.service
 
 echo "[14/14] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
