@@ -14,6 +14,12 @@ BorderActivate=9
 [NightColor]
 Active=false
 
+[TabBox]
+ShowScreenMode=1
+
+[TabBoxAlternative]
+ShowScreenMode=1
+
 [Tiling]
 padding=4
 
