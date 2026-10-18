@@ -27,7 +27,7 @@
       },
       "models": {
         "qwen3.8:27b-q8_0": {
-          "name": "Qwen 3.8 27B · Ollama · Q8 · Vision",
+          "name": "Qwen Q8",
           "attachment": true,
           "limit": {
             "context": 262144,
@@ -44,7 +44,7 @@
           }
         },
         "qwen3.8:27b-mlx": {
-          "name": "Qwen 3.8 27B · MLX",
+          "name": "Qwen MLX",
           "attachment": true,
           "limit": {
             "context": 262144,
@@ -70,7 +70,7 @@
       },
       "models": {
         "qwen38-nvfp4": {
-          "name": "Qwen 3.8 27B · Uncensored · llama.cpp · NVFP4 · MTP · 256K",
+          "name": "Qwen Daily",
           "reasoning": true,
           "tool_call": true,
           "attachment": true,
@@ -110,86 +110,8 @@
             }
           }
         },
-        "sglang-27b": {
-          "name": "Qwen 3.8 27B · Uncensored · SGLang · FP8 · DFlash2 · 512K",
-          "reasoning": true,
-          "tool_call": true,
-          "attachment": true,
-          "limit": {
-            "context": 524288,
-            "output": 65536
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "think": {
-              "chat_template_kwargs": {
-                "enable_thinking": true
-              },
-              "temperature": 0.6,
-              "top_p": 0.95,
-              "top_k": 20,
-              "min_p": 0.0,
-              "reasoning_budget_tokens": 4096,
-              "reasoning_budget_message": "\n\nI have planned enough. I will now stop thinking and take the next concrete action using a tool.\n"
-            },
-            "nothink": {
-              "chat_template_kwargs": {
-                "enable_thinking": false
-              },
-              "temperature": 0.7,
-              "top_p": 0.8,
-              "top_k": 20,
-              "min_p": 0.0
-            }
-          }
-        },
-        "sglang-muse30b": {
-          "name": "Muse Glimmer 30B · SGLang · FP8 · DFlash2 · 128K",
-          "reasoning": true,
-          "tool_call": true,
-          "attachment": true,
-          "limit": {
-            "context": 131072,
-            "output": 32768
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "think": {
-              "chat_template_kwargs": {
-                "reasoning_strength": "high"
-              },
-              "temperature": 1.0,
-              "top_p": 0.95,
-              "top_k": 64
-            },
-            "fast": {
-              "chat_template_kwargs": {
-                "reasoning_strength": "low"
-              },
-              "temperature": 1.0,
-              "top_p": 0.95,
-              "top_k": 64
-            }
-          }
-        },
         "nemotron-3.5-super-vl-120b-nvfp4": {
-          "name": "Nemotron 3.5 Super VL 120B · vLLM · NVFP4 · MTP · 256K",
+          "name": "Super",
           "reasoning": true,
           "tool_call": true,
           "attachment": true,
@@ -232,7 +154,7 @@
           }
         },
         "nemotron-3.5-bolt-74b-a9b-24gb-gguf": {
-          "name": "Nemotron 3.5 Bolt 74B · llama.cpp · IQ2 · DFlash · 256K",
+          "name": "Bolt",
           "reasoning": true,
           "tool_call": true,
           "attachment": true,
@@ -275,7 +197,7 @@
           }
         },
         "nemotron-3.5-bolt-74b-a9b-24gb-abliterated-gguf": {
-          "name": "Nemotron 3.5 Bolt 74B · Uncensored · llama.cpp · IQ2 · DFlash · 256K",
+          "name": "Bolt Unchained",
           "reasoning": true,
           "tool_call": true,
           "attachment": true,
@@ -314,6 +236,122 @@
               },
               "temperature": 1.0,
               "top_p": 0.95
+            }
+          }
+        },
+        "sglang-27b": {
+          "name": "Pennyroyal",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 524288,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 0.6,
+              "top_p": 0.95,
+              "top_k": 20,
+              "min_p": 0.0
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 0.7,
+              "top_p": 0.8,
+              "top_k": 20,
+              "min_p": 0.0
+            }
+          }
+        },
+        "sglang-muse30b": {
+          "name": "Glimmer",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "reasoning_strength": "high"
+              },
+              "temperature": 1.0,
+              "top_p": 0.95,
+              "top_k": 64
+            },
+            "fast": {
+              "chat_template_kwargs": {
+                "reasoning_strength": "low"
+              },
+              "temperature": 1.0,
+              "top_p": 0.95,
+              "top_k": 64
+            }
+          }
+        },
+        "mimo-v2.6-distill-9b-gguf": {
+          "name": "MiMo",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": false,
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 0.6,
+              "top_p": 0.95,
+              "top_k": 20,
+              "min_p": 0.0,
+              "reasoning_budget_tokens": 4096,
+              "reasoning_budget_message": "\n\nI have planned enough. I will now stop thinking and take the next concrete action using a tool.\n"
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 0.7,
+              "top_p": 0.8,
+              "top_k": 20,
+              "min_p": 0.0
             }
           }
         }
