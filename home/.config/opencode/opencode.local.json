@@ -27,7 +27,7 @@
       },
       "models": {
         "qwen3.8:27b-q8_0": {
-          "name": "Qwen 3.8 27B · Q8 · vision",
+          "name": "Qwen 3.8 27B · Ollama · Q8 · Vision",
           "attachment": true,
           "limit": {
             "context": 262144,
@@ -70,7 +70,7 @@
       },
       "models": {
         "qwen38-nvfp4": {
-          "name": "Qwen 3.8 27B · NVFP4 · Daily · MTP",
+          "name": "Qwen 3.8 27B · Uncensored · llama.cpp · NVFP4 · MTP · 256K",
           "reasoning": true,
           "tool_call": true,
           "attachment": true,
@@ -111,7 +111,7 @@
           }
         },
         "sglang-27b": {
-          "name": "Qwen 3.8 27B · SGLang · DFlash2 · 524K",
+          "name": "Qwen 3.8 27B · Uncensored · SGLang · FP8 · DFlash2 · 512K",
           "reasoning": true,
           "tool_call": true,
           "attachment": true,
@@ -185,6 +185,135 @@
               "temperature": 1.0,
               "top_p": 0.95,
               "top_k": 64
+            }
+          }
+        },
+        "nemotron-3.5-super-vl-120b-nvfp4": {
+          "name": "Nemotron 3.5 Super VL 120B · vLLM · NVFP4 · MTP · 256K",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "fast": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "medium_effort": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            }
+          }
+        },
+        "nemotron-3.5-bolt-74b-a9b-24gb-gguf": {
+          "name": "Nemotron 3.5 Bolt 74B · llama.cpp · IQ2 · DFlash · 256K",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "fast": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "medium_effort": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            }
+          }
+        },
+        "nemotron-3.5-bolt-74b-a9b-24gb-abliterated-gguf": {
+          "name": "Nemotron 3.5 Bolt 74B · Uncensored · llama.cpp · IQ2 · DFlash · 256K",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "fast": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "medium_effort": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
             }
           }
         }
