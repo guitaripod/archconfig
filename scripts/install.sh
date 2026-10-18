@@ -39,6 +39,11 @@ sudo cp "$DOTFILES_DIR/etc/keyd/default.conf" /etc/keyd/
 sudo cp "$DOTFILES_DIR/etc/systemd/system/nvidia-power-limit.service" /etc/systemd/system/
 sudo mkdir -p /etc/default
 sudo cp "$DOTFILES_DIR/etc/default/cpupower-service.conf" /etc/default/
+sudo install -Dm 644 "$DOTFILES_DIR/etc/host-fw.nft" /etc/host-fw.nft
+sudo install -Dm 644 "$DOTFILES_DIR/etc/systemd/system/host-fw.service" /etc/systemd/system/host-fw.service
+sudo install -Dm 644 "$DOTFILES_DIR/etc/samba/smb.conf" /etc/samba/smb.conf
+sudo install -Dm 644 "$DOTFILES_DIR/etc/ssh/sshd_config.d/10-hardening.conf" /etc/ssh/sshd_config.d/10-hardening.conf
+sudo install -Dm 644 "$DOTFILES_DIR/etc/sysctl.d/99-hardening.conf" /etc/sysctl.d/99-hardening.conf
 
 if [[ "$(cat /etc/hostname)" == "x1carbon" ]]; then
     echo "  Installing x1carbon fingerprint PAM configs..."

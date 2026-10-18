@@ -28,7 +28,11 @@ home/                     # Dotfiles (mirrors ~/)
 etc/                      # System configs (mirrors /etc/)
   etc/keyd/               # Key remapping
   etc/default/cpupower-service.conf  # CPU governor (performance)
-  etc/systemd/system/     # Custom systemd services
+  etc/systemd/system/     # Custom systemd services (nvidia-power-limit, host-fw)
+  etc/host-fw.nft         # nft table dropping LAN access to SMB, ComfyUI, llama-swap, delegate, unrager
+  etc/samba/smb.conf      # Tailnet-only share
+  etc/ssh/sshd_config.d/  # Key-only sshd
+  etc/sysctl.d/           # kptr_restrict
 ```
 
 ## Workflow

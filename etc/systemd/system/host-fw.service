@@ -1,0 +1,13 @@
+[Unit]
+Description=Block unauthenticated services on LAN interfaces
+Before=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/nft -f /etc/host-fw.nft
+ExecStop=/usr/bin/nft delete table inet host_fw
+
+[Install]
+WantedBy=multi-user.target

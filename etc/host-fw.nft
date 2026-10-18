@@ -1,0 +1,18 @@
+table inet host_fw
+delete table inet host_fw
+
+table inet host_fw {
+    set lan_blocked_tcp {
+        type inet_service
+        elements = { 139, 445, 4100, 7777, 8081, 8188 }
+    }
+    set lan_blocked_udp {
+        type inet_service
+        elements = { 137, 138 }
+    }
+    chain input {
+        type filter hook input priority -10; policy accept;
+        iifname { "enp7s0", "wlo1" } tcp dport @lan_blocked_tcp counter drop
+        iifname { "enp7s0", "wlo1" } udp dport @lan_blocked_udp counter drop
+    }
+}

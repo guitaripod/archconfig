@@ -53,7 +53,7 @@ git push
 - Git: config, global ignore
 - Terminal: ghostty, btop
 - Desktop: KDE Plasma theme, shortcuts
-- System: keyd (Ctrl+J/K as arrow keys), cpupower (performance governor)
+- System: keyd (Ctrl+J/K as arrow keys), cpupower (performance governor), LAN firewall table, tailnet-only Samba, key-only sshd
 - Audio: PipeWire low-latency config, Guitarix + Neural Amp Modeler
 - Packages: official and AUR package lists
 - Services: systemd enabled services list
