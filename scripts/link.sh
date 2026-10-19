@@ -193,9 +193,16 @@ if [[ "$HOST" == arch ]]; then
         cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
     done
     cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
+elif [[ "$HOST" == x1carbon ]]; then
+    cp "$DOTFILES/.config/systemd/user/opencode-serve.service" "$HOME/.config/systemd/user/"
 fi
 systemctl --user daemon-reload
 systemctl --user enable circadia.service taildrop.service themeswitch.service
+
+if [[ "$HOST" == x1carbon ]]; then
+    systemctl --user enable opencode-serve.service
+    systemctl --user start opencode-serve.service
+fi
 
 if [[ "$HOST" == arch ]]; then
     systemctl --user enable obsbot-fix-whitebalance.service qbittorrent-nox.service \

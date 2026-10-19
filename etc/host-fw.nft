@@ -4,7 +4,7 @@ delete table inet host_fw
 table inet host_fw {
     set lan_blocked_tcp {
         type inet_service
-        elements = { 139, 445, 4100, 7777, 8080, 8081, 8188, 32400 }
+        elements = { 139, 445, 4096, 4100, 7777, 8080, 8081, 8188, 32400 }
     }
     set lan_blocked_udp {
         type inet_service
