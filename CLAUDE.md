@@ -22,9 +22,12 @@ scripts/
   steam-taskbar-icons.py  # Real taskbar icons for Steam games (steam_app_<id>.desktop + hicolor icons)
   pkglist-official.txt    # Arch official packages (pacman)
   pkglist-aur.txt         # AUR packages (yay)
-  enabled-services.txt    # Systemd services to enable
+  enabled-services.txt    # Systemd services to enable (default, arch)
+  enabled-services-<host>.txt  # Host-specific service list, used when present
 home/                     # Dotfiles (mirrors ~/)
-  home/.claude/rules/     # Arch-only Claude Code rules, linked into ~/.claude/rules/ (global config is claudeconfig)
+  home/.claude/rules/     # Per-host Claude Code rules, linked into ~/.claude/rules/ (global config is claudeconfig)
+  home/.config/opencode/machines/<host>.json  # Per-host opencode overlay
+  home/.config/delegate/machines/<host>.yml   # Per-host delegate overlay
 etc/                      # System configs (mirrors /etc/)
   etc/keyd/               # Key remapping
   etc/default/cpupower-service.conf  # CPU governor (performance)
@@ -60,7 +63,7 @@ etc/                      # System configs (mirrors /etc/)
 - **steamdeck** — SteamOS (immutable root), packages go through Distrobox (`distrobox enter arch`), export apps/bins to host. Run `scripts/link-steamdeck.sh`, never `link.sh`: mainline enables units that do not exist here and clones over SSH, which this host has no authorized key for. The Deck linker takes shell/git/ssh/terminal/Claude configs only — KDE, emulators (EmuDeck owns them), pipewire, mimeapps and systemd units are deliberately skipped.
 - **macbook** — macOS
 - **g14** — Arch laptop
-- **x1carbon** — ThinkPad X1 Carbon 7th gen (Intel-only); skip nvidia/lib32/gaming packages from pkglists when installing. Only machine with a fingerprint reader (Synaptics 06cb:00bd) — `etc/x1carbon/pam.d/` is installed only on this host. After enrolling with `fprintd-enroll`, the PAM files give fingerprint auth (with password fallback) for sudo, su, polkit, system-local-login, SDDM, and kscreenlocker.
+- **x1carbon** — ThinkPad X1 Carbon 7th gen (Intel-only, 7.4 GiB, no swap). `install.sh` filters nvidia/lib32/gaming/server packages on this host and uses `enabled-services-x1carbon.txt`; `link.sh` selects the `x1carbon` opencode/delegate/rule overlays and disables the arch-only user units. Only machine with a fingerprint reader (Synaptics 06cb:00bd) — `etc/x1carbon/pam.d/` is installed only on this host. After enrolling with `fprintd-enroll`, the PAM files give fingerprint auth (with password fallback) for sudo, su, polkit, system-local-login, SDDM, and kscreenlocker.
 
 ## Rules
 

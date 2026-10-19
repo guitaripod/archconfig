@@ -56,8 +56,9 @@ git push
 - System: keyd (Ctrl+J/K as arrow keys), cpupower (performance governor), LAN firewall table, tailnet-only Samba, key-only sshd
 - Audio: PipeWire low-latency config, Guitarix + Neural Amp Modeler
 - Packages: official and AUR package lists
-- Services: systemd enabled services list
-- Claude Code: Arch-only rules in `home/.claude/rules/` (global config comes from [claudeconfig](https://github.com/guitaripod/claudeconfig))
+- Services: systemd enabled services list, with `enabled-services-<host>.txt` overrides
+- Claude Code: per-host rules in `home/.claude/rules/` (global config comes from [claudeconfig](https://github.com/guitaripod/claudeconfig))
+- Host overlays: `home/.config/opencode/machines/<host>.json` and `home/.config/delegate/machines/<host>.yml`
 
 ## Guitar
 

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1"
+      },
+      "models": {
+        "stealth/ox-alpha": {
+          "name": "Ox Alpha · OpenRouter",
+          "reasoning": true,
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        }
+      }
+    },
+    "macbook": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "MacBook (tailnet)",
+      "options": {
+        "baseURL": "http://100.127.250.64:11434/v1"
+      },
+      "models": {
+        "qwen3.8:27b-q8_0": {
+          "name": "Qwen Q8",
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 16384
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        },
+        "qwen3.8:27b-mlx": {
+          "name": "Qwen MLX",
+          "attachment": true,
+          "limit": {
+            "context": 262144,
+            "output": 16384
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "instructions": [
+    "~/.claude/rules/*.md"
+  ]
+}

@@ -2,15 +2,22 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOTFILES="$(dirname "$SCRIPT_DIR")/home"
+ROOT="$(dirname "$SCRIPT_DIR")"
+DOTFILES="$ROOT/home"
+HOST="$(cat /etc/hostname)"
 
 echo "=== Updating dotfiles from system ==="
+echo "Machine: $HOST"
 echo ""
 
 echo "[1/6] Updating shell configs..."
-cp ~/.bashrc "$DOTFILES/"
-cp ~/.bash_profile "$DOTFILES/"
-cp ~/.bash_aliases "$DOTFILES/"
+if [[ "$HOST" == arch ]]; then
+    cp ~/.bashrc "$DOTFILES/"
+    cp ~/.bash_profile "$DOTFILES/"
+    cp ~/.bash_aliases "$DOTFILES/"
+else
+    echo "  Skipped shared shell configs (arch only; edit the repo instead)"
+fi
 
 echo "[2/6] Updating editor configs..."
 cp ~/.config/nvim/init.lua "$DOTFILES/.config/nvim/"
@@ -31,13 +38,17 @@ echo "[4/6] Updating SSH config..."
 cp ~/.ssh/config "$DOTFILES/.ssh/"
 
 echo "[5/6] Updating package lists..."
-pacman -Qqen > "$SCRIPT_DIR/pkglist-official.txt"
-pacman -Qqem > "$SCRIPT_DIR/pkglist-aur.txt"
+if [[ "$HOST" == arch ]]; then
+    pacman -Qqen > "$SCRIPT_DIR/pkglist-official.txt"
+    pacman -Qqem > "$SCRIPT_DIR/pkglist-aur.txt"
+else
+    echo "  Skipped shared package lists (arch only; edit them on arch)"
+fi
 
-if [[ "$(cat /etc/hostname)" == "x1carbon" ]]; then
+if [[ "$HOST" == "x1carbon" ]]; then
     echo "[5b/6] Updating x1carbon fingerprint PAM configs..."
     for f in sudo su su-l polkit-1 system-local-login sddm kde; do
-        cp "/etc/pam.d/$f" "$DOTFILES_DIR/etc/x1carbon/pam.d/$f"
+        cp "/etc/pam.d/$f" "$ROOT/etc/x1carbon/pam.d/$f"
     done
 fi
 

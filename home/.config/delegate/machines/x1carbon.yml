@@ -1,0 +1,10 @@
+# x1carbon: no local GPU or llama-swap; start at the cheap cloud tier.
+order: [t2, t3]
+
+tiers:
+  t1:
+    label: cheap cloud (no local GPU)
+    chain:
+      - runner: omp
+        model: ollama-cloud/glm-5.3-flash
+        thinking: low

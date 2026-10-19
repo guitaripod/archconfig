@@ -371,6 +371,6 @@
     }
   },
   "instructions": [
-    "~/dotfiles/home/.claude/rules/*.md"
+    "~/.claude/rules/*.md"
   ]
 }

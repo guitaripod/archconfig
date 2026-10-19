@@ -3,6 +3,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES="$(dirname "$SCRIPT_DIR")/home"
+HOST="$(cat /etc/hostname)"
 
 echo "=== Dotfiles Linker ==="
 echo "Source: $DOTFILES"
@@ -62,13 +63,25 @@ fi
 mkdir -p "$HOME/.config/btop"
 link_file "$DOTFILES/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf"
 
-# delegate: per-machine tier overlay (shared config.yml comes from claudeconfig)
-mkdir -p "$HOME/.config/delegate"
-link_file "$DOTFILES/.config/delegate/host.yml" "$HOME/.config/delegate/host.yml"
+# delegate: host.yml is a real per-machine file, not a symlink (see the delegate skill)
+DELEGATE_OVERLAY="$DOTFILES/.config/delegate/machines/$HOST.yml"
+if [[ -f "$DELEGATE_OVERLAY" ]]; then
+    mkdir -p "$HOME/.config/delegate"
+    rm -f "$HOME/.config/delegate/host.yml"
+    install -Dm 644 "$DELEGATE_OVERLAY" "$HOME/.config/delegate/host.yml"
+    echo "  Copied: $HOME/.config/delegate/host.yml"
+else
+    echo "  Skipped delegate overlay (no $DELEGATE_OVERLAY)"
+fi
 
-# opencode: per-machine models/MCPs overlay (shared opencode.json lives in the opencodeconfig repo)
-mkdir -p "$HOME/.config/opencode"
-link_file "$DOTFILES/.config/opencode/opencode.local.json" "$HOME/.config/opencode/opencode.local.json"
+# opencode: per-machine models/MCPs overlay (shared config lives in claudeconfig)
+OPENCODE_OVERLAY="$DOTFILES/.config/opencode/machines/$HOST.json"
+if [[ -f "$OPENCODE_OVERLAY" ]]; then
+    mkdir -p "$HOME/.config/opencode"
+    link_file "$OPENCODE_OVERLAY" "$HOME/.config/opencode/opencode.local.json"
+else
+    echo "  Skipped opencode overlay (no $OPENCODE_OVERLAY)"
+fi
 
 echo "[5/14] Setting up Claude Code config (claudeconfig)..."
 if [[ -d "$HOME/claudeconfig/.git" ]]; then
@@ -79,7 +92,24 @@ fi
 "$HOME/claudeconfig/scripts/link.sh"
 mkdir -p "$HOME/.claude/rules"
 for rule in "$DOTFILES"/.claude/rules/*.md; do
-    link_file "$rule" "$HOME/.claude/rules/$(basename "$rule")"
+    name="$(basename "$rule")"
+    case "$name" in
+        arch.md|local-models.md|zvec-grep.md)
+            if [[ "$HOST" != arch ]]; then
+                rm -f "$HOME/.claude/rules/$name"
+                echo "  Skipped: $name (arch only)"
+                continue
+            fi
+            ;;
+        x1carbon.md)
+            if [[ "$HOST" != x1carbon ]]; then
+                rm -f "$HOME/.claude/rules/$name"
+                echo "  Skipped: $name (x1carbon only)"
+                continue
+            fi
+            ;;
+    esac
+    link_file "$rule" "$HOME/.claude/rules/$name"
 done
 
 echo "[6/14] Copying KDE configs (no symlinks - KDE overwrites them)..."
@@ -101,6 +131,7 @@ link_file "$DOTFILES/.config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
 
 echo "[9/14] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
+rm -f "$HOME/.config/autostart/themeswitch.desktop"
 link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/autostart/xmousepasteblock.desktop"
 
 echo "[10/14] Linking PipeWire configs..."
@@ -125,54 +156,63 @@ fi
 
 echo "[12/14] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
-cp "$SCRIPT_DIR/toggle-perf.sh" "$HOME/.local/bin/toggle-perf"
-chmod +x "$HOME/.local/bin/toggle-perf"
-cp "$SCRIPT_DIR/guitar.sh" "$HOME/.local/bin/guitar"
-chmod +x "$HOME/.local/bin/guitar"
-cp "$SCRIPT_DIR/obsbot-fix-whitebalance.sh" "$HOME/.local/bin/obsbot-fix-whitebalance"
-chmod +x "$HOME/.local/bin/obsbot-fix-whitebalance"
-cp "$SCRIPT_DIR/tailsend.sh" "$HOME/.local/bin/tailsend"
-chmod +x "$HOME/.local/bin/tailsend"
-cp "$SCRIPT_DIR/qbt-add.sh" "$HOME/.local/bin/qbt-add"
-chmod +x "$HOME/.local/bin/qbt-add"
-cp "$SCRIPT_DIR/ufc-rss-fetch.sh" "$HOME/.local/bin/ufc-rss-fetch"
-chmod +x "$HOME/.local/bin/ufc-rss-fetch"
-cp "$SCRIPT_DIR/clip-to-twitter.sh" "$HOME/.local/bin/clip-to-twitter"
-chmod +x "$HOME/.local/bin/clip-to-twitter"
-cp "$SCRIPT_DIR/steam-taskbar-icons.py" "$HOME/.local/bin/steam-taskbar-icons"
-chmod +x "$HOME/.local/bin/steam-taskbar-icons"
-cp "$SCRIPT_DIR/upscayl-watch.py" "$HOME/.local/bin/upscayl-watch"
-chmod +x "$HOME/.local/bin/upscayl-watch"
-mkdir -p "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch"
-[ -e "$HOME/.config/upscayl-watch/config.toml" ] || cp "$DOTFILES/.config/upscayl-watch/config.toml" "$HOME/.config/upscayl-watch/"
+for script in toggle-perf guitar tailsend clip-to-twitter; do
+    cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
+    chmod +x "$HOME/.local/bin/$script"
+done
+
+if [[ "$HOST" == arch ]]; then
+    for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch; do
+        cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
+        chmod +x "$HOME/.local/bin/$script"
+    done
+    for script in steam-taskbar-icons.py upscayl-watch.py; do
+        dest="${script%.py}"
+        cp "$SCRIPT_DIR/$script" "$HOME/.local/bin/$dest"
+        chmod +x "$HOME/.local/bin/$dest"
+    done
+    mkdir -p "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch"
+    [ -e "$HOME/.config/upscayl-watch/config.toml" ] || cp "$DOTFILES/.config/upscayl-watch/config.toml" "$HOME/.config/upscayl-watch/"
+fi
 
 mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
 cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
 chmod +x "$HOME/.local/share/kio/servicemenus/tailsend.desktop"
 cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.local/share/applications/"
-cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
 
 echo "[13/14] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"
-cp "$DOTFILES/.config/systemd/user/obsbot-fix-whitebalance.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/taildrop.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/omp-auth-broker.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/qbittorrent-nox.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/ufc-rss-fetch.timer" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/themeswitch.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/steam-taskbar-icons.service" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/steam-taskbar-icons.path" "$HOME/.config/systemd/user/"
-cp "$DOTFILES/.config/systemd/user/upscayl-watch.service" "$HOME/.config/systemd/user/"
+for unit in taildrop.service themeswitch.service omp-auth-broker.service; do
+    cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
+done
+
+if [[ "$HOST" == arch ]]; then
+    for unit in obsbot-fix-whitebalance.service qbittorrent-nox.service \
+        ufc-rss-fetch.service ufc-rss-fetch.timer \
+        steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service; do
+        cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
+    done
+    cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
+fi
 systemctl --user daemon-reload
-systemctl --user enable obsbot-fix-whitebalance.service
-systemctl --user enable circadia.service
-systemctl --user enable taildrop.service
-systemctl --user enable qbittorrent-nox.service
-systemctl --user enable ufc-rss-fetch.timer
-systemctl --user enable themeswitch.service
-systemctl --user enable steam-taskbar-icons.path
-systemctl --user enable upscayl-watch.service
+systemctl --user enable circadia.service taildrop.service themeswitch.service
+
+if [[ "$HOST" == arch ]]; then
+    systemctl --user enable obsbot-fix-whitebalance.service qbittorrent-nox.service \
+        ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service
+else
+    for unit in obsbot-fix-whitebalance.service qbittorrent-nox.service \
+        ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service; do
+        systemctl --user disable --now "$unit" 2>/dev/null || true
+        rm -f "$HOME/.config/systemd/user/$unit"
+    done
+    rm -f "$HOME/.local/bin/obsbot-fix-whitebalance" "$HOME/.local/bin/qbt-add" \
+        "$HOME/.local/bin/ufc-rss-fetch" "$HOME/.local/bin/steam-taskbar-icons" \
+        "$HOME/.local/bin/upscayl-watch"
+    rm -f "$HOME/.local/share/applications/qbittorrent-nox.desktop"
+    rm -rf "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch"
+    systemctl --user daemon-reload
+fi
 
 echo "[14/14] Copying emulator configs (no symlinks - emulators overwrite them)..."
 mkdir -p "$HOME/.config/rpcs3/custom_configs" "$HOME/.config/rpcs3/GuiConfigs"
