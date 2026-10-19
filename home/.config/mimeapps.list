@@ -42,6 +42,7 @@ x-scheme-handler/net.thunderbird=userapp-Thunderbird-87C8S3.desktop;
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
 x-scheme-handler/webcal=userapp-Thunderbird-HU79S3.desktop;
 x-scheme-handler/webcals=userapp-Thunderbird-HU79S3.desktop;
+x-scheme-handler/ton=org.telegram.desktop.desktop;
 
 [Default Applications]
 application/json=vivaldi-stable.desktop;
@@ -109,3 +110,4 @@ x-scheme-handler/tailscode=io.github.guitaripod.Tailscode.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
 x-scheme-handler/webcal=userapp-Thunderbird-HU79S3.desktop
 x-scheme-handler/webcals=userapp-Thunderbird-HU79S3.desktop
+x-scheme-handler/ton=org.telegram.desktop.desktop

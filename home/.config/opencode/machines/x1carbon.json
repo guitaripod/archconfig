@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "permission": "allow",
   "provider": {
     "openrouter": {
       "npm": "@ai-sdk/openai-compatible",
