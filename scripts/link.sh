@@ -182,13 +182,13 @@ cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.loca
 
 echo "[13/14] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"
-for unit in taildrop.service themeswitch.service omp-auth-broker.service; do
+for unit in taildrop.service themeswitch.service; do
     cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
 done
 
 if [[ "$HOST" == arch ]]; then
-    for unit in obsbot-fix-whitebalance.service qbittorrent-nox.service \
-        ufc-rss-fetch.service ufc-rss-fetch.timer \
+    for unit in omp-auth-broker.service obsbot-fix-whitebalance.service \
+        qbittorrent-nox.service ufc-rss-fetch.service ufc-rss-fetch.timer \
         steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service; do
         cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
     done
