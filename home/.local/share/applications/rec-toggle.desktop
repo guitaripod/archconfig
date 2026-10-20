@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=rec: record region (toggle)
+Comment=Start or stop a region screen recording with gpu-screen-recorder
+Exec=/home/marcus/.local/bin/rec --toggle
+Icon=media-record
+Terminal=false
+NoDisplay=true
