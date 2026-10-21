@@ -198,48 +198,6 @@
             }
           }
         },
-        "nemotron-3.5-lightning-30b-a3b-darkstar-gguf": {
-          "name": "Darkstar",
-          "reasoning": true,
-          "tool_call": true,
-          "attachment": false,
-          "limit": {
-            "context": 262144,
-            "output": 65536
-          },
-          "modalities": {
-            "input": [
-              "text"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "think": {
-              "chat_template_kwargs": {
-                "enable_thinking": true
-              },
-              "temperature": 1.0,
-              "top_p": 0.95
-            },
-            "fast": {
-              "chat_template_kwargs": {
-                "enable_thinking": true,
-                "medium_effort": true
-              },
-              "temperature": 1.0,
-              "top_p": 0.95
-            },
-            "nothink": {
-              "chat_template_kwargs": {
-                "enable_thinking": false
-              },
-              "temperature": 1.0,
-              "top_p": 0.95
-            }
-          }
-        },
         "sglang-27b": {
           "name": "Pennyroyal",
           "reasoning": true,
