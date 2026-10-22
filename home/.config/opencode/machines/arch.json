@@ -327,6 +327,13 @@
       ],
       "enabled": true,
       "timeout": 600000
+    },
+    "1password": {
+      "type": "local",
+      "command": [
+        "/opt/1Password/1password-mcp"
+      ],
+      "enabled": true
     }
   },
   "instructions": [
