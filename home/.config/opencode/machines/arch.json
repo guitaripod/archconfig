@@ -331,10 +331,7 @@
     "1password": {
       "type": "local",
       "command": [
-        "script",
-        "-qec",
-        "/opt/1Password/1password-mcp",
-        "/dev/null"
+        "/opt/1Password/1password-mcp"
       ],
       "enabled": true
     }
