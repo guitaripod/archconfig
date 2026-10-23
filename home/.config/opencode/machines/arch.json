@@ -198,6 +198,48 @@
             }
           }
         },
+        "nemotron-3.5-bolt-e4b-4gb-gguf": {
+          "name": "Bolt Pocket",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": false,
+          "limit": {
+            "context": 131072,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "fast": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "medium_effort": true
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 1.0,
+              "top_p": 0.95
+            }
+          }
+        },
         "flint": {
           "name": "Flint",
           "reasoning": true,
