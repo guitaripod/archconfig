@@ -128,6 +128,8 @@ link_file "$DOTFILES/.ssh/config" "$HOME/.ssh/config"
 echo "[8/14] Linking XDG configs..."
 link_file "$DOTFILES/.config/mimeapps.list" "$HOME/.config/mimeapps.list"
 link_file "$DOTFILES/.config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
+mkdir -p "$HOME/.config/pacman"
+link_file "$DOTFILES/.config/pacman/makepkg.conf" "$HOME/.config/pacman/makepkg.conf"
 
 echo "[9/14] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
