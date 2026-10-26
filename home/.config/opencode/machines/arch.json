@@ -394,6 +394,14 @@
         "/opt/1Password/1password-mcp"
       ],
       "enabled": true
+    },
+    "nalka": {
+      "type": "local",
+      "command": [
+        "/home/marcus/.cargo/bin/nalka",
+        "mcp"
+      ],
+      "enabled": true
     }
   },
   "instructions": [
