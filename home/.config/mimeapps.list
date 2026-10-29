@@ -111,3 +111,5 @@ x-scheme-handler/tonsite=org.telegram.desktop.desktop
 x-scheme-handler/webcal=userapp-Thunderbird-HU79S3.desktop
 x-scheme-handler/webcals=userapp-Thunderbird-HU79S3.desktop
 x-scheme-handler/ton=org.telegram.desktop.desktop
+x-scheme-handler/discord-938876425585434654=discord-938876425585434654.desktop
+x-scheme-handler/discord-1060390251694149703=discord-1060390251694149703.desktop
