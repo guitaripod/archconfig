@@ -3,4 +3,5 @@ Description=Give installed Steam games a real taskbar icon
 
 [Service]
 Type=oneshot
+ExecStartPre=/usr/bin/sleep 20
 ExecStart=%h/.local/bin/steam-taskbar-icons
