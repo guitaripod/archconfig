@@ -164,7 +164,7 @@ for script in toggle-perf guitar tailsend clip-to-twitter; do
 done
 
 if [[ "$HOST" == arch ]]; then
-    for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch; do
+    for script in obsbot-fix-whitebalance plex-backup qbt-add ufc-rss-fetch; do
         cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
         chmod +x "$HOME/.local/bin/$script"
     done
@@ -190,8 +190,8 @@ done
 
 if [[ "$HOST" == arch ]]; then
     for unit in omp-auth-broker.service obsbot-fix-whitebalance.service \
-        qbittorrent-nox.service ufc-rss-fetch.service ufc-rss-fetch.timer \
-        steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service; do
+        plex-backup.service plex-backup.timer qbittorrent-nox.service \
+        ufc-rss-fetch.service ufc-rss-fetch.timer steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service; do
         cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
     done
     cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
@@ -207,15 +207,15 @@ if [[ "$HOST" == x1carbon ]]; then
 fi
 
 if [[ "$HOST" == arch ]]; then
-    systemctl --user enable obsbot-fix-whitebalance.service qbittorrent-nox.service \
+    systemctl --user enable obsbot-fix-whitebalance.service plex-backup.timer qbittorrent-nox.service \
         ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service
 else
-    for unit in obsbot-fix-whitebalance.service qbittorrent-nox.service \
-        ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service; do
+    for unit in obsbot-fix-whitebalance.service plex-backup.timer plex-backup.service \
+        qbittorrent-nox.service ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service; do
         systemctl --user disable --now "$unit" 2>/dev/null || true
         rm -f "$HOME/.config/systemd/user/$unit"
     done
-    rm -f "$HOME/.local/bin/obsbot-fix-whitebalance" "$HOME/.local/bin/qbt-add" \
+    rm -f "$HOME/.local/bin/obsbot-fix-whitebalance" "$HOME/.local/bin/plex-backup" "$HOME/.local/bin/qbt-add" \
         "$HOME/.local/bin/ufc-rss-fetch" "$HOME/.local/bin/steam-taskbar-icons" \
         "$HOME/.local/bin/upscayl-watch"
     rm -f "$HOME/.local/share/applications/qbittorrent-nox.desktop"
