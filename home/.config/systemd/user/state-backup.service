@@ -1,6 +1,0 @@
-[Unit]
-Description=Back up small irreplaceable app state (databases, saves) to Cloudflare R2
-
-[Service]
-Type=oneshot
-ExecStart=%h/.local/bin/state-backup

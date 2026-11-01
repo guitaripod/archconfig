@@ -1,0 +1,64 @@
+[storage]
+backend = "wrangler"
+bucket = "state-backup"
+prefix = "arch"
+
+[retention]
+keep_daily = 30
+keep_monthly = 12
+
+[limits]
+max_snapshot_mb = 1024
+
+[[source]]
+kind = "sqlite"
+name = "plex"
+path = "/var/lib/plex/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db"
+
+[[source]]
+kind = "sqlite"
+name = "nalka"
+path = "~/.local/share/nalka/nalka.db"
+
+[[source]]
+kind = "sqlite"
+name = "hinta"
+path = "~/.local/share/hinta/hinta.db"
+
+[[source]]
+kind = "sqlite"
+name = "blackwall"
+path = "~/.local/share/blackwall/bench.db"
+
+[[source]]
+kind = "sqlite"
+name = "tonight"
+path = "~/.local/share/tonight/tonight.db"
+
+[[source]]
+kind = "files"
+name = "myyty"
+paths = ["~/.local/share/myyty"]
+
+[[source]]
+kind = "files"
+name = "tailscode"
+paths = ["~/.local/share/tailscode/profiles.json"]
+
+[[source]]
+kind = "files"
+name = "steam"
+paths = [
+    "~/.local/share/Steam/userdata/*/config/shortcuts.vdf",
+    "~/.local/share/Steam/userdata/*/config/localconfig.vdf",
+]
+
+[[source]]
+kind = "files"
+name = "emulator-saves"
+paths = [
+    "~/.config/rpcs3/dev_hdd0/home/00000001/savedata",
+    "~/.config/PCSX2/memcards",
+    "~/.config/Ryujinx/bis/user/save",
+    "~/.local/share/Cemu/mlc01/usr/save",
+]

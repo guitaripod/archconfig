@@ -1,0 +1,6 @@
+[Unit]
+Description=Snapshot small irreplaceable app state to Cloudflare R2 with talteen
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/talteen run
