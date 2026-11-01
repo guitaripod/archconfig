@@ -1,0 +1,10 @@
+[Unit]
+Description=Verify the GitHub mirror and both copies every Sunday
+
+[Timer]
+OnCalendar=Sun *-*-* 05:30:00
+Persistent=true
+Unit=github-mirror@verify.service
+
+[Install]
+WantedBy=timers.target

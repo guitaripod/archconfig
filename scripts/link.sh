@@ -164,7 +164,7 @@ for script in toggle-perf guitar tailsend clip-to-twitter; do
 done
 
 if [[ "$HOST" == arch ]]; then
-    for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch; do
+    for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch github-mirror; do
         cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
         chmod +x "$HOME/.local/bin/$script"
     done
@@ -176,6 +176,7 @@ if [[ "$HOST" == arch ]]; then
     mkdir -p "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch" "$HOME/.config/talteen"
     cp "$DOTFILES/.config/talteen/config.toml" "$HOME/.config/talteen/config.toml"
     command -v talteen >/dev/null || echo "  talteen is not installed: cargo install talteen"
+    command -v github-backup >/dev/null || echo "  github-backup is not installed: uv tool install github-backup"
     [ -e "$HOME/.config/upscayl-watch/config.toml" ] || cp "$DOTFILES/.config/upscayl-watch/config.toml" "$HOME/.config/upscayl-watch/"
 fi
 
@@ -193,7 +194,8 @@ done
 if [[ "$HOST" == arch ]]; then
     for unit in omp-auth-broker.service obsbot-fix-whitebalance.service \
         qbittorrent-nox.service talteen.service talteen.timer \
-        ufc-rss-fetch.service ufc-rss-fetch.timer steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service; do
+        ufc-rss-fetch.service ufc-rss-fetch.timer steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service \
+        github-mirror@.service github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer; do
         cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
     done
     cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
@@ -210,16 +212,18 @@ fi
 
 if [[ "$HOST" == arch ]]; then
     systemctl --user enable obsbot-fix-whitebalance.service qbittorrent-nox.service talteen.timer \
-        ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service
+        ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service \
+        github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer
 else
     for unit in obsbot-fix-whitebalance.service qbittorrent-nox.service talteen.timer \
-        talteen.service ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service; do
+        talteen.service ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service \
+        github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer github-mirror@.service; do
         systemctl --user disable --now "$unit" 2>/dev/null || true
         rm -f "$HOME/.config/systemd/user/$unit"
     done
     rm -f "$HOME/.local/bin/obsbot-fix-whitebalance" "$HOME/.local/bin/qbt-add" \
         "$HOME/.local/bin/ufc-rss-fetch" "$HOME/.local/bin/steam-taskbar-icons" \
-        "$HOME/.local/bin/upscayl-watch"
+        "$HOME/.local/bin/upscayl-watch" "$HOME/.local/bin/github-mirror"
     rm -f "$HOME/.local/share/applications/qbittorrent-nox.desktop"
     rm -rf "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch" "$HOME/.config/talteen"
     systemctl --user daemon-reload

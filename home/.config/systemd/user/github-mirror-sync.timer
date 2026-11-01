@@ -1,0 +1,10 @@
+[Unit]
+Description=Copy the GitHub mirror to the backup drive and the mac SD card when they are out of date
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=github-mirror@sync.service
+
+[Install]
+WantedBy=timers.target

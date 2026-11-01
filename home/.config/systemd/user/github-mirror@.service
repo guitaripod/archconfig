@@ -1,0 +1,11 @@
+[Unit]
+Description=GitHub mirror: %i
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/github-mirror %i
+Nice=19
+IOSchedulingClass=idle
+CPUWeight=20
+MemoryHigh=2G
+TimeoutStartSec=8h
