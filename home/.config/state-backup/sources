@@ -1,0 +1,13 @@
+sqlite	plex	/var/lib/plex/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db
+sqlite	nalka	~/.local/share/nalka/nalka.db
+sqlite	hinta	~/.local/share/hinta/hinta.db
+sqlite	blackwall	~/.local/share/blackwall/bench.db
+sqlite	tonight	~/.local/share/tonight/tonight.db
+copy	~/.local/share/myyty
+copy	~/.local/share/tailscode/profiles.json
+copy	~/.local/share/Steam/userdata/*/config/shortcuts.vdf
+copy	~/.local/share/Steam/userdata/*/config/localconfig.vdf
+copy	~/.config/rpcs3/dev_hdd0/home/00000001/savedata
+copy	~/.config/PCSX2/memcards
+copy	~/.config/Ryujinx/bis/user/save
+copy	~/.local/share/Cemu/mlc01/usr/save

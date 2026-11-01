@@ -1,6 +1,0 @@
-[Unit]
-Description=Back up the Plex library database to Cloudflare R2
-
-[Service]
-Type=oneshot
-ExecStart=%h/.local/bin/plex-backup
