@@ -53,28 +53,26 @@ class Link:
     code: str
     name: str
     url: str
+    track_id: str = ""
     subtitle: str = ""
     name_hits: list[int] = field(default_factory=list)
     subtitle_hits: list[int] = field(default_factory=list)
 
-    @property
-    def track_id(self) -> str:
-        found = re.search(r"/id(\d+)", self.url)
-        return found.group(1) if found else ""
-
 
 def read_links(path: Path) -> tuple[list[Link], list[int]]:
-    """Valid rows of links.tsv (code, name, https URL) and the line numbers of malformed ones."""
+    """Valid rows of links.tsv (code, name, https URL, optional App Store ID for the icon) and the line numbers of malformed ones."""
     links, bad = [], []
     for number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         line = raw.rstrip("\r")
         if not line.strip():
             continue
         parts = line.split("\t")
-        if len(parts) != 3 or not parts[0] or not parts[1] or not parts[2].startswith("https://"):
+        if len(parts) == 3:
+            parts.append("")
+        if len(parts) != 4 or not parts[0] or not parts[1] or not parts[2].startswith("https://") or not re.fullmatch(r"\d*", parts[3]):
             bad.append(number)
             continue
-        links.append(Link(parts[0], parts[1], parts[2]))
+        links.append(Link(parts[0], parts[1], parts[2], parts[3]))
     return links, bad
 
 
@@ -100,17 +98,20 @@ def read_meta() -> dict:
 
 
 def icon_path(track_id: str) -> Path | None:
+    if not track_id:
+        return None
     matches = sorted(ICONS.glob(f"{track_id}.*"))
     return matches[0] if matches else None
 
 
 def needs_refresh(links: list[Link], meta: dict) -> bool:
-    """True when an app has no cached subtitle or icon, or the cache is a week old."""
+    """True when an app with an App Store ID has no cached subtitle or icon, or the cache is a week old."""
     try:
         stale = time.time() - META.stat().st_mtime > META_MAX_AGE
     except OSError:
         stale = True
-    return stale or any(l.track_id not in meta or icon_path(l.track_id) is None for l in links)
+    listed = [l.track_id for l in links if l.track_id]
+    return bool(listed) and (stale or any(i not in meta or icon_path(i) is None for i in listed))
 
 
 def subtitle_from(track_name: str, name: str, genre: str) -> str:
@@ -468,6 +469,8 @@ class Picker(QWidget):
         self._refilter()
 
     def icon_for(self, link: Link) -> QPixmap | None:
+        if not link.track_id:
+            return None
         if link.track_id not in self.icons:
             path = icon_path(link.track_id)
             pixmap = QPixmap(str(path)) if path else QPixmap()
