@@ -7,15 +7,13 @@ above=true
 aboverule=2
 placement=7
 placementrule=2
-size=400,510
-sizerule=3
 skippager=true
 skippagerrule=2
 skiptaskbar=true
 skiptaskbarrule=2
 title=App Link
 titlematch=1
-wmclass=org.kde.kdialog
+wmclass=applink
 wmclasscomplete=false
 wmclassmatch=1
 
