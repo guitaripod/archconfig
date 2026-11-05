@@ -163,6 +163,8 @@ for script in toggle-perf guitar tailsend clip-to-twitter applink; do
     cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
     chmod +x "$HOME/.local/bin/$script"
 done
+cp "$SCRIPT_DIR/applink-picker.py" "$HOME/.local/bin/applink-picker"
+chmod +x "$HOME/.local/bin/applink-picker"
 
 if [[ "$HOST" == arch ]]; then
     for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch github-mirror; do

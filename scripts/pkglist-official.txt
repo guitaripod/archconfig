@@ -125,6 +125,7 @@ podman-compose
 print-manager
 python-fastbencode
 python-pip
+python-pyqt6
 python-virtualenv
 qbittorrent-nox
 qemu-full

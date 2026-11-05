@@ -2,8 +2,6 @@
 set -uo pipefail
 
 NAME="App Link"
-LINKS="$HOME/.config/applink/links.tsv"
-LAST="$HOME/.local/state/applink/last"
 LOCK="${XDG_RUNTIME_DIR:-/tmp}/applink.lock"
 TERMINALS='^([a-z0-9-]+\.)*(ghostty|konsole|yakuake|kitty|alacritty|foot|footclient|wezterm)$'
 export YDOTOOL_SOCKET="/run/user/$(id -u)/.ydotool_socket"
@@ -42,42 +40,13 @@ ensure_ydotoold() {
 exec 9>"$LOCK"
 flock -n 9 || exit 0
 
-[[ -r "$LINKS" ]] || die "Missing $LINKS"
-
-declare -A urls labels
-menu=()
-bad=()
-n=0
-while IFS= read -r line || [[ -n "$line" ]]; do
-    n=$((n + 1))
-    line=${line%$'\r'}
-    [[ -z "$line" ]] && continue
-    IFS=$'\t' read -r code name url extra <<<"$line"
-    if [[ -z "$code" || -z "$name" || "$url" != https://* || -n "$extra" || "$line" == *$'\t\t'* ]]; then
-        bad+=("$n")
-        continue
-    fi
-    urls[$code]=$url
-    labels[$code]=$name
-    menu+=("$code" "${labels[$code]}")
-done < "$LINKS"
-
-[[ ${#bad[@]} -gt 0 ]] && notify-send -a "$NAME" "$NAME" "Skipped malformed lines in $LINKS: ${bad[*]}"
-[[ ${#menu[@]} -gt 0 ]] || die "No links in $LINKS"
-
 window=$(kdotool getactivewindow 2>/dev/null || true)
 class=""
 [[ -n "$window" ]] && class=$(kdotool getwindowclassname "$window" 2>/dev/null || true)
 
-last=$(cat "$LAST" 2>/dev/null || true)
-default=${labels[${last:-none}]:-${menu[1]}}
-
-choice=$(kdialog --title "$NAME" --default "$default" --menu "Paste the App Store link for:" "${menu[@]}" 2>/dev/null) || exit 0
-url=${urls[$choice]:-}
+url=$("${BASH_SOURCE[0]%/*}/applink-picker") || exit 0
 [[ -n "$url" ]] || exit 0
 
-mkdir -p "${LAST%/*}"
-printf '%s\n' "$choice" > "$LAST"
 printf '%s' "$url" | wl-copy 9>&- || die "wl-copy failed"
 
 [[ -n "$window" ]] || { notify-send -a "$NAME" "$NAME" "No focused window to paste into; the link is on the clipboard"; exit 0; }
