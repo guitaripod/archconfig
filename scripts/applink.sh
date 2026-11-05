@@ -58,7 +58,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
         continue
     fi
     urls[$code]=$url
-    labels[$code]="$name   $code"
+    labels[$code]=$name
     menu+=("$code" "${labels[$code]}")
 done < "$LINKS"
 
