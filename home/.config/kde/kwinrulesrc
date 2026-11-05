@@ -1,5 +1,23 @@
 [General]
-Order=emojipick,putki-menu,putki-pip,tailscode-centered
+Order=emojipick,applink,putki-menu,putki-pip,tailscode-centered
+
+[applink]
+Description=applink picker
+above=true
+aboverule=2
+placement=5
+placementrule=2
+size=400,510
+sizerule=3
+skippager=true
+skippagerrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+title=App Link
+titlematch=1
+wmclass=org.kde.kdialog
+wmclasscomplete=false
+wmclassmatch=1
 
 [emojipick]
 Description=emojipick centered palette
