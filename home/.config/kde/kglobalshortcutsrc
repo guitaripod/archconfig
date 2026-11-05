@@ -328,6 +328,9 @@ switch to next activity=none,none,Switch to Next Activity
 switch to previous activity=none,none,Switch to Previous Activity
 toggle do not disturb=none,none,Toggle do not disturb
 
+[services][applink.desktop]
+_launch=Meta+Shift+L
+
 [services][display-lg-only.desktop]
 _launch=Meta+8
 

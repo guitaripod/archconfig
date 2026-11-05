@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Paste App Link
+Comment=Pick one of my apps and paste its App Store link into the focused field
+Exec=/home/marcus/.local/bin/applink
+Icon=insert-link
+Terminal=false
+NoDisplay=true
+StartupNotify=false

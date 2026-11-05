@@ -158,7 +158,7 @@ fi
 
 echo "[12/14] Installing custom scripts..."
 mkdir -p "$HOME/.local/bin"
-for script in toggle-perf guitar tailsend clip-to-twitter; do
+for script in toggle-perf guitar tailsend clip-to-twitter applink; do
     cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
     chmod +x "$HOME/.local/bin/$script"
 done
@@ -184,6 +184,9 @@ mkdir -p "$HOME/.local/share/kio/servicemenus" "$HOME/.local/share/applications"
 cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/share/kio/servicemenus/"
 chmod +x "$HOME/.local/share/kio/servicemenus/tailsend.desktop"
 cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.local/share/applications/"
+cp "$DOTFILES/.local/share/applications/applink.desktop" "$HOME/.local/share/applications/"
+mkdir -p "$HOME/.config/applink"
+link_file "$DOTFILES/.config/applink/links.tsv" "$HOME/.config/applink/links.tsv"
 
 echo "[13/14] Installing user services..."
 mkdir -p "$HOME/.config/systemd/user"
