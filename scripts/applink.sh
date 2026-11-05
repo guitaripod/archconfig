@@ -4,7 +4,8 @@ set -uo pipefail
 NAME="App Link"
 LINKS="$HOME/.config/applink/links.tsv"
 LAST="$HOME/.local/state/applink/last"
-TERMINALS='ghostty|konsole|kitty|alacritty|foot|wezterm|xterm|yakuake'
+LOCK="${XDG_RUNTIME_DIR:-/tmp}/applink.lock"
+TERMINALS='^([a-z0-9-]+\.)*(ghostty|konsole|yakuake|kitty|alacritty|foot|footclient|wezterm)$'
 export YDOTOOL_SOCKET="/run/user/$(id -u)/.ydotool_socket"
 
 die() { notify-send -a "$NAME" -u critical "$NAME" "$1"; exit 1; }
@@ -18,6 +19,16 @@ paste_chord() {
     fi
 }
 
+# Activate the window the picker was opened over and wait up to half a second for KWin to report it active.
+focus_window() {
+    kdotool windowactivate "$1" 2>/dev/null
+    for _ in {1..10}; do
+        [[ "$(kdotool getactivewindow 2>/dev/null)" == "$1" ]] && return 0
+        sleep 0.05
+    done
+    return 1
+}
+
 # Start the ydotool user unit if needed and wait up to a second for its socket.
 ensure_ydotoold() {
     systemctl --user is-active --quiet ydotool || systemctl --user start ydotool
@@ -28,17 +39,30 @@ ensure_ydotoold() {
     return 1
 }
 
+exec 9>"$LOCK"
+flock -n 9 || exit 0
+
 [[ -r "$LINKS" ]] || die "Missing $LINKS"
 
 declare -A urls labels
 menu=()
-while IFS=$'\t' read -r code name url; do
-    [[ -z "$code" || -z "$url" ]] && continue
+bad=()
+n=0
+while IFS= read -r line || [[ -n "$line" ]]; do
+    n=$((n + 1))
+    line=${line%$'\r'}
+    [[ -z "$line" ]] && continue
+    IFS=$'\t' read -r code name url extra <<<"$line"
+    if [[ -z "$code" || -z "$name" || "$url" != https://* || -n "$extra" || "$line" == *$'\t\t'* ]]; then
+        bad+=("$n")
+        continue
+    fi
     urls[$code]=$url
     labels[$code]="$name   $code"
     menu+=("$code" "${labels[$code]}")
 done < "$LINKS"
 
+[[ ${#bad[@]} -gt 0 ]] && notify-send -a "$NAME" "$NAME" "Skipped malformed lines in $LINKS: ${bad[*]}"
 [[ ${#menu[@]} -gt 0 ]] || die "No links in $LINKS"
 
 window=$(kdotool getactivewindow 2>/dev/null || true)
@@ -54,9 +78,10 @@ url=${urls[$choice]:-}
 
 mkdir -p "${LAST%/*}"
 printf '%s\n' "$choice" > "$LAST"
-printf '%s' "$url" | wl-copy || die "wl-copy failed"
+printf '%s' "$url" | wl-copy 9>&- || die "wl-copy failed"
 
+[[ -n "$window" ]] || { notify-send -a "$NAME" "$NAME" "No focused window to paste into; the link is on the clipboard"; exit 0; }
 ensure_ydotoold || die "ydotoold is not running; the link is on the clipboard"
-[[ -n "$window" ]] && kdotool windowactivate "$window" 2>/dev/null
-sleep 0.15
+focus_window "$window" || die "The window you were in is gone; the link is on the clipboard"
+sleep 0.1
 ydotool key $(paste_chord "$class") >/dev/null 2>&1 || die "Paste failed; the link is on the clipboard"
