@@ -1,0 +1,56 @@
+[General]
+Order=emojipick,putki-menu,putki-pip,tailscode-centered
+
+[emojipick]
+Description=emojipick centered palette
+above=true
+aboverule=2
+placement=5
+placementrule=2
+skippager=true
+skippagerrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+wmclass=emojipick
+wmclasscomplete=false
+wmclassmatch=2
+
+[putki-menu]
+Description=putki menu
+above=true
+aboverule=2
+decorationpolicy=none
+decorationpolicyrule=2
+placement=5
+placementrule=2
+skippager=true
+skippagerrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+wmclass=com.guitaripod.putki
+wmclasscomplete=false
+wmclassmatch=2
+
+[putki-pip]
+Description=putki picture in picture
+above=true
+aboverule=2
+decorationpolicy=none
+decorationpolicyrule=2
+position=2813,1570
+positionrule=3
+skippager=true
+skippagerrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+wmclass=putki-pip
+wmclasscomplete=false
+wmclassmatch=2
+
+[tailscode-centered]
+Description=Tailscode windows open centered
+placement=5
+placementrule=2
+wmclass=io.github.guitaripod.Tailscode
+wmclasscomplete=false
+wmclassmatch=1
