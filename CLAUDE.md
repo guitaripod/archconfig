@@ -37,6 +37,7 @@ etc/                      # System configs (mirrors /etc/)
   etc/samba/smb.conf      # Tailnet-only share
   etc/ssh/sshd_config.d/  # Key-only sshd
   etc/sysctl.d/           # kptr_restrict
+  etc/pacman.d/hooks/     # 1password-mcp setgid onepassword after each 1password upgrade (the app rejects MCP clients without it)
 ```
 
 ## Workflow
