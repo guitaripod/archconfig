@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=hdr-game restore
+Comment=Put a display back to SDR if a game left it in HDR when the session ended
+Exec=/home/marcus/.local/bin/hdr-game --restore
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

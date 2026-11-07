@@ -136,6 +136,11 @@ echo "[9/14] Linking autostart entries..."
 mkdir -p "$HOME/.config/autostart"
 rm -f "$HOME/.config/autostart/themeswitch.desktop"
 link_file "$DOTFILES/.config/autostart/xmousepasteblock.desktop" "$HOME/.config/autostart/xmousepasteblock.desktop"
+if [[ "$HOST" == arch ]]; then
+    link_file "$DOTFILES/.config/autostart/hdr-game-restore.desktop" "$HOME/.config/autostart/hdr-game-restore.desktop"
+else
+    rm -f "$HOME/.config/autostart/hdr-game-restore.desktop"
+fi
 
 echo "[10/14] Linking PipeWire configs..."
 mkdir -p "$HOME/.config/pipewire/pipewire.conf.d"
@@ -167,7 +172,7 @@ cp "$SCRIPT_DIR/applink-picker.py" "$HOME/.local/bin/applink-picker"
 chmod +x "$HOME/.local/bin/applink-picker"
 
 if [[ "$HOST" == arch ]]; then
-    for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch github-mirror; do
+    for script in obsbot-fix-whitebalance qbt-add ufc-rss-fetch github-mirror hdr-game; do
         cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
         chmod +x "$HOME/.local/bin/$script"
     done
@@ -229,7 +234,7 @@ else
     done
     rm -f "$HOME/.local/bin/obsbot-fix-whitebalance" "$HOME/.local/bin/qbt-add" \
         "$HOME/.local/bin/ufc-rss-fetch" "$HOME/.local/bin/steam-taskbar-icons" \
-        "$HOME/.local/bin/upscayl-watch" "$HOME/.local/bin/github-mirror"
+        "$HOME/.local/bin/upscayl-watch" "$HOME/.local/bin/github-mirror" "$HOME/.local/bin/hdr-game"
     rm -f "$HOME/.local/share/applications/qbittorrent-nox.desktop"
     rm -rf "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch" "$HOME/.config/talteen"
     systemctl --user daemon-reload
