@@ -172,10 +172,28 @@ proton_of() {
   done
 }
 
-# Valve's Proton has no Wayland driver, so its games render through Xwayland and never get an
-# HDR swapchain; switching the display for them only washes the picture out.
-proton_reaches_hdr() {
-  compgen -G "$(dirname "$1")/files/lib/wine/x86_64-unix/winewayland.so" >/dev/null
+# Why a Proton build cannot show this game in HDR on its own, or nothing when it can. Valve's
+# Proton has no Wayland driver, so its games render through Xwayland and never get an HDR
+# swapchain. GE-Proton before 11-10 hands KWin 6.8 HDR10 frames it renders purple.
+proton_hdr_problem() {
+  local build
+  build=$(basename "$(dirname "$1")")
+  if ! compgen -G "$(dirname "$1")/files/lib/wine/x86_64-unix/winewayland.so" >/dev/null; then
+    echo "$build has no Wayland driver"
+  elif [[ "$build" =~ ^GE-Proton([0-9]+)-([0-9]+) ]] &&
+    (( BASH_REMATCH[1] < 11 || (BASH_REMATCH[1] == 11 && BASH_REMATCH[2] < 10) )); then
+    echo "$build renders HDR10 purple on KWin 6.8 (fixed in GE-Proton11-10)"
+  fi
+}
+
+# gamescope composites the game itself and turns HDR on for it when the output is in HDR, so a
+# game under gamescope only needs the switch, and Wine's Wayland driver has to stay off inside it.
+under_gamescope() {
+  local argument
+  for argument in "$@"; do
+    [[ "${argument##*/}" == *gamescope* ]] && return 0
+  done
+  return 1
 }
 
 case "${1:-}" in
@@ -185,9 +203,13 @@ case "${1:-}" in
 esac
 
 proton=$(proton_of "$@")
-if [[ -n "$proton" ]] && ! proton_reaches_hdr "$proton"; then
-  say "$(basename "$(dirname "$proton")") has no Wayland driver, so no HDR; pick GE-Proton for this game. Starting it in SDR."
-  exec "$@"
+under_gamescope "$@" && gamescope=1 || gamescope=""
+if [[ -n "$proton" && -z "$gamescope" ]]; then
+  problem=$(proton_hdr_problem "$proton")
+  if [[ -n "$problem" ]]; then
+    say "$problem; pick GE-Proton 11-10 or newer for this game. Starting it in SDR."
+    exec "$@"
+  fi
 fi
 
 output=$(target_output)
@@ -205,7 +227,7 @@ if with_lock acquire "$output" "$uuid" "$session"; then
     say "could not start the guard; HDR on $output stays on until 'hdr-game --restore'"
 fi
 
-if [[ -n "$proton" ]]; then
+if [[ -n "$proton" && -z "$gamescope" ]]; then
   export PROTON_ENABLE_WAYLAND="${PROTON_ENABLE_WAYLAND:-1}"
   export PROTON_ENABLE_HDR="${PROTON_ENABLE_HDR:-1}"
   export WAYLANDDRV_PRIMARY_MONITOR="${WAYLANDDRV_PRIMARY_MONITOR:-$output}"
