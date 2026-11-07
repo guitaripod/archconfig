@@ -35,7 +35,9 @@ for o in json.load(sys.stdin)["outputs"]:
 }
 
 # The connector to switch: $HDR_GAME_OUTPUT, else the enabled output with the top priority,
-# which is the primary that fullscreen games open on.
+# which is the primary that fullscreen games open on. Wine's Wayland driver takes the output at
+# (0,0) as its primary instead, so the game is pointed at this one with WAYLANDDRV_PRIMARY_MONITOR,
+# or it sizes its fullscreen window to that other monitor.
 target_output() {
   if [[ -n "${HDR_GAME_OUTPUT:-}" ]]; then
     printf '%s\n' "$HDR_GAME_OUTPUT"
@@ -206,5 +208,6 @@ fi
 if [[ -n "$proton" ]]; then
   export PROTON_ENABLE_WAYLAND="${PROTON_ENABLE_WAYLAND:-1}"
   export PROTON_ENABLE_HDR="${PROTON_ENABLE_HDR:-1}"
+  export WAYLANDDRV_PRIMARY_MONITOR="${WAYLANDDRV_PRIMARY_MONITOR:-$output}"
 fi
 exec "$@"
