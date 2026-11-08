@@ -23,7 +23,7 @@ import time
 DEFAULT_HELPER_THREADS = (
     r"^(NxStorage|Job Lo|audio_client|FAudio|Texture Streami|File Video Stre|Pipeline creati|"
     r"Pipeline write|Archive|Asset Load|UXAnalytics|Save Thread|Stats thread|TTY Transmitter|"
-    r"wine_|mangohud|sl\.log|cuda|\[vk|vkd3d-disk|Touch Pad|MessageThread|ResourceCreatio)"
+    r"wine_|mangohud|sl\.log|cuda|\[vk|vkd3d-disk|dxvk-shader|Touch Pad|MessageThread|ResourceCreatio)"
 )
 HELPER_PROCESSES = re.compile(
     r"(crs-handler|crashreport|system32\\steam\.exe|explorer\.exe|winedevice\.exe|services\.exe|"
