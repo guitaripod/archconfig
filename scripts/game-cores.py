@@ -32,16 +32,22 @@ HELPER_PROCESSES = re.compile(
 )
 POLL_SECONDS = 2.0
 PR_SET_CHILD_SUBREAPER = 36
+FORWARDED_SIGNALS = (signal.SIGTERM, signal.SIGINT, signal.SIGHUP)
+
+
+def _read(path: str) -> str:
+    """Reads a /proc file as text, tolerating non-UTF-8 thread names; empty when the task is gone."""
+    try:
+        with open(path, "rb") as f:
+            return f.read().decode(errors="replace")
+    except OSError:
+        return ""
 
 
 def _cpu_list(path: str) -> set[int]:
     """Parses a sysfs CPU list such as "0-15,20" into a set, or an empty set when absent."""
-    try:
-        text = open(path).read().strip()
-    except OSError:
-        return set()
     cpus: set[int] = set()
-    for part in filter(None, text.split(",")):
+    for part in filter(None, _read(path).strip().split(",")):
         first, _, last = part.partition("-")
         cpus.update(range(int(first), int(last or first) + 1))
     return cpus
@@ -53,14 +59,14 @@ def _children_map() -> dict[int, list[int]]:
     for entry in os.listdir("/proc"):
         if not entry.isdigit():
             continue
+        stat = _read(f"/proc/{entry}/stat")
         try:
-            stat = open(f"/proc/{entry}/stat").read()
-        except OSError:
+            fields = stat[stat.rindex(")") + 2 :].split()
+            if fields[0] == "Z":
+                continue
+            children.setdefault(int(fields[1]), []).append(int(entry))
+        except (ValueError, IndexError):
             continue
-        fields = stat[stat.rindex(")") + 2 :].split()
-        if fields[0] == "Z":
-            continue
-        children.setdefault(int(fields[1]), []).append(int(entry))
     return children
 
 
@@ -75,13 +81,6 @@ def _process_tree(root: int) -> list[int]:
     return found
 
 
-def _cmdline(pid: int) -> str:
-    try:
-        return open(f"/proc/{pid}/cmdline", "rb").read().replace(b"\0", b" ").decode(errors="replace")
-    except OSError:
-        return ""
-
-
 def _pin(tid: int, cpus: set[int]) -> None:
     """Sets one thread's affinity when it differs, ignoring threads that exit meanwhile."""
     try:
@@ -94,59 +93,79 @@ def _pin(tid: int, cpus: set[int]) -> None:
 def _place(root: int, p_cores: set[int], e_cores: set[int], helper_threads: re.Pattern[str]) -> None:
     """Puts helper processes and helper threads on the E-cores and every other thread on the P-cores."""
     for pid in _process_tree(root):
-        helper_process = bool(HELPER_PROCESSES.search(_cmdline(pid)))
+        helper_process = bool(HELPER_PROCESSES.search(_read(f"/proc/{pid}/cmdline").replace("\0", " ")))
         try:
             tids = os.listdir(f"/proc/{pid}/task")
         except OSError:
             continue
         for tid in tids:
-            try:
-                name = open(f"/proc/{pid}/task/{tid}/comm").read().rstrip("\n")
-            except OSError:
-                continue
-            on_e = helper_process or bool(helper_threads.match(name))
-            _pin(int(tid), e_cores if on_e else p_cores)
+            name = _read(f"/proc/{pid}/task/{tid}/comm").rstrip("\n")
+            if name:
+                _pin(int(tid), e_cores if helper_process or helper_threads.match(name) else p_cores)
 
 
 def _become_subreaper() -> None:
     """Adopts orphaned descendants, so a game that Wine starts through a double fork stays in our tree."""
-    libc = ctypes.CDLL(None, use_errno=True)
-    libc.prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0)
+    ctypes.CDLL(None, use_errno=True).prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0)
+
+
+def _forward(signum: int) -> None:
+    """Passes a stop signal to the whole tree, since Proton's script dies without relaying it to Wine."""
+    for pid in _process_tree(os.getpid())[1:]:
+        try:
+            os.kill(pid, signum)
+        except OSError:
+            pass
 
 
 def _reap(child: int) -> int | None:
-    """Collects every exited descendant and returns the direct child's exit code once it has exited."""
+    """Collects every exited descendant and returns the direct child's wait status once it has exited."""
     while True:
         try:
             pid, status = os.waitpid(-1, os.WNOHANG)
         except ChildProcessError:
             return 0
+        except InterruptedError:
+            continue
         if pid == 0:
             return None
         if pid == child:
-            return os.waitstatus_to_exitcode(status)
+            return status
 
 
-def main() -> int:
-    if len(sys.argv) < 2:
-        print("usage: game-cores <command> [args...]", file=sys.stderr)
-        return 2
+def _exit_like(status: int) -> None:
+    """Exits with the child's code, or dies by the same signal so Steam sees a signal exit."""
+    if os.WIFSIGNALED(status):
+        sig = os.WTERMSIG(status)
+        signal.signal(sig, signal.SIG_DFL)
+        os.kill(os.getpid(), sig)
+    sys.exit(os.waitstatus_to_exitcode(status))
+
+
+def main() -> None:
+    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
+        print(__doc__.strip() if __doc__ else "usage: game-cores <command> [args...]")
+        sys.exit(0 if len(sys.argv) > 1 else 2)
     command = sys.argv[1:]
     p_cores = _cpu_list("/sys/devices/cpu_core/cpus")
     e_cores = _cpu_list("/sys/devices/cpu_atom/cpus")
-    if not p_cores or not e_cores or os.environ.get("GAME_CORES", "").lower() == "off":
-        os.execvp(command[0], command)
-    helper_threads = re.compile(os.environ.get("GAME_CORES_HELPERS", DEFAULT_HELPER_THREADS))
-    os.sched_setaffinity(0, p_cores)
-    _become_subreaper()
-    child = os.posix_spawnp(command[0], command, os.environ)
-    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
-        signal.signal(sig, lambda signum, _: os.kill(child, signum))
-    while (code := _reap(child)) is None:
+    try:
+        if not p_cores or not e_cores or os.environ.get("GAME_CORES", "").lower() == "off":
+            os.execvp(command[0], command)
+        helper_threads = re.compile(os.environ.get("GAME_CORES_HELPERS", DEFAULT_HELPER_THREADS))
+        os.sched_setaffinity(0, p_cores)
+        _become_subreaper()
+        child = os.posix_spawnp(command[0], command, os.environ)
+    except OSError as err:
+        print(f"game-cores: {command[0]}: {err.strerror}", file=sys.stderr)
+        sys.exit(127)
+    for sig in FORWARDED_SIGNALS:
+        signal.signal(sig, lambda signum, _: _forward(signum))
+    while (status := _reap(child)) is None:
         _place(os.getpid(), p_cores, e_cores, helper_threads)
         time.sleep(POLL_SECONDS)
-    return code
+    _exit_like(status)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
