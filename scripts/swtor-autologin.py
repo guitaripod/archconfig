@@ -16,6 +16,7 @@ Progress, never a secret, goes to ~/.local/state/swtor-autologin.log.
 from __future__ import annotations
 
 import ctypes
+import datetime
 import os
 import re
 import sys
@@ -61,41 +62,38 @@ def _read_env(path: str, timeout: float) -> dict[str, str]:
 
 
 class _LogWatch:
-    """Follows the launcher's debug log, which is rewritten on each launch, reading only lines written after `since`."""
+    """Reads the launcher's debug log, keeping only lines stamped at or after `since`; the launcher rewrites the file on each start."""
+
+    STAMP = re.compile(r"^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d)\.\d+([+-]\d\d)")
 
     def __init__(self, path: str, since: float) -> None:
         self.path = path
-        self.since = since
-        try:
-            st = os.stat(path)
-            self.inode, self.offset = st.st_ino, st.st_size
-        except OSError:
-            self.inode, self.offset = None, 0
-        self.text = ""
+        self.since = since - 2
+
+    def _stamp(self, line: str) -> float | None:
+        m = self.STAMP.match(line)
+        if not m:
+            return None
+        local = datetime.datetime.strptime(m.group(1), "%Y-%m-%dT%H:%M:%S")
+        offset = datetime.timezone(datetime.timedelta(hours=int(m.group(2))))
+        return local.replace(tzinfo=offset).timestamp()
 
     def poll(self) -> str:
-        """Returns all new launcher log text seen so far in this launch."""
+        """All launcher log lines written since this launch began."""
         try:
-            st = os.stat(self.path)
+            with open(self.path, "rb") as f:
+                raw = f.read().decode(errors="replace")
         except OSError:
-            return self.text
-        if st.st_mtime < self.since:
-            return self.text
-        if st.st_ino != self.inode or st.st_size < self.offset:
-            self.inode, self.offset, self.text = st.st_ino, 0, ""
-        with open(self.path, "rb") as f:
-            f.seek(self.offset)
-            chunk = f.read()
-        self.offset += len(chunk)
-        self.text += chunk.decode(errors="replace")
-        return self.text
+            return ""
+        return "\n".join(line for line in raw.splitlines() if (self._stamp(line) or 0) >= self.since)
 
-    def wait(self, pattern: re.Pattern[str], timeout: float, fail: re.Pattern[str] | None = None) -> str | None:
-        """Waits for `pattern` in new log text; returns "fail" if `fail` shows up first, None on timeout."""
-        start = len(self.text)
+    def wait(self, pattern: re.Pattern[str], timeout: float, fail: re.Pattern[str] | None = None,
+             after: str = "") -> str | None:
+        """Waits for `pattern` in lines newer than `after`; returns "fail" if `fail` shows up first, None on timeout."""
         deadline = time.time() + timeout
         while time.time() < deadline:
-            new = self.poll()[start:]
+            text = self.poll()
+            new = text[len(after):] if text.startswith(after) else text
             if fail and fail.search(new):
                 return "fail"
             if pattern.search(new):
@@ -277,36 +275,44 @@ def _launcher_window(x: _X, timeout: float) -> int:
 
 def _helper(started: float) -> None:
     """Logs in and presses Play, or stops and leaves the launcher to the user at the first surprise."""
-    secrets = _read_env(ENV_FILE, 60)
-    password = secrets.get("SWTOR_PASSWORD", "")
-    if not password:
-        _log("no SWTOR_PASSWORD (1Password locked or the .env not mounted); log in by hand")
-        return
+    _log("started")
+    secrets: dict[str, str] = {}
+    reader = threading.Thread(target=lambda: secrets.update(_read_env(ENV_FILE, 60)), daemon=True)
+    reader.start()
     prefix = os.environ.get("STEAM_COMPAT_DATA_PATH", DEFAULT_PREFIX)
     watch = _LogWatch(os.path.join(prefix, LAUNCHER_LOG), started)
     if watch.wait(READY, 180) != "ok":
         _log("the launcher never reached its login form; nothing typed")
         return
+    reader.join(max(0.0, started + 60 - time.time()))
+    password = secrets.get("SWTOR_PASSWORD", "")
+    if not password:
+        _log("no SWTOR_PASSWORD (1Password locked, empty value or the .env not mounted); log in by hand")
+        return
+    _log("login form ready, password loaded")
     x = _X()
     win = _launcher_window(x, 30)
     if not win or not x.activate(win):
         _log("could not focus the launcher window; nothing typed")
         return
     time.sleep(0.5)
+    before = watch.poll()
     if not x.type_into(win, password) or not x.press_return(win):
         _log("focus left the launcher while typing (or a character has no key); stopped")
         return
     _log("password submitted")
-    result = watch.wait(LOGGED_IN, 60, LOGIN_FAILED)
+    result = watch.wait(LOGGED_IN, 60, LOGIN_FAILED, after=before)
     if result != "ok":
         _log("login " + ("rejected" if result == "fail" else "did not finish in 60 s") + "; finish it by hand")
         return
+    _log("logged in")
     time.sleep(3)
+    before = watch.poll()
     win = _launcher_window(x, 10)
     if not win or not x.activate(win) or not x.press_return(win):
         _log("logged in, but could not press Play; click it yourself")
         return
-    if watch.wait(LAUNCHED, 30) == "ok":
+    if watch.wait(LAUNCHED, 30, after=before) == "ok":
         _log("game launched")
     else:
         _log("logged in and pressed Return, but the game did not start; click Play yourself")
