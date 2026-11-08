@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Fill in the SWTOR launcher's password and press Play, so a Steam launch needs no typing.
+"""Fill in and submit the SWTOR launcher's password, so a Steam launch needs no typing.
 
 Steam launch options (SWTOR, appid 1286830):
-    ... /home/marcus/.local/bin/swtor-autologin /home/marcus/.local/bin/game-cores mangohud obs-gamecapture %command%
+    ... /home/marcus/.local/bin/swtor-autologin mangohud obs-gamecapture %command%
 
 The wrapper runs the launch command unchanged and forks a helper. The helper reads
 SWTOR_PASSWORD from the 1Password-mounted ~/.config/swtor-autologin/.env, waits until the
 launcher logs that it focused the password field, types the password into the launcher
-window only (keyboard focus is checked before every key), submits, and presses Play once the
-launcher leaves the login screen. Anything unexpected (1Password locked, another window
-focused, a login error, an unknown screen) stops the helper and leaves the launcher to you.
+window only (keyboard focus is checked before every key) and submits it with Return. Pressing
+Play stays with the user. Anything unexpected (1Password locked, another window focused, no
+login form) stops the helper and leaves the launcher to you.
 Progress, never a secret, goes to ~/.local/state/swtor-autologin.log.
 """
 
@@ -28,9 +28,6 @@ OWN_LOG = os.path.join(os.environ.get("XDG_STATE_HOME", os.path.expanduser("~/.l
 DEFAULT_PREFIX = "/mnt/nvme8tb/SteamLibrary/steamapps/compatdata/1286830"
 LAUNCHER_LOG = "pfx/drive_c/users/steamuser/AppData/LocalLow/BioWare/Star Wars - The Old Republic Steam Launcher/host.developer.log"
 READY = re.compile(r"Remembered username found, focusing on password field")
-LOGGED_IN = re.compile(r"State Change Success - login -> (?!login\b)\S+")
-LOGIN_FAILED = re.compile(r"(?i)bad password|invalid (credentials|password)|incorrect password|login failed")
-LAUNCHED = re.compile(r"(?i)game successfully launched|user pressed play|retailclient\\swtor\.exe")
 LAUNCHER_TITLE = b"Old Republic"
 
 
@@ -141,7 +138,10 @@ class _X:
         x.XQueryTree.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.POINTER(ctypes.c_ulong), ctypes.POINTER(ctypes.c_ulong),
                                  ctypes.POINTER(ctypes.POINTER(ctypes.c_ulong)), ctypes.POINTER(ctypes.c_uint)]
         x.XGetClassHint.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.POINTER(_XClassHint)]
-        x.XFetchName.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.POINTER(ctypes.c_char_p)]
+        x.XGetWindowProperty.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.c_ulong, ctypes.c_long, ctypes.c_long, ctypes.c_int,
+                                         ctypes.c_ulong, ctypes.POINTER(ctypes.c_ulong), ctypes.POINTER(ctypes.c_int),
+                                         ctypes.POINTER(ctypes.c_ulong), ctypes.POINTER(ctypes.c_ulong),
+                                         ctypes.POINTER(ctypes.POINTER(ctypes.c_ubyte))]
         x.XGetWindowAttributes.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.POINTER(_XWindowAttributes)]
         x.XGetInputFocus.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_ulong), ctypes.POINTER(ctypes.c_int)]
         x.XSetInputFocus.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
@@ -183,12 +183,23 @@ class _X:
 
     def _matches(self, win: int, wm_class: bytes) -> bool:
         """True for a window of this Steam app whose title names the game, which only the launcher has before Play."""
-        hint, name = _XClassHint(), ctypes.c_char_p()
+        hint = _XClassHint()
         if not self.x.XGetClassHint(self.d, win, ctypes.byref(hint)) or hint.res_class != wm_class:
             return False
-        if not self.x.XFetchName(self.d, win, ctypes.byref(name)) or not name.value:
-            return False
-        return LAUNCHER_TITLE in name.value and b"EXCLUSIVE" not in name.value
+        title = self._title(win)
+        return LAUNCHER_TITLE in title and b"EXCLUSIVE" not in title
+
+    def _title(self, win: int) -> bytes:
+        """The window's _NET_WM_NAME; Wine writes WM_NAME as COMPOUND_TEXT, which XFetchName cannot return."""
+        kind, fmt, count, rest = ctypes.c_ulong(), ctypes.c_int(), ctypes.c_ulong(), ctypes.c_ulong()
+        data = ctypes.POINTER(ctypes.c_ubyte)()
+        atom = self.x.XInternAtom(self.d, b"_NET_WM_NAME", 0)
+        if self.x.XGetWindowProperty(self.d, win, atom, 0, 1024, 0, 0, ctypes.byref(kind), ctypes.byref(fmt),
+                                     ctypes.byref(count), ctypes.byref(rest), ctypes.byref(data)) != 0 or not data:
+            return b""
+        title = ctypes.string_at(data, count.value)
+        self.x.XFree(data)
+        return title
 
     def find_launcher(self) -> int:
         """The largest viewable window of this Steam app titled with the game's name, or 0."""
@@ -274,7 +285,7 @@ def _launcher_window(x: _X, timeout: float) -> int:
 
 
 def _helper(started: float) -> None:
-    """Logs in and presses Play, or stops and leaves the launcher to the user at the first surprise."""
+    """Types the password into the login form and submits it, or stops and leaves the launcher to the user at the first surprise."""
     _log("started")
     secrets: dict[str, str] = {}
     reader = threading.Thread(target=lambda: secrets.update(_read_env(ENV_FILE, 60)), daemon=True)
@@ -295,27 +306,11 @@ def _helper(started: float) -> None:
     if not win or not x.activate(win):
         _log("could not focus the launcher window; nothing typed")
         return
-    time.sleep(0.5)
-    before = watch.poll()
+    time.sleep(2)
     if not x.type_into(win, password) or not x.press_return(win):
         _log("focus left the launcher while typing (or a character has no key); stopped")
         return
     _log("password submitted")
-    result = watch.wait(LOGGED_IN, 60, LOGIN_FAILED, after=before)
-    if result != "ok":
-        _log("login " + ("rejected" if result == "fail" else "did not finish in 60 s") + "; finish it by hand")
-        return
-    _log("logged in")
-    time.sleep(3)
-    before = watch.poll()
-    win = _launcher_window(x, 10)
-    if not win or not x.activate(win) or not x.press_return(win):
-        _log("logged in, but could not press Play; click it yourself")
-        return
-    if watch.wait(LAUNCHED, 30, after=before) == "ok":
-        _log("game launched")
-    else:
-        _log("logged in and pressed Return, but the game did not start; click Play yourself")
 
 
 def main() -> None:
