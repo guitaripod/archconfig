@@ -176,7 +176,7 @@ if [[ "$HOST" == arch ]]; then
         cp "$SCRIPT_DIR/$script.sh" "$HOME/.local/bin/$script"
         chmod +x "$HOME/.local/bin/$script"
     done
-    for script in steam-taskbar-icons.py upscayl-watch.py; do
+    for script in steam-taskbar-icons.py upscayl-watch.py game-cores.py; do
         dest="${script%.py}"
         cp "$SCRIPT_DIR/$script" "$HOME/.local/bin/$dest"
         chmod +x "$HOME/.local/bin/$dest"
@@ -234,7 +234,8 @@ else
     done
     rm -f "$HOME/.local/bin/obsbot-fix-whitebalance" "$HOME/.local/bin/qbt-add" \
         "$HOME/.local/bin/ufc-rss-fetch" "$HOME/.local/bin/steam-taskbar-icons" \
-        "$HOME/.local/bin/upscayl-watch" "$HOME/.local/bin/github-mirror" "$HOME/.local/bin/hdr-game"
+        "$HOME/.local/bin/upscayl-watch" "$HOME/.local/bin/github-mirror" "$HOME/.local/bin/hdr-game" \
+        "$HOME/.local/bin/game-cores"
     rm -f "$HOME/.local/share/applications/qbittorrent-nox.desktop"
     rm -rf "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch" "$HOME/.config/talteen"
     systemctl --user daemon-reload
