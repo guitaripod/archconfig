@@ -232,34 +232,34 @@ view_zoom_in=Meta++\tMeta+=,Meta++\tMeta+=,Zoom In
 view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [kwin][$InverseAction]
-Cycle Overview=Cycle Overview Opposite
-Decrease Opacity=Increase Opacity
+Cycle Overview Opposite=Cycle Overview
+Increase Opacity=Decrease Opacity
+MoveZoomDown=MoveZoomUp
 MoveZoomLeft=MoveZoomRight
-MoveZoomUp=MoveZoomDown
 Switch One Desktop Up=Switch One Desktop Down
 Switch One Desktop to the Left=Switch One Desktop to the Right
-Switch Window Down=Switch Window Up
 Switch Window Left=Switch Window Right
+Switch Window Up=Switch Window Down
 Switch to Next Screen=Switch to Previous Screen
 Switch to Previous Desktop=Switch to Next Desktop
-Switch to Screen Above=Switch to Screen Below
+Switch to Screen Below=Switch to Screen Above
 Switch to Screen to the Right=Switch to Screen to the Left
-Walk Through Windows=Walk Through Windows (Reverse)
-Walk Through Windows Alternative=Walk Through Windows Alternative (Reverse)
-Walk Through Windows of Current Application=Walk Through Windows of Current Application (Reverse)
-Walk Through Windows of Current Application Alternative (Reverse)=Walk Through Windows of Current Application Alternative
-Window Grow Vertical=Window Shrink Vertical
-Window One Desktop Up=Window One Desktop Down
+Walk Through Windows (Reverse)=Walk Through Windows
+Walk Through Windows Alternative (Reverse)=Walk Through Windows Alternative
+Walk Through Windows of Current Application (Reverse)=Walk Through Windows of Current Application
+Walk Through Windows of Current Application Alternative=Walk Through Windows of Current Application Alternative (Reverse)
+Window Grow Horizontal=Window Shrink Horizontal
+Window One Desktop Down=Window One Desktop Up
 Window One Desktop to the Left=Window One Desktop to the Right
-Window One Screen Up=Window One Screen Down
-Window One Screen to the Right=Window One Screen to the Left
+Window One Screen Down=Window One Screen Up
+Window One Screen to the Left=Window One Screen to the Right
+Window Pack Down=Window Pack Up
 Window Pack Left=Window Pack Right
-Window Pack Up=Window Pack Down
 Window Raise=Window Lower
-Window Shrink Horizontal=Window Grow Horizontal
-Window to Next Screen=Window to Previous Screen
-Window to Previous Desktop=Window to Next Desktop
-view_zoom_in=view_zoom_out
+Window Shrink Vertical=Window Grow Vertical
+Window to Next Desktop=Window to Previous Desktop
+Window to Previous Screen=Window to Next Screen
+view_zoom_out=view_zoom_in
 
 [mediacontrol]
 _k_friendly_name=Media Controller
@@ -343,9 +343,6 @@ _launch=Meta+6
 [services][net.local.paste-1pw.sh.desktop]
 _launch=Ctrl+Shift+P
 
-[services][rec-toggle.desktop]
-_launch=Meta+Alt+V
-
 [services][org.kde.plasma.emojier.desktop]
 _launch=Meta+.\tMeta+Ctrl+Space\tMeta+Ctrl+Alt+Shift+Space
 
@@ -357,6 +354,9 @@ RectangularRegionScreenShot=Meta+Alt+C
 
 [services][org.kde.touchpadshortcuts.desktop]
 ToggleTouchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku
+
+[services][rec-toggle.desktop]
+_launch=Meta+Alt+V
 
 [wacomtablet]
 Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen

@@ -135,24 +135,26 @@ ForegroundVisited=155,89,182
 [General]
 BrowserApplication=vivaldi-stable.desktop
 ColorScheme=BreezeDark
-ColorSchemeHash=2c3f86428c11011a7c64ee1e7f47c274d498ff10
+ColorSchemeHash=27363f5706202c1c8261fbda7381ddaab8ad48f3
 TerminalApplication=ghostty
 TerminalService=com.mitchellh.ghostty.desktop
 
 [KDE]
 AnimationDurationFactor=0.125
+AutomaticLookAndFeelOnIdle=false
 DoubleClickInterval=300
-LookAndFeelPackage=org.kde.breezedark.desktop
+contrast=4
+frameContrast=0.2
 
 [KFileDialog Settings]
 Allow Expansion=false
 Automatically select filename extension=true
 Breadcrumb Navigation=false
 Decoration position=2
-Preview Width=309
+Preview Width=523
 Show Full Path=false
 Show Inline Previews=true
-Show Preview=true
+Show Preview=false
 Show Speedbar=true
 Show hidden files=true
 Sort by=Date
@@ -160,7 +162,7 @@ Sort directories first=true
 Sort hidden files last=false
 Sort reversed=false
 Speedbar Width=215
-View Style=Detail
+View Style=DetailTree
 
 [Shortcuts]
 Deselect=

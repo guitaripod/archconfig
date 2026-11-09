@@ -12,13 +12,14 @@ ScrollFactor=1.5
 [Libinput][12951][6505][ZSA Technology Labs Moonlander Mark I]
 NaturalScroll=false
 
+[Libinput][4012][6878][keyd virtual pointer]
+NaturalScroll=true
+PointerAccelerationProfile=2
+
 [Libinput][48879][57005][Mouse passthrough]
 NaturalScroll=true
 
 [Libinput][48879][57005][Mouse passthrough (absolute)]
-NaturalScroll=true
-
-[Libinput][4012][6878][keyd virtual pointer]
 NaturalScroll=true
 
 [Mouse]
