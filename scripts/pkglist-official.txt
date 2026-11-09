@@ -55,6 +55,7 @@ hivex
 imagemagick
 intel-ucode
 jdk17-openjdk
+jdk21-openjdk
 jq
 kde-gtk-config
 kdegraphics-thumbnailers
@@ -123,9 +124,9 @@ plasma-workspace-wallpapers
 plymouth-kcm
 podman-compose
 print-manager
+prismlauncher
 python-fastbencode
 python-pip
-python-pyqt6
 python-virtualenv
 qbittorrent-nox
 qemu-full
