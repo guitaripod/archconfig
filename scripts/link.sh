@@ -187,6 +187,7 @@ if [[ "$HOST" == arch ]]; then
     cp "$DOTFILES/.config/talteen/config.toml" "$HOME/.config/talteen/config.toml"
     command -v talteen >/dev/null || echo "  talteen is not installed: cargo install talteen"
     command -v github-backup >/dev/null || echo "  github-backup is not installed: uv tool install github-backup"
+    command -v mediaforge >/dev/null || echo "  mediaforge is not installed: cargo install --git https://github.com/guitaripod/mediaforge"
     [ -e "$HOME/.config/upscayl-watch/config.toml" ] || cp "$DOTFILES/.config/upscayl-watch/config.toml" "$HOME/.config/upscayl-watch/"
 fi
 
@@ -209,7 +210,8 @@ if [[ "$HOST" == arch ]]; then
     for unit in omp-auth-broker.service obsbot-fix-whitebalance.service \
         qbittorrent-nox.service talteen.service talteen.timer \
         ufc-rss-fetch.service ufc-rss-fetch.timer steam-taskbar-icons.service steam-taskbar-icons.path upscayl-watch.service \
-        github-mirror@.service github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer; do
+        github-mirror@.service github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer \
+        mediaforge.service; do
         cp "$DOTFILES/.config/systemd/user/$unit" "$HOME/.config/systemd/user/"
     done
     cp "$DOTFILES/.local/share/applications/qbittorrent-nox.desktop" "$HOME/.local/share/applications/"
@@ -227,11 +229,12 @@ fi
 if [[ "$HOST" == arch ]]; then
     systemctl --user enable obsbot-fix-whitebalance.service qbittorrent-nox.service talteen.timer \
         ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service \
-        github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer
+        github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer mediaforge.service
 else
     for unit in obsbot-fix-whitebalance.service qbittorrent-nox.service talteen.timer \
         talteen.service ufc-rss-fetch.timer steam-taskbar-icons.path upscayl-watch.service \
-        github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer github-mirror@.service; do
+        github-mirror-backup.timer github-mirror-sync.timer github-mirror-verify.timer github-mirror@.service \
+        mediaforge.service; do
         systemctl --user disable --now "$unit" 2>/dev/null || true
         rm -f "$HOME/.config/systemd/user/$unit"
     done
