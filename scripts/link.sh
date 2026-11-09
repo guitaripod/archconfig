@@ -19,7 +19,7 @@ link_file() {
         mv "$dst" "$dst.backup"
     fi
 
-    ln -sf "$src" "$dst"
+    ln -sfn "$src" "$dst"
     echo "  Linked: $dst"
 }
 
@@ -154,6 +154,8 @@ link_file "$DOTFILES/.config/ThemeSwitch/settings.json" "$HOME/.config/ThemeSwit
 
 mkdir -p "$HOME/.config/mpv"
 link_file "$DOTFILES/.config/mpv/mpv.conf" "$HOME/.config/mpv/mpv.conf"
+link_file "$DOTFILES/.config/mpv/input.conf" "$HOME/.config/mpv/input.conf"
+link_file "$DOTFILES/.config/mpv/scripts" "$HOME/.config/mpv/scripts"
 
 echo "[11/14] Linking browser configs..."
 if has_nvidia_gpu; then
@@ -193,6 +195,7 @@ cp "$DOTFILES/.local/share/kio/servicemenus/tailsend.desktop" "$HOME/.local/shar
 chmod +x "$HOME/.local/share/kio/servicemenus/tailsend.desktop"
 cp "$DOTFILES/.local/share/applications/tailsend-clipboard.desktop" "$HOME/.local/share/applications/"
 cp "$DOTFILES/.local/share/applications/applink.desktop" "$HOME/.local/share/applications/"
+cp "$DOTFILES/.local/share/applications/rec-toggle.desktop" "$HOME/.local/share/applications/"
 mkdir -p "$HOME/.config/applink"
 link_file "$DOTFILES/.config/applink/links.tsv" "$HOME/.config/applink/links.tsv"
 
