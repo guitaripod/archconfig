@@ -9,7 +9,7 @@ filter_packages() {
     if [[ "$HOST" == arch ]]; then
         cat
     else
-        grep -Ev '^(lib32-|nvidia|steam$|steam-rom-manager-bin|mangohud|gamemode|gamescope|lutris|wine-staging|winetricks|protonup-qt|obs-studio$|obs-|obsbot-camera-control|upscayl-bin|plex-media-server|qbittorrent-nox|samba$|docker$|docker-compose|lazydocker-bin|ollama-cuda|onnxruntime-cuda|nvidia-container-toolkit|sunshine$|mprime$|r8125-dkms|cemu-bin|pcsx2-latest-bin|rpcs3-bin|ryujinx-bin|clonehero$)' || true
+        grep -Ev '^(lib32-|nvidia|steam$|steam-rom-manager-bin|mangohud|gamemode|gamescope|lutris|wine-staging|winetricks|protonup-qt|obs-studio$|obs-|obsbot-camera-control|upscayl-bin|plex-media-server|qbittorrent-nox|samba$|docker$|docker-compose|lazydocker-bin|ollama-cuda|onnxruntime-cuda|nvidia-container-toolkit|sunshine$|mprime$|r8125-dkms|cemu-bin|pcsx2-latest-bin|rpcs3-bin|ryujinx-bin|clonehero$|libva-nvidia-driver|prismlauncher)' || true
     fi
 }
 
@@ -61,6 +61,7 @@ fi
 
 if [[ "$HOST" == "x1carbon" ]]; then
     echo "  Installing x1carbon fingerprint PAM configs..."
+    sudo pacman -S --needed --noconfirm fprintd
     sudo install -m 644 "$DOTFILES_DIR/etc/x1carbon/pam.d/"* /etc/pam.d/
 fi
 
