@@ -1,5 +1,6 @@
 local mp = require 'mp'
 local msg = require 'mp.msg'
+local utils = require 'mp.utils'
 
 local opts = {
     output = mp.get_opt("kde-hdr-output") or "",
@@ -17,6 +18,9 @@ local state = {
 local restore
 local sync
 local sync_timer
+
+local cache_dir = (os.getenv("XDG_CACHE_HOME") or (os.getenv("HOME") .. "/.cache")) .. "/mpv"
+local state_path = cache_dir .. "/kde-hdr.state"
 
 local function run(argv)
     local res = mp.command_native({
@@ -86,6 +90,35 @@ local function wants_hdr()
     return not opts.require_fullscreen or mp.get_property_native("fullscreen") == true
 end
 
+local function remember()
+    os.execute('mkdir -p "' .. cache_dir .. '"')
+    local file = io.open(state_path, "w")
+    if not file then return end
+    file:write(string.format("%d\t%s\t%s\t%s\n", utils.getpid(), state.output,
+        tostring(state.changed_hdr), tostring(state.changed_wcg)))
+    file:close()
+end
+
+local function forget()
+    os.remove(state_path)
+end
+
+local function recover_stale_state()
+    local file = io.open(state_path, "r")
+    if not file then return end
+    local line = file:read("*l")
+    file:close()
+    local pid, name, changed_hdr, changed_wcg = (line or ""):match("^(%d+)\t([^\t]+)\t(%a+)\t(%a+)$")
+    if not pid then
+        forget()
+        return
+    end
+    if tonumber(pid) ~= utils.getpid() and utils.file_info("/proc/" .. pid) then return end
+    msg.verbose("recovering HDR state left behind by pid " .. pid)
+    apply_state(name, changed_hdr ~= "true", changed_wcg ~= "true")
+    forget()
+end
+
 local function enable_on(name)
     local before = read_output_states(name)
     if not before then
@@ -103,6 +136,7 @@ local function enable_on(name)
         state.output = nil
         return false
     end
+    remember()
     msg.verbose("enabled HDR on " .. name)
     return true
 end
@@ -115,6 +149,7 @@ restore = function()
     state.output = nil
     state.changed_hdr = false
     state.changed_wcg = false
+    forget()
 end
 
 sync = function()
