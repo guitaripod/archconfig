@@ -14,6 +14,10 @@ local state = {
     changed_wcg = false,
 }
 
+local restore
+local sync
+local sync_timer
+
 local function run(argv)
     local res = mp.command_native({
         name = "subprocess",
@@ -65,8 +69,10 @@ local function target_output()
     if opts.output ~= "" then return opts.output end
     local names = mp.get_property_native("display-names")
     if names and #names > 0 then return names[1] end
-    msg.verbose("display-names is empty, using fallback output " .. opts.fallback_output)
-    return opts.fallback_output
+    if mp.get_property_native("fullscreen") == true then
+        return opts.fallback_output
+    end
+    return nil
 end
 
 local function content_is_hdr()
@@ -75,42 +81,63 @@ local function content_is_hdr()
     return mp.get_property("video-params/primaries") == "bt.2020"
 end
 
-local restore
+local function wants_hdr()
+    if not content_is_hdr() then return false end
+    return not opts.require_fullscreen or mp.get_property_native("fullscreen") == true
+end
 
-local function enable()
-    if not content_is_hdr() then
-        restore()
-        return
-    end
-    if state.output then return end
-    if opts.require_fullscreen and mp.get_property_native("fullscreen") ~= true then return end
-    local name = target_output()
-    if not name then
-        msg.warn("could not determine which output mpv is on")
-        return
-    end
+local function enable_on(name)
     local before = read_output_states(name)
     if not before then
         msg.warn("could not read the HDR state of " .. name)
-        return
+        return false
     end
     state.output = name
     state.changed_hdr = not before.hdr
     state.changed_wcg = not before.wcg
     if not state.changed_hdr and not state.changed_wcg then
-        msg.info(name .. " is already in HDR mode")
-        return
+        msg.verbose(name .. " is already in HDR mode")
+        return true
     end
-    if not apply_state(name, true, true) then state.output = nil end
+    if not apply_state(name, true, true) then
+        state.output = nil
+        return false
+    end
+    msg.verbose("enabled HDR on " .. name)
+    return true
 end
 
-function restore()
+restore = function()
     if not state.output then return end
     local name = state.output
+    msg.verbose("restoring " .. name)
     apply_state(name, not state.changed_hdr, not state.changed_wcg)
     state.output = nil
     state.changed_hdr = false
     state.changed_wcg = false
+end
+
+sync = function()
+    if not wants_hdr() then
+        restore()
+        return
+    end
+    local name = target_output()
+    if not name then
+        restore()
+        return
+    end
+    if name == state.output then return end
+    restore()
+    enable_on(name)
+end
+
+local function schedule_sync()
+    if sync_timer then sync_timer:kill() end
+    sync_timer = mp.add_timeout(0.6, function()
+        sync_timer = nil
+        sync()
+    end)
 end
 
 local function has_next_entry()
@@ -119,23 +146,16 @@ local function has_next_entry()
     return pos ~= nil and count ~= nil and pos + 1 < count
 end
 
-local function on_file_loaded()
-    mp.add_timeout(0.5, enable)
-end
-
 local function on_end_file(event)
     if event.reason == "eof" and has_next_entry() then
-        mp.add_timeout(0.5, enable)
+        schedule_sync()
         return
     end
     restore()
 end
 
-local function on_fullscreen_change(_, value)
-    if value == true then enable() end
-end
-
-mp.register_event("file-loaded", on_file_loaded)
+mp.register_event("file-loaded", schedule_sync)
 mp.register_event("end-file", on_end_file)
 mp.register_event("shutdown", restore)
-mp.observe_property("fullscreen", "bool", on_fullscreen_change)
+mp.observe_property("fullscreen", "bool", schedule_sync)
+mp.observe_property("display-names", "native", schedule_sync)
