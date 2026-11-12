@@ -68,6 +68,7 @@ kind = "files"
 name = "botw-recomp"
 paths = [
     "/mnt/nvme8tb/Games/savagewind-data/save",
+    "/mnt/nvme8tb/Games/savagewind-data/save-backups",
     "/mnt/nvme8tb/Games/savagewind-data/savagewind.ini",
 ]
 
@@ -76,5 +77,7 @@ kind = "files"
 name = "totk-recomp"
 paths = [
     "/mnt/nvme8tb/Games/TotK-Recomp/profile/save",
+    "/mnt/nvme8tb/Games/TotK-Recomp/profile/save-backup",
+    "/mnt/nvme8tb/Games/TotK-Recomp/profile/save.bak-*",
     "/mnt/nvme8tb/Games/TotK-Recomp/totk.ini",
 ]
