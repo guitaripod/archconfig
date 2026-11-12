@@ -62,3 +62,19 @@ paths = [
     "~/.config/Ryujinx/bis/user/save",
     "~/.local/share/Cemu/mlc01/usr/save",
 ]
+
+[[source]]
+kind = "files"
+name = "botw-recomp"
+paths = [
+    "/mnt/nvme8tb/Games/savagewind-data/save",
+    "/mnt/nvme8tb/Games/savagewind-data/savagewind.ini",
+]
+
+[[source]]
+kind = "files"
+name = "totk-recomp"
+paths = [
+    "/mnt/nvme8tb/Games/TotK-Recomp/profile/save",
+    "/mnt/nvme8tb/Games/TotK-Recomp/totk.ini",
+]
