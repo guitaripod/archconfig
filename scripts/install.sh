@@ -50,6 +50,7 @@ sudo install -Dm 644 "$DOTFILES_DIR/etc/host-fw.nft" /etc/host-fw.nft
 sudo install -Dm 644 "$DOTFILES_DIR/etc/systemd/system/host-fw.service" /etc/systemd/system/host-fw.service
 sudo install -Dm 644 "$DOTFILES_DIR/etc/ssh/sshd_config.d/10-hardening.conf" /etc/ssh/sshd_config.d/10-hardening.conf
 sudo install -Dm 644 "$DOTFILES_DIR/etc/sysctl.d/99-hardening.conf" /etc/sysctl.d/99-hardening.conf
+sudo install -Dm 644 "$DOTFILES_DIR/etc/sysctl.d/90-memory.conf" /etc/sysctl.d/90-memory.conf
 sudo install -Dm 644 "$DOTFILES_DIR/etc/pacman.d/hooks/1password-mcp-setgid.hook" /etc/pacman.d/hooks/1password-mcp-setgid.hook
 
 if [[ "$HOST" == arch ]]; then
