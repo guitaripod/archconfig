@@ -51,6 +51,8 @@ sudo install -Dm 644 "$DOTFILES_DIR/etc/systemd/system/host-fw.service" /etc/sys
 sudo install -Dm 644 "$DOTFILES_DIR/etc/ssh/sshd_config.d/10-hardening.conf" /etc/ssh/sshd_config.d/10-hardening.conf
 sudo install -Dm 644 "$DOTFILES_DIR/etc/sysctl.d/99-hardening.conf" /etc/sysctl.d/99-hardening.conf
 sudo install -Dm 644 "$DOTFILES_DIR/etc/sysctl.d/90-memory.conf" /etc/sysctl.d/90-memory.conf
+sudo install -Dm 644 "$DOTFILES_DIR/etc/tmpfiles.d/90-mglru.conf" /etc/tmpfiles.d/90-mglru.conf
+sudo systemd-tmpfiles --create /etc/tmpfiles.d/90-mglru.conf
 sudo install -Dm 644 "$DOTFILES_DIR/etc/pacman.d/hooks/1password-mcp-setgid.hook" /etc/pacman.d/hooks/1password-mcp-setgid.hook
 
 if [[ "$HOST" == arch ]]; then
