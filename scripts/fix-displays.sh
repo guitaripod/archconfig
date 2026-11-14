@@ -76,6 +76,12 @@ best_4k_mode() {
       END { if (idx != "") print idx }'
 }
 
+# Re-applies the UltraGear+ white balance matched by eye to the C6 on 2026-11-14 (User 1, R45 G43 B60).
+restore_ultragear_white_balance() {
+  ddcutil --sn 511NTZNF9973 setvcp 14 0x0b 16 45 18 43 1A 60 2>/dev/null ||
+    echo "UltraGear+ white balance not applied: DDC/CI unreachable" >&2
+}
+
 layout=(output.DP-2.disable)
 
 for connector in $(dummy_connector); do
@@ -103,6 +109,8 @@ kscreen-doctor "${tv_args[@]}" >/dev/null
 sleep 1
 
 "$HOME/.local/bin/kscreen-gamut" "$tv" 0.6
+
+restore_ultragear_white_balance
 
 kscreen-doctor -o 2>&1 | sed 's/\x1b\[[0-9;]*m//g' |
   awk '/^Output: / { conn = $3; state = ""; mode = ""; next }
