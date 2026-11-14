@@ -76,9 +76,9 @@ best_4k_mode() {
       END { if (idx != "") print idx }'
 }
 
-# Re-applies the UltraGear+ white balance matched by eye to the C6 on 2026-11-14 (User 1, R45 G43 B60).
+# Puts the UltraGear+ on its factory-calibrated 6500K colour preset (D65) instead of hand-tuned User gains.
 restore_ultragear_white_balance() {
-  ddcutil --sn 511NTZNF9973 setvcp 14 0x0b 16 45 18 43 1A 60 2>/dev/null ||
+  ddcutil --sn 511NTZNF9973 setvcp 14 0x05 2>/dev/null ||
     echo "UltraGear+ white balance not applied: DDC/CI unreachable" >&2
 }
 
