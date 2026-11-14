@@ -20,9 +20,11 @@ Mode=0
 NightTemperature=6500
 
 [TabBox]
+HighlightWindows=false
 ShowScreenMode=1
 
 [TabBoxAlternative]
+HighlightWindows=false
 ShowScreenMode=1
 
 [Tiling][039aa178-1bd6-588f-b43a-b529e3c87725]
