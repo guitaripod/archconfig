@@ -61,15 +61,29 @@ def save_seen(seen):
     STATE_FILE.write_text(json.dumps(list(seen)))
 
 
+NON_FIGHT_SHOW = re.compile(
+    r"\b(?:weigh[\s._-]*ins?|press[\s._-]+conferences?|embedded|countdown|face[\s._-]*offs?"
+    r"|media[\s._-]+days?|open[\s._-]+workouts?|preview|post[\s._-]*fight|pre[\s._-]*fight)\b",
+    re.IGNORECASE,
+)
+
+
 def is_ufc(title):
     return bool(re.search(r"\bUFC\b", title, re.IGNORECASE))
+
+
+def is_non_fight_show(title):
+    """Weigh-ins, press conferences and other shoulder content share the event number and would otherwise take the fight card's slot."""
+    return bool(NON_FIGHT_SHOW.search(title))
 
 
 def event_key(title):
     m = re.search(r"(UFC[\s._-]+(?:Fight[\s._-]+Night|PPV)?[\s._-]*\d+)", title, re.IGNORECASE)
     base = m.group(1).strip() if m else title.split("1080p")[0].strip()
     base = re.sub(r"[\s._-]+", " ", base)
-    is_prelims = bool(re.search(r"\bprelims?\b", title, re.IGNORECASE))
+    if re.search(r"\bearly[\s._-]+prelim(?:s|inary|inaries)?\b|\bUFP\b", title, re.IGNORECASE):
+        return f"{base} Early Prelims"
+    is_prelims = bool(re.search(r"\bprelim(?:s|inary|inaries)?\b", title, re.IGNORECASE))
     return f"{base} Prelims" if is_prelims else base
 
 
@@ -126,7 +140,7 @@ def get_qb_ufc_event_keys():
     for t in torrents:
         name = t.get("name", "")
         normalized = name.replace(".", " ").replace("_", " ")
-        if re.search(r"\bUFC\b", normalized, re.IGNORECASE):
+        if is_ufc(normalized) and not is_non_fight_show(normalized):
             keys.add(event_key(normalized))
     log_debug(f"qB seed: {len(torrents)} torrents total, {len(keys)} UFC event keys")
     return keys
@@ -203,6 +217,9 @@ def run_once(dry_run, verbose):
 
     candidates = []
     for title, link, _ in feed_ufc:
+        if is_non_fight_show(title):
+            log_debug(f"  skip-non-fight: {title}")
+            continue
         key = event_key(title)
         if key in seen:
             log_debug(f"  skip-seen ({key}): {title}")
