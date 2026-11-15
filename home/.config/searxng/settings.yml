@@ -15,6 +15,29 @@ search:
   formats:
     - html
     - json
+  suspended_times:
+    SearxEngineAccessDenied: 900
+    SearxEngineCaptcha: 900
+    SearxEngineTooManyRequests: 300
+    cf_SearxEngineCaptcha: 900
+    cf_SearxEngineAccessDenied: 900
+    recaptcha_SearxEngineCaptcha: 900
+
+engines:
+  - name: bing
+    disabled: false
+  - name: startpage
+    disabled: false
+  - name: mojeek
+    disabled: false
+  - name: qwant
+    disabled: false
+  - name: yahoo
+    disabled: false
+  - name: presearch
+    disabled: false
+  - name: wikipedia
+    disabled: false
 
 ui:
   static_use_hash: true
