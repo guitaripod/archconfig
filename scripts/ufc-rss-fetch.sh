@@ -404,6 +404,13 @@ def run_once(dry_run, verbose, first=True, final=True):
     return outcome
 
 
+def describe_missing(missing):
+    """Reads as "UFC 334 main card" or "UFC 334 Prelims" instead of repeating the event key."""
+    return "; ".join(
+        f"{base} {', '.join(part[len(base):].strip() or 'main card' for part in parts)}" for base, parts in missing.items()
+    )
+
+
 def parse_flag_value(argv, flag):
     for i, a in enumerate(argv):
         if a == flag and i + 1 < len(argv):
@@ -449,7 +456,7 @@ def main():
                 return 0
         if final:
             break
-        waiting = "; ".join(f"{base}: {', '.join(parts)}" for base, parts in outcome.missing.items()) if outcome and outcome.missing else "the next event"
+        waiting = describe_missing(outcome.missing) if outcome and outcome.missing else "the next event"
         log_event(f"Waiting for {waiting}; sleeping {retry_interval}s...")
         time.sleep(retry_interval)
 
@@ -457,8 +464,7 @@ def main():
         log_event(f"Deadline {retry_until} reached and the last attempt failed.", level="ERROR")
         return 1
     if outcome.missing:
-        gaps = "; ".join(f"{base}: {', '.join(parts)}" for base, parts in outcome.missing.items())
-        log_event(f"Deadline {retry_until} reached with parts still missing: {gaps}.", level="ERROR")
+        log_event(f"Deadline {retry_until} reached with parts still missing: {describe_missing(outcome.missing)}.", level="ERROR")
         return 1
     log_event(f"Deadline {retry_until} reached; no UFC event released in the last {TARGET_MAX_AGE_HOURS}h. {total} torrent(s) added.")
     return 0
