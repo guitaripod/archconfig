@@ -6,9 +6,10 @@ Steam launch options:  game-cores %command%
 
 The whole process tree starts on the P-cores. While the game runs, threads whose names match
 the helper pattern (streaming, audio, shader compiles, Wine plumbing, overlays) and whole helper
-processes (crash reporters, Proton's steam.exe bridge) are moved to the E-cores, so the main,
-render and job threads have the P-cores to themselves. On a CPU without E-cores it just runs
-the command. GAME_CORES_HELPERS overrides the thread pattern, GAME_CORES=off disables it.
+processes (crash reporters, Proton's steam.exe bridge, the Battle.net launcher and its agent)
+are moved to the E-cores, so the main, render and job threads have the P-cores to themselves.
+On a CPU without E-cores it just runs the command. GAME_CORES_HELPERS overrides the thread
+pattern, GAME_CORES=off disables it.
 """
 
 from __future__ import annotations
@@ -27,7 +28,7 @@ DEFAULT_HELPER_THREADS = (
 )
 HELPER_PROCESSES = re.compile(
     r"(crs-handler|crashreport|system32\\steam\.exe|explorer\.exe|winedevice\.exe|services\.exe|"
-    r"plugplay\.exe|rpcss\.exe|svchost\.exe|tabtip\.exe)",
+    r"plugplay\.exe|rpcss\.exe|svchost\.exe|tabtip\.exe|\\Battle\.net\\)",
     re.IGNORECASE,
 )
 POLL_SECONDS = 2.0
