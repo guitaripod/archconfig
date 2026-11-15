@@ -1,0 +1,13 @@
+services:
+  searxng:
+    image: searxng/searxng:2026.11.13-219b63b20
+    container_name: searxng
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8888:8080"
+    env_file:
+      - ${HOME}/.config/searxng/secret.env
+    volumes:
+      - ${HOME}/.config/searxng/settings.yml:/etc/searxng/settings.yml:ro
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"

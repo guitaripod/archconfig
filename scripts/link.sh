@@ -183,6 +183,10 @@ if [[ "$HOST" == arch ]]; then
         cp "$SCRIPT_DIR/$script" "$HOME/.local/bin/$dest"
         chmod +x "$HOME/.local/bin/$dest"
     done
+    mkdir -p "$HOME/.config/searxng"
+    cp "$DOTFILES/.config/searxng/settings.yml" "$DOTFILES/.config/searxng/compose.yml" "$HOME/.config/searxng/"
+    [ -f "$HOME/.config/searxng/secret.env" ] || (umask 077 && printf 'SEARXNG_SECRET=%s\n' "$(openssl rand -hex 32)" > "$HOME/.config/searxng/secret.env")
+    docker compose -f "$HOME/.config/searxng/compose.yml" up -d >/dev/null 2>&1 || echo "  searxng did not start: docker compose -f ~/.config/searxng/compose.yml up -d"
     mkdir -p "$HOME/.config/upscayl-watch" "$HOME/.local/state/upscayl-watch" "$HOME/.config/talteen"
     cp "$DOTFILES/.config/talteen/config.toml" "$HOME/.config/talteen/config.toml"
     command -v talteen >/dev/null || echo "  talteen is not installed: cargo install talteen"
