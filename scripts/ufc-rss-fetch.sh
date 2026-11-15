@@ -21,7 +21,9 @@ SAVE_PATH = "/mnt/stuff2/Sports"
 STATE_FILE = Path.home() / ".local/share/ufc-torrents/seen.json"
 LOG_DIR = Path.home() / ".local/state/ufc-rss-fetch"
 TARGET_MAX_AGE_HOURS = 120
-WEB_GRACE_HOURS = 3
+GRACE_HOURS = {1: 3, 2: 3, 3: 6}
+TRUSTED_GROUPS = ("FBB", "Fight-BB", "VERUM", "nVa", "BILLIE")
+BANNED_GROUPS = ("MmA",)
 REQUIRED_PARTS = ("", " Prelims")
 STALE_EVENT_GAP = 3
 
@@ -138,13 +140,24 @@ def event_key(title):
     return base
 
 
+def _has_group(title, groups):
+    """Release groups are matched case-sensitively after the resolution, so "MmA" never catches "MMA" in a promotion's name."""
+    tail = re.split(r"1080p", title, flags=re.IGNORECASE)[-1]
+    return any(re.search(rf"(?<![A-Za-z0-9]){re.escape(group)}(?![A-Za-z0-9])", tail) for group in groups)
+
+
+def is_banned(title):
+    """Groups whose UFC encodes are cropped or zoomed to dodge copyright matching."""
+    return _has_group(title, BANNED_GROUPS)
+
+
 def release_rank(title):
-    """WEB-DL and WEB encodes beat WEBRip, which beats HDTV satellite-feed captures."""
+    """0: a WEB-DL or WEB encode from a group whose UFC releases are known clean; 1: another group's WEB-DL or WEB; 2: WEBRip; 3: an HDTV satellite-feed capture."""
     if re.search(r"\bweb[\s._-]?rip\b", title, re.IGNORECASE):
-        return 1
+        return 2
     if re.search(r"\bweb(?:[\s._-]?dl)?\b", title, re.IGNORECASE):
-        return 0
-    return 2
+        return 0 if _has_group(title, TRUSTED_GROUPS) else 1
+    return 3
 
 
 def is_1080p(title):
@@ -161,16 +174,19 @@ def missing_parts(base, seen, pool):
 
 
 def choose_releases(candidates, final):
-    """Best 1080p release per event part; a WEBRip or HDTV release waits WEB_GRACE_HOURS for a WEB-DL unless this is the last attempt."""
+    """Best 1080p release per event part; anything short of a trusted group's WEB-DL waits GRACE_HOURS for one unless this is the last attempt."""
     by_key = {}
     for release in candidates:
-        if is_1080p(release.title):
+        if is_banned(release.title):
+            log_debug(f"  skip-banned-group: {release.title}")
+        elif is_1080p(release.title):
             by_key.setdefault(event_key(release.title), []).append(release)
     picks = []
     for key, releases in by_key.items():
         best = min(releases, key=lambda r: (release_rank(r.title), r.age_hours))
-        if release_rank(best.title) > 0 and best.age_hours < WEB_GRACE_HOURS and not final:
-            log_debug(f"  defer ({key}, {best.age_hours:.1f}h old, waiting for WEB-DL): {best.title}")
+        rank = release_rank(best.title)
+        if rank > 0 and best.age_hours < GRACE_HOURS[rank] and not final:
+            log_debug(f"  defer ({key}, rank {rank}, {best.age_hours:.1f}h old, waiting for a trusted WEB-DL): {best.title}")
             continue
         picks.append(best)
     return picks
