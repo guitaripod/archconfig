@@ -154,8 +154,23 @@ def add_to_qbittorrent(torrent_data, name):
     )
     with urllib.request.urlopen(req, timeout=10) as resp:
         result = resp.read().decode()
-        if result.strip().lower() != "ok.":
-            raise RuntimeError(f"qBittorrent rejected torrent: {result}")
+    if not _qb_add_succeeded(result):
+        raise RuntimeError(f"qBittorrent rejected torrent: {result}")
+
+
+def _qb_add_succeeded(result):
+    """qBittorrent before 5.2 answers "Ok."; 5.2 and later answer JSON with success, pending and failure counts."""
+    text = result.strip()
+    if text.lower() == "ok.":
+        return True
+    try:
+        counts = json.loads(text)
+    except ValueError:
+        return False
+    if not isinstance(counts, dict):
+        return False
+    accepted = counts.get("success_count", 0) + counts.get("pending_count", 0)
+    return accepted > 0 and counts.get("failure_count", 0) == 0
 
 
 def run_once(dry_run, verbose):
