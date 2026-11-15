@@ -240,7 +240,7 @@ def run_once(dry_run, verbose):
 
         if dry_run:
             print(f"WOULD ADD: {title}")
-            print(f"  URL: {dl_url}")
+            print(f"  URL: {dl_url.replace(TORRENT_PASS, '$TD_TORRENT_PASS')}")
             new_count += 1
             continue
 
