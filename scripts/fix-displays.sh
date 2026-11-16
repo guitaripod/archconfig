@@ -82,6 +82,14 @@ restore_ultragear_white_balance() {
     echo "UltraGear+ white balance not applied: DDC/CI unreachable" >&2
 }
 
+# Gives the UltraGear+ the TV's wide-gamut SDR look: WCG on with the same 0.6 stretch, so skin reads as red as on the C6.
+match_ultragear_gamut_to_tv() {
+  local ultragear="${connector_of["LG Electronics LG ULTRAGEAR+"]}"
+  kscreen-doctor "output.$ultragear.hdr.disable" "output.$ultragear.wcg.enable" >/dev/null
+  sleep 1
+  "$HOME/.local/bin/kscreen-gamut" "$ultragear" 0.6
+}
+
 layout=(output.DP-2.disable)
 
 for connector in $(dummy_connector); do
@@ -109,6 +117,8 @@ kscreen-doctor "${tv_args[@]}" >/dev/null
 sleep 1
 
 "$HOME/.local/bin/kscreen-gamut" "$tv" 0.6
+
+match_ultragear_gamut_to_tv
 
 restore_ultragear_white_balance
 
