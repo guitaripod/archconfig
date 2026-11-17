@@ -36,9 +36,14 @@ name = "tonight"
 path = "~/.local/share/tonight/tonight.db"
 
 [[source]]
+kind = "sqlite"
+name = "apple-reports"
+path = "~/.local/share/midgar/apple/reports.sqlite"
+
+[[source]]
 kind = "files"
-name = "myyty"
-paths = ["~/.local/share/myyty"]
+name = "apple-reports-raw"
+paths = ["~/.local/share/midgar/apple/raw"]
 
 [[source]]
 kind = "files"
