@@ -110,6 +110,29 @@ with_lock() {
   return $status
 }
 
+# Turns KWin's fullscreen tearing off while a game with HDR_GAME_NO_TEARING=1 runs. NVIDIA Smooth
+# Motion presents without vsync, which on a fixed-refresh screen tears instead of locking to it.
+tearing_off() {
+  [[ "${HDR_GAME_NO_TEARING:-}" == 1 && ! -f "$STATE_DIR/tearing.saved" ]] || return 0
+  kreadconfig6 --file kwinrc --group Compositing --key AllowTearing --default true >"$STATE_DIR/tearing.saved"
+  set_tearing false
+}
+
+# Puts KWin's tearing setting back once no game holds any monitor.
+tearing_restore() {
+  [[ -f "$STATE_DIR/tearing.saved" ]] || return 0
+  local sessions
+  for sessions in "$STATE_DIR"/*.sessions; do
+    [[ -d "$sessions" ]] && held "$(basename "$sessions" .sessions)" && return 0
+  done
+  set_tearing "$(cat "$STATE_DIR/tearing.saved")" && rm -f "$STATE_DIR/tearing.saved"
+}
+
+set_tearing() {
+  kwriteconfig6 --file kwinrc --group Compositing --key AllowTearing "$1" &&
+    qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1
+}
+
 # Marks the game as holding the monitor; the first holder records the state to return to and switches HDR on.
 acquire() {
   local output=$1 uuid=$2 session=$3 prior
@@ -121,12 +144,14 @@ acquire() {
   mkdir -p "$STATE_DIR/$uuid.sessions"
   : >"$STATE_DIR/$uuid.sessions/$session"
   set_flags "$output" true true || say "KWin did not switch $output to HDR"
+  tearing_off
 }
 
 # Puts the monitor back to its recorded state once no game holds it.
 restore() {
   local uuid=$1 output prior
   held "$uuid" && return 0
+  tearing_restore
   [[ -f "$STATE_DIR/$uuid.prior" ]] || return 0
   output=$(connector_of "$uuid")
   if [[ -z "$output" ]]; then
@@ -154,6 +179,7 @@ restore_all() {
     [[ -e "$prior" ]] || continue
     restore "$(basename "$prior" .prior)"
   done
+  tearing_restore
 }
 
 # Waits for the game outside its process tree, so Steam's Stop (which kills the whole tree) or a
