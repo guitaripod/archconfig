@@ -322,7 +322,7 @@
           "tool_call": true,
           "attachment": true,
           "limit": {
-            "context": 524288,
+            "context": 262144,
             "output": 65536
           },
           "modalities": {
