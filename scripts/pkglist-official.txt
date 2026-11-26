@@ -216,3 +216,4 @@ yt-dlp
 zed
 zig
 zip
+zram-generator
