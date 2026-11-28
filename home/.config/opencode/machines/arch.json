@@ -297,6 +297,55 @@
             ]
           }
         },
+        "mimo-v2.6-distill-9b-gguf": {
+          "name": "MiMo",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": false,
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "think": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "temperature": 0.6,
+              "top_p": 0.95,
+              "top_k": 20,
+              "min_p": 0.0,
+              "reasoning_budget_tokens": 4096,
+              "reasoning_budget_message": "\n\nI have planned enough. I will now stop thinking and take the next concrete action using a tool.\n"
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "temperature": 0.7,
+              "top_p": 0.8,
+              "top_k": 20,
+              "min_p": 0.0
+            }
+          }
+        }
+      }
+    },
+    "sglang": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "SGLang (local)",
+      "options": {
+        "baseURL": "http://localhost:8081/v1"
+      },
+      "models": {
         "inkling-2-mini-26b-gguf": {
           "name": "Inkling",
           "reasoning": true,
@@ -389,46 +438,6 @@
               "temperature": 1.0,
               "top_p": 0.95,
               "top_k": 64
-            }
-          }
-        },
-        "mimo-v2.6-distill-9b-gguf": {
-          "name": "MiMo",
-          "reasoning": true,
-          "tool_call": true,
-          "attachment": false,
-          "limit": {
-            "context": 262144,
-            "output": 32768
-          },
-          "modalities": {
-            "input": [
-              "text"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "think": {
-              "chat_template_kwargs": {
-                "enable_thinking": true
-              },
-              "temperature": 0.6,
-              "top_p": 0.95,
-              "top_k": 20,
-              "min_p": 0.0,
-              "reasoning_budget_tokens": 4096,
-              "reasoning_budget_message": "\n\nI have planned enough. I will now stop thinking and take the next concrete action using a tool.\n"
-            },
-            "nothink": {
-              "chat_template_kwargs": {
-                "enable_thinking": false
-              },
-              "temperature": 0.7,
-              "top_p": 0.8,
-              "top_k": 20,
-              "min_p": 0.0
             }
           }
         }
