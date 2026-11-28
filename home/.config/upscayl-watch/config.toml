@@ -1,7 +1,7 @@
 # upscayl-watch configuration
 min_free_gb = 50.0
 
-binary = "realesrgan-ncnn-vulkan"
+binary = "/usr/share/upscayl/bin/upscayl-bin"
 model_dir = "/usr/share/upscayl/models"
 model = "ultrasharp-4x"
 

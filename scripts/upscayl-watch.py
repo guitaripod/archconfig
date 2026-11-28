@@ -100,7 +100,7 @@ class Config:
     work_dir: Path = STATE_DIR / "work"
     roots: tuple[Root, ...] = ()
     min_free_gb: float = 50.0
-    binary: str = "realesrgan-ncnn-vulkan"
+    binary: str = "/usr/share/upscayl/bin/upscayl-bin"
     model_dir: Path = Path("/usr/share/upscayl/models")
     model: str = "ultrasharp-4x"
     max_scale: float = 4.0
@@ -1141,7 +1141,7 @@ class Watcher:
 DEFAULT_CONFIG = """# upscayl-watch configuration
 min_free_gb = 50.0
 
-binary = "realesrgan-ncnn-vulkan"
+binary = "/usr/share/upscayl/bin/upscayl-bin"
 model_dir = "/usr/share/upscayl/models"
 model = "ultrasharp-4x"
 
